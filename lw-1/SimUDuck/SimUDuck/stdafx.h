@@ -15,6 +15,7 @@
 #include <memory>
 #include "IFlyBehavior.h"
 #include "IQuackBehavior.h"
+#include "IDanceBehavior.h"
 #include "FlyWithWings.h"
 #include "QuackBehavior.h"
 #include "FlyNoWay.h"
@@ -25,4 +26,6 @@
 #include "RubberDuck.h"
 #include "DeckoyDuck.h"
 #include "ModelDuck.h"
-
+#include "WaltzDanceBehavior.h"
+#include "NotDanceBehavior.h"
+#include "MinuetDanceBehavior.h"

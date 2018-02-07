@@ -3,7 +3,9 @@
 
 
 CModelDuck::CModelDuck():
-	CDuck(std::make_unique<CFlyNoWay>(), std::make_unique<CQuackBehavior>())
+	CDuck(std::make_unique<CFlyNoWay>(),
+		std::make_unique<CQuackBehavior>(),
+		std::make_unique<CNotDanceBehavior>())
 {
 }
 

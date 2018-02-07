@@ -142,17 +142,21 @@
     <ClInclude Include="Duck.h" />
     <ClInclude Include="FlyNoWay.h" />
     <ClInclude Include="FlyWithWings.h" />
+    <ClInclude Include="IDanceBehavior.h" />
     <ClInclude Include="IFlyBehavior.h" />
     <ClInclude Include="IQuackBehavior.h" />
     <ClInclude Include="MallardDuck.h" />
+    <ClInclude Include="MinuetDanceBehavior.h" />
     <ClInclude Include="ModelDuck.h" />
     <ClInclude Include="MuteQuackBehavior.h" />
+    <ClInclude Include="NotDanceBehavior.h" />
     <ClInclude Include="QuackBehavior.h" />
     <ClInclude Include="RedheadDuck.h" />
     <ClInclude Include="RubberDuck.h" />
     <ClInclude Include="SqueakBehavior.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="WaltzDanceBehavior.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DeckoyDuck.cpp" />
@@ -160,8 +164,10 @@
     <ClCompile Include="FlyNoWay.cpp" />
     <ClCompile Include="FlyWithWings.cpp" />
     <ClCompile Include="MallardDuck.cpp" />
+    <ClCompile Include="MinuetDanceBehavior.cpp" />
     <ClCompile Include="ModelDuck.cpp" />
     <ClCompile Include="MuteQuackBehavior.cpp" />
+    <ClCompile Include="NotDanceBehavior.cpp" />
     <ClCompile Include="QuackBehavior.cpp" />
     <ClCompile Include="RedheadDuck.cpp" />
     <ClCompile Include="RubberDuck.cpp" />
@@ -173,6 +179,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="WaltzDanceBehavior.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

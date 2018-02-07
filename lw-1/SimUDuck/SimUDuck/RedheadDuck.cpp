@@ -3,7 +3,9 @@
 
 
 CRedheadDuck::CRedheadDuck()
-	: CDuck(std::make_unique<CFlyWithWings>(), std::make_unique<CQuackBehavior>())
+	: CDuck(std::make_unique<CFlyWithWings>(),
+		std::make_unique<CQuackBehavior>(),
+		std::make_unique<CMinuetDanceBehavior>())
 {
 }
 
