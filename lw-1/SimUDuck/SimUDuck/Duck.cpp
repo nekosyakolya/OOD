@@ -33,6 +33,8 @@ void CDuck::Dance() const
 
 void CDuck::SetFlyBehavior(std::unique_ptr<IFlyBehavior>&& flyBehavior)
 {
+	int currentFlightNumber = (m_flyBehavior) ? m_flyBehavior->GetFlightNumber() : 0;
 	m_flyBehavior = move(flyBehavior);
+	m_flyBehavior->SetFlightNumber(currentFlightNumber);
 }
 

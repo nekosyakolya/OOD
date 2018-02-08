@@ -1,6 +1,6 @@
 #pragma once
 #include "FlyBehavior.h"
-class CFlyWithWings :
+class CFlyRocketPowered :
 	public CFlyBehavior
 {
 public:

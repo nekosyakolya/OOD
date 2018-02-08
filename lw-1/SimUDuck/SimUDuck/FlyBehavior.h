@@ -1,10 +1,14 @@
 #pragma once
 #include "IFlyBehavior.h"
-class CFlyNoWay :
+class CFlyBehavior :
 	public IFlyBehavior
 {
 public:
-	void Fly() override;
 	void SetFlightNumber(int) override;
 	int GetFlightNumber() const override;
+	virtual void FlyBehavior() = 0;
+	void Fly() override;
+private:
+	int m_flightNumber = 0;
 };
+

@@ -75,6 +75,12 @@
     <ClInclude Include="NotDanceBehavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FlyBehavior.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyRocketPowered.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -123,6 +129,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NotDanceBehavior.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FlyBehavior.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FlyRocketPowered.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
