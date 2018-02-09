@@ -15,25 +15,26 @@ void PlayWithDuck(CDuck& duck)
 	std::cout << std::endl;
 }
 
-
-
 int main()
 {
 	CMallardDuck mallarDuck;
 	PlayWithDuck(mallarDuck);
+
 	CRedheadDuck redheadDuck;
 	PlayWithDuck(redheadDuck);
+
 	CRubberDuck rubberDuck;
 	PlayWithDuck(rubberDuck);
+
 	CDecoyDuck decoyDuck;
 	PlayWithDuck(decoyDuck);
+
 	CModelDuck modelDuck;
 	PlayWithDuck(modelDuck);
 	modelDuck.SetFlyBehavior(std::make_unique<CFlyWithWings>());
 	PlayWithDuck(modelDuck);
 	modelDuck.SetFlyBehavior(std::make_unique<CFlyRocketPowered>());
 	PlayWithDuck(modelDuck);
-
 
 	return EXIT_SUCCESS;
 }

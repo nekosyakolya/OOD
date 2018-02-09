@@ -5,6 +5,4 @@ class CFlyNoWay :
 {
 public:
 	void Fly() override;
-	void SetFlightNumber(int) override;
-	int GetFlightNumber() const override;
 };
