@@ -3,7 +3,7 @@
 class CFlyWithWings :
 	public CFlyBehavior
 {
-public:
+private:
 	void FlyBehavior() override;
 };
 

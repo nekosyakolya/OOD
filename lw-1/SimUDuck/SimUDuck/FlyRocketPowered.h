@@ -3,7 +3,7 @@
 class CFlyRocketPowered :
 	public CFlyBehavior
 {
-public:
+private:
 	void FlyBehavior() override;
 };
 

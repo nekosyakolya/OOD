@@ -4,10 +4,10 @@ class CFlyBehavior :
 	public IFlyBehavior
 {
 public:
-	virtual void FlyBehavior() = 0;
 	void Fly() override;
 	virtual ~CFlyBehavior() = default;
 private:
+	virtual void FlyBehavior() = 0;
 	int m_flightNumber = 0;
 };
 
