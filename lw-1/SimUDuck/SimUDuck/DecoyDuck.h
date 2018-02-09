@@ -1,10 +1,10 @@
 #pragma once
 #include "Duck.h"
-class CDeckoyDuck :
+class CDecoyDuck :
 	public CDuck
 {
 public:
-	CDeckoyDuck();
+	CDecoyDuck();
 	void Display() const override;
 };
 

@@ -24,7 +24,7 @@
 #include "MallardDuck.h"
 #include "RedheadDuck.h"
 #include "RubberDuck.h"
-#include "DeckoyDuck.h"
+#include "DecoyDuck.h"
 #include "ModelDuck.h"
 #include "WaltzDanceBehavior.h"
 #include "NotDanceBehavior.h"

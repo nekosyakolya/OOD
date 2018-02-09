@@ -1,14 +1,15 @@
 #include "stdafx.h"
-#include "DeckoyDuck.h"
+#include "DecoyDuck.h"
 
 
-CDeckoyDuck::CDeckoyDuck():
+CDecoyDuck::CDecoyDuck():
 	CDuck(std::make_unique<CFlyNoWay>(),
 		std::make_unique<CMuteQuackBehavior>(),
 		std::make_unique<CNotDanceBehavior>())
 {
 }
-void CDeckoyDuck::Display() const
+void CDecoyDuck::Display() const
 {
 	std::cout << "I'm deckoy duck" << std::endl;
 }
+

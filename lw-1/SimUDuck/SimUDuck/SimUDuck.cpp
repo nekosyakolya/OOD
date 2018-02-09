@@ -25,8 +25,8 @@ int main()
 	PlayWithDuck(redheadDuck);
 	CRubberDuck rubberDuck;
 	PlayWithDuck(rubberDuck);
-	CDeckoyDuck deckoyDuck;
-	PlayWithDuck(deckoyDuck);
+	CDecoyDuck decoyDuck;
+	PlayWithDuck(decoyDuck);
 	CModelDuck modelDuck;
 	PlayWithDuck(modelDuck);
 	modelDuck.SetFlyBehavior(std::make_unique<CFlyWithWings>());

@@ -138,7 +138,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DeckoyDuck.h" />
+    <ClInclude Include="DecoyDuck.h" />
     <ClInclude Include="Duck.h" />
     <ClInclude Include="FlyBehavior.h" />
     <ClInclude Include="FlyNoWay.h" />
@@ -161,7 +161,7 @@
     <ClInclude Include="WaltzDanceBehavior.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DeckoyDuck.cpp" />
+    <ClCompile Include="DecoyDuck.cpp" />
     <ClCompile Include="Duck.cpp" />
     <ClCompile Include="FlyBehavior.cpp" />
     <ClCompile Include="FlyNoWay.cpp" />
