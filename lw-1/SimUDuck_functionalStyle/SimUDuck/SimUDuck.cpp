@@ -10,8 +10,19 @@ namespace {
 	using IDanceBehavior = std::function<void()>;
 }
 
-const IFlyBehavior flyBehavior = []() {
+
+const std::function<void()> calculateFlightNumber = [flightNumber = 0]() mutable {
+	std::cout << "Flight number: " << ++flightNumber << std::endl;
+};
+
+const IFlyBehavior flyWithWings = [calculateFlightNumber = calculateFlightNumber]() {
+	calculateFlightNumber();
 	std::cout << "I'm flying with wings!!" << std::endl;
+};
+
+const IFlyBehavior flyRocketPowered = [calculateFlightNumber = calculateFlightNumber]() {
+	calculateFlightNumber();
+	std::cout << "I'm flying on rocket powered!!" << std::endl;
 };
 
 const IFlyBehavior flyNoWay = []() {
@@ -85,7 +96,7 @@ class CMallardDuck : public CDuck
 {
 public:
 	CMallardDuck()
-		: CDuck(std::make_unique<IFlyBehavior>(flyBehavior),
+		: CDuck(std::make_unique<IFlyBehavior>(flyWithWings),
 			std::make_unique<IQuackBehavior>(quackBehavior),
 			std::make_unique<IDanceBehavior>(waltzDanceBehavior))
 	{
@@ -101,7 +112,7 @@ class CRedheadDuck : public CDuck
 {
 public:
 	CRedheadDuck()
-		: CDuck(std::make_unique<IFlyBehavior>(flyBehavior),
+		: CDuck(std::make_unique<IFlyBehavior>(flyWithWings),
 			std::make_unique<IQuackBehavior>(quackBehavior),
 			std::make_unique<IDanceBehavior>(minuetDanceBehavior))
 	{
@@ -181,7 +192,12 @@ int main()
 	PlayWithDuck(deckoyDuck);
 	CModelDuck modelDuck;
 	PlayWithDuck(modelDuck);
-	modelDuck.SetFlyBehavior(std::make_unique<IFlyBehavior>(flyBehavior));
+	modelDuck.SetFlyBehavior(std::make_unique<IFlyBehavior>(flyWithWings));
+	PlayWithDuck(modelDuck);
+	modelDuck.SetFlyBehavior(std::make_unique<IFlyBehavior>(flyRocketPowered));
+	PlayWithDuck(modelDuck);
+	PlayWithDuck(mallarDuck);
+	PlayWithDuck(mallarDuck);
 	PlayWithDuck(modelDuck);
 
 	return EXIT_SUCCESS;
