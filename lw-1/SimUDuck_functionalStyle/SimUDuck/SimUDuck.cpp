@@ -1,104 +1,112 @@
 #include "stdafx.h"
 
-#include <iostream>
-#include <memory>
-#include <functional>
-
-namespace {
-	using IFlyBehavior = std::function<void()>;
-	using IQuackBehavior = std::function<void()>;
-	using IDanceBehavior = std::function<void()>;
+namespace Behavior {
+	using Fly = std::function<void()>;
+	using Quack = std::function<void()>;
+	using Dance = std::function<void()>;
 }
 
+namespace FlyBehavior {
+	namespace FlightNumber {
+		const std::function<void()> calculate = [flightNumber = 0]() mutable {
+			std::cout << "Flight number: " << ++flightNumber << std::endl;
+		};
+	}
 
-const std::function<void()> calculateFlightNumber = [flightNumber = 0]() mutable {
-	std::cout << "Flight number: " << ++flightNumber << std::endl;
-};
+	const Behavior::Fly WITH_WINGS = [calculateFlightNumber = FlightNumber::calculate]() {
+		calculateFlightNumber();
+		std::cout << "I'm flying with wings!!" << std::endl;
+	};
 
-const IFlyBehavior flyWithWings = [calculateFlightNumber = calculateFlightNumber]() {
-	calculateFlightNumber();
-	std::cout << "I'm flying with wings!!" << std::endl;
-};
+	const Behavior::Fly ROCKET_POWERED = [calculateFlightNumber = FlightNumber::calculate]() {
+		calculateFlightNumber();
+		std::cout << "I'm flying on rocket powered!!" << std::endl;
+	};
 
-const IFlyBehavior flyRocketPowered = [calculateFlightNumber = calculateFlightNumber]() {
-	calculateFlightNumber();
-	std::cout << "I'm flying on rocket powered!!" << std::endl;
-};
+	const Behavior::Fly NO_WAY = []() {
+		std::cout << "Men don't fly" << std::endl;
+	};
+}
 
-const IFlyBehavior flyNoWay = []() {
-	std::cout << "Men don't fly" << std::endl;
-};
+namespace QuackBehavior {
+	const Behavior::Quack QUAK = []() {
+		std::cout << "Quack Quack!!!" << std::endl;
+	};
 
-const IQuackBehavior quackBehavior = []() {
-	std::cout << "Quack Quack!!!" << std::endl;
-};
+	const Behavior::Quack SQUEAK = []() {
+		std::cout << "Squeek!!!" << std::endl;
+	};
 
-const IQuackBehavior squeakBehavior = []() {
-	std::cout << "Squeek!!!" << std::endl;
-};
+	const Behavior::Quack MUTE_QUAK = []() {};
+}
 
-const IQuackBehavior muteQuackBehavior = []() {};
+namespace DanceBehavior {
+	const Behavior::Dance MINUET = []() {
+		std::cout << "I'm dancing minuet" << std::endl;
+	};
 
-const IDanceBehavior minuetDanceBehavior = []() {
-	std::cout << "I'm dancing minuet" << std::endl;
-};
+	const Behavior::Dance WALTZ = []() {
+		std::cout << "I'm dancing waltz" << std::endl;
+	};
 
-const IDanceBehavior waltzDanceBehavior = []() {
-	std::cout << "I'm dancing waltz" << std::endl;
-};
+	const Behavior::Dance NOT_DANCE = []() {
+		std::cout << "Men don't dance" << std::endl;
+	};
+}
 
-const IDanceBehavior notDanceBehavior = []() {
-	std::cout << "Men don't dance" << std::endl;
-};
 
 class CDuck
 {
 public:
-	CDuck(std::unique_ptr<IFlyBehavior>&& flyBehavior,
-		std::unique_ptr<IQuackBehavior>&& quackBehavior,
-		std::unique_ptr<IDanceBehavior>&& danceBehavior) :
-		m_quackBehavior(move(quackBehavior)),
-		m_danceBehavior(move(danceBehavior))
+	CDuck(const Behavior::Fly &flyBehavior,
+		const Behavior::Quack &quackBehavior,
+		const Behavior::Dance &danceBehavior):
+		m_quackBehavior(quackBehavior),
+		m_danceBehavior(danceBehavior)
 	{
-		SetFlyBehavior(move(flyBehavior));
+		SetFlyBehavior(flyBehavior);
 	}
+
 	void Quack() const
 	{
-		(*m_quackBehavior)();
+		m_quackBehavior();
 	}
+
 	void Swim() const
 	{
 		std::cout << "I'm swimming" << std::endl;
 	}
+	
 	void Fly() const
 	{
-		(*m_flyBehavior)();
+		m_flyBehavior();
 	}
+	
 	void Dance() const
 	{
-		(*m_danceBehavior)();
+		m_danceBehavior();
 	}
 
-	void SetFlyBehavior(std::unique_ptr<IFlyBehavior>&& flyBehavior)
+	void SetFlyBehavior(const Behavior::Fly & flyBehavior)
 	{
-		m_flyBehavior = move(flyBehavior);
+		m_flyBehavior = flyBehavior;
 	}
 	virtual void Display() const = 0;
 	virtual ~CDuck() = default;
 
 private:
-	std::unique_ptr<IFlyBehavior> m_flyBehavior;
-	std::unique_ptr<IQuackBehavior> m_quackBehavior;
-	std::unique_ptr<IDanceBehavior> m_danceBehavior;
+	Behavior::Fly m_flyBehavior;
+	Behavior::Quack m_quackBehavior;
+	Behavior::Dance m_danceBehavior;
 };
 
 class CMallardDuck : public CDuck
 {
 public:
 	CMallardDuck()
-		: CDuck(std::make_unique<IFlyBehavior>(flyWithWings),
-			std::make_unique<IQuackBehavior>(quackBehavior),
-			std::make_unique<IDanceBehavior>(waltzDanceBehavior))
+		: CDuck(FlyBehavior::WITH_WINGS,
+			QuackBehavior::QUAK,
+			DanceBehavior::WALTZ)
 	{
 	}
 
@@ -112,11 +120,12 @@ class CRedheadDuck : public CDuck
 {
 public:
 	CRedheadDuck()
-		: CDuck(std::make_unique<IFlyBehavior>(flyWithWings),
-			std::make_unique<IQuackBehavior>(quackBehavior),
-			std::make_unique<IDanceBehavior>(minuetDanceBehavior))
+		: CDuck(FlyBehavior::WITH_WINGS,
+			QuackBehavior::QUAK,
+			DanceBehavior::MINUET)
 	{
 	}
+
 	void Display() const override
 	{
 		std::cout << "I'm redhead duck" << std::endl;
@@ -126,11 +135,12 @@ class CDecoyDuck : public CDuck
 {
 public:
 	CDecoyDuck()
-		: CDuck(std::make_unique<IFlyBehavior>(flyNoWay),
-			std::make_unique<IQuackBehavior>(muteQuackBehavior),
-			std::make_unique<IDanceBehavior>(notDanceBehavior))
+		: CDuck(FlyBehavior::NO_WAY,
+			QuackBehavior::MUTE_QUAK,
+			DanceBehavior::NOT_DANCE)
 	{
 	}
+
 	void Display() const override
 	{
 		std::cout << "I'm deckoy duck" << std::endl;
@@ -140,11 +150,12 @@ class CRubberDuck : public CDuck
 {
 public:
 	CRubberDuck()
-		: CDuck(std::make_unique<IFlyBehavior>(flyNoWay),
-			std::make_unique<IQuackBehavior>(squeakBehavior),
-			std::make_unique<IDanceBehavior>(notDanceBehavior))
+		: CDuck(FlyBehavior::NO_WAY,
+			QuackBehavior::SQUEAK,
+			DanceBehavior::NOT_DANCE)
 	{
 	}
+
 	void Display() const override
 	{
 		std::cout << "I'm rubber duck" << std::endl;
@@ -155,11 +166,12 @@ class CModelDuck : public CDuck
 {
 public:
 	CModelDuck()
-		: CDuck(std::make_unique<IFlyBehavior>(flyNoWay),
-			std::make_unique<IQuackBehavior>(quackBehavior),
-			std::make_unique<IDanceBehavior>(notDanceBehavior))
+		: CDuck(FlyBehavior::NO_WAY,
+			QuackBehavior::QUAK,
+			DanceBehavior::NOT_DANCE)
 	{
 	}
+
 	void Display() const override
 	{
 		std::cout << "I'm model duck" << std::endl;
@@ -192,9 +204,10 @@ int main()
 	PlayWithDuck(deckoyDuck);
 	CModelDuck modelDuck;
 	PlayWithDuck(modelDuck);
-	modelDuck.SetFlyBehavior(std::make_unique<IFlyBehavior>(flyWithWings));
+
+	modelDuck.SetFlyBehavior(FlyBehavior::WITH_WINGS);
 	PlayWithDuck(modelDuck);
-	modelDuck.SetFlyBehavior(std::make_unique<IFlyBehavior>(flyRocketPowered));
+	modelDuck.SetFlyBehavior(FlyBehavior::ROCKET_POWERED);
 	PlayWithDuck(modelDuck);
 	PlayWithDuck(mallarDuck);
 	PlayWithDuck(mallarDuck);
