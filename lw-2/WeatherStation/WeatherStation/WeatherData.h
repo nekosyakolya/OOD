@@ -68,7 +68,7 @@ public:
 	void AddWeatherCalculator(const WeatherParamExtractor& extractor, const std::string& name)
 	{
 		StatsCalculator calc(name);
-		m_calculators.emplace(m_calculators.end(), std::make_pair(calc, extractor));
+		m_calculators.emplace_back(calc, extractor);
 	}
 
 private:
