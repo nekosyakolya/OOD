@@ -4,8 +4,8 @@ int main()
 {
 	CWeatherData wd;
 
-//	CDisplay display;
-//	wd.RegisterObserver(display);
+	CDisplay display;
+	wd.RegisterObserver(display);
 
 	CStatsDisplay statsDisplay;
 	wd.RegisterObserver(statsDisplay);
@@ -15,7 +15,7 @@ int main()
 
 	wd.RemoveObserver(statsDisplay);
 
-	//wd.SetMeasurements(10, 0.8, 761);
-	//wd.SetMeasurements(-10, 0.8, 761);
+	wd.SetMeasurements(10, 0.8, 761);
+	wd.SetMeasurements(-10, 0.8, 761);
 	return EXIT_SUCCESS;
 }
