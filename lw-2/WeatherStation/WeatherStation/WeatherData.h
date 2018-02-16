@@ -191,9 +191,9 @@ private:
 	*/
 	void Update(SWeatherInfo const& data) override
 	{
-		for (auto & sensor: m_statistics)
+		for (auto & sensorStatistics : m_statistics)
 		{
-			sensor->Update(data);
+			sensorStatistics->Update(data);
 		}
 
 	}
