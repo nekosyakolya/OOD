@@ -31,7 +31,7 @@ public:
 	virtual ~IStatistics() = default;
 };
 
-class CWeatherStatistics : public IStatistics<SWeatherInfo>
+class CStatistics : public IStatistics<SWeatherInfo>
 {
 private:
 	void Update(SWeatherInfo const& data) override
@@ -43,21 +43,10 @@ private:
 	virtual void UpdateStatistics(SWeatherInfo const& data) = 0;
 };
 
-template <typename T>
-class IUpdateStatistics
+class CWeatherStatistics : public CStatistics
 {
 public:
-	virtual void Update(T const& data) = 0;
-	virtual T GetMax() = 0;
-	virtual T GetMin() = 0;
-	virtual T GetAverage() = 0;
-	virtual ~IUpdateStatistics() = default;
-};
-
-class CUpdateStatistics : public IUpdateStatistics<double>
-{
-public:
-	void Update(double const& data) override
+	void Update(double  data)
 	{
 		if (m_min > data)
 		{
@@ -71,21 +60,24 @@ public:
 		++m_countAcc;
 	};
 
-	double GetMax() override
+	double GetMax() const
 	{
 		return m_max;
 	};
 
-	double GetMin() override
+	double GetMin() const
 	{
 		return m_min;
 	}
 
-	double GetAverage() override
+	double GetAverage() const
 	{
 		return (m_countAcc == 0) ? 0 : (m_acc / m_countAcc);
 	}
 private:
+	virtual void Display() = 0;
+	virtual void UpdateStatistics(SWeatherInfo const& data) = 0;
+
 	double m_min = std::numeric_limits<double>::infinity();
 	double m_max = -std::numeric_limits<double>::infinity();
 	double m_acc = 0;
@@ -95,67 +87,49 @@ private:
 
 class CTemperatureStatistics : public CWeatherStatistics
 {
-public:
-	CTemperatureStatistics(std::unique_ptr<IUpdateStatistics<double>> &&updateStatistics) :
-		m_updateStatistics(move(updateStatistics))
-	{
-	}
 private:
-	std::unique_ptr<IUpdateStatistics<double>> m_updateStatistics;
 	void Display() override
 	{
-		std::cout << "Max Temp " << m_updateStatistics->GetMax() << std::endl;
-		std::cout << "Min Temp " << m_updateStatistics->GetMin() << std::endl;
-		std::cout << "Average Temp " << m_updateStatistics->GetAverage() << std::endl;
+		std::cout << "Max Temp " << GetMax() << std::endl;
+		std::cout << "Min Temp " << GetMin() << std::endl;
+		std::cout << "Average Temp " << GetAverage() << std::endl;
 		std::cout << "----------------" << std::endl;
 	};
 	void UpdateStatistics(SWeatherInfo const& data) override
 	{
-		m_updateStatistics->Update(data.temperature);
+		Update(data.temperature);
 	};
 };
 
 class CPressureStatistics : public CWeatherStatistics
 {
-public:
-	CPressureStatistics(std::unique_ptr<IUpdateStatistics<double>> &&updateStatistics) :
-		m_updateStatistics(move(updateStatistics))
-	{
-	}
 private:
-	std::unique_ptr<IUpdateStatistics<double>> m_updateStatistics;
 	void Display() override
 	{
-		std::cout << "Max Pressure " << m_updateStatistics->GetMax() << std::endl;
-		std::cout << "Min Pressure " << m_updateStatistics->GetMin() << std::endl;
-		std::cout << "Average Pressure " << m_updateStatistics->GetAverage() << std::endl;
+		std::cout << "Max Pressure " << GetMax() << std::endl;
+		std::cout << "Min Pressure " << GetMin() << std::endl;
+		std::cout << "Average Pressure " << GetAverage() << std::endl;
 		std::cout << "----------------" << std::endl;
 	};
 	void UpdateStatistics(SWeatherInfo const& data) override
 	{
-		m_updateStatistics->Update(data.pressure);
+		Update(data.pressure);
 	};
 };
 
 class CHumidityStatistics : public CWeatherStatistics
 {
-public:
-	CHumidityStatistics(std::unique_ptr<IUpdateStatistics<double>> &&updateStatistics):
-		m_updateStatistics(move(updateStatistics))
-	{
-	}
 private:
-	std::unique_ptr<IUpdateStatistics<double>> m_updateStatistics;
 	void Display() override
 	{
-		std::cout << "Max Humidity " << m_updateStatistics->GetMax() << std::endl;
-		std::cout << "Min Humidity " << m_updateStatistics->GetMin() << std::endl;
-		std::cout << "Average Humidity " << m_updateStatistics->GetAverage() << std::endl;
+		std::cout << "Max Humidity " << GetMax() << std::endl;
+		std::cout << "Min Humidity " << GetMin() << std::endl;
+		std::cout << "Average Humidity " << GetAverage() << std::endl;
 		std::cout << "----------------" << std::endl;
 	};
 	void UpdateStatistics(SWeatherInfo const& data) override
 	{
-		m_updateStatistics->Update(data.humidity);
+		Update(data.humidity);
 	};
 };
 
@@ -167,18 +141,18 @@ public:
 	CStatsDisplay()
 	{
 		std::unique_ptr<IStatistics<SWeatherInfo>> temperatureStatistics = 
-			std::make_unique<CTemperatureStatistics>(std::make_unique<CUpdateStatistics>());
+			std::make_unique<CTemperatureStatistics>();
 
 		m_statistics.push_back(std::move(temperatureStatistics));
 
 
 		std::unique_ptr<IStatistics<SWeatherInfo>> pressureStatistics =
-			std::make_unique<CPressureStatistics>(std::make_unique<CUpdateStatistics>());
+			std::make_unique<CPressureStatistics>();
 
 		m_statistics.push_back(std::move(pressureStatistics));
 
 		std::unique_ptr<IStatistics<SWeatherInfo>> humidityStatistics =
-			std::make_unique<CHumidityStatistics>(std::make_unique<CUpdateStatistics>());
+			std::make_unique<CHumidityStatistics>();
 
 		m_statistics.push_back(std::move(humidityStatistics));
 
