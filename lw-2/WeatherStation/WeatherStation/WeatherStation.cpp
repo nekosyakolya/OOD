@@ -8,6 +8,18 @@ int main()
 	wd.RegisterObserver(display);
 
 	CStatsDisplay statsDisplay;
+	statsDisplay.AddWeatherCalculator([](const SWeatherInfo& wd) {
+		return wd.temperature;
+	}, "temperature");
+
+	statsDisplay.AddWeatherCalculator([](const SWeatherInfo& wd) {
+		return wd.humidity;
+	}, "humidity");
+
+	statsDisplay.AddWeatherCalculator([](const SWeatherInfo& wd) {
+		return wd.pressure;
+	}, "pressure");
+
 	wd.RegisterObserver(statsDisplay);
 
 	wd.SetMeasurements(3, 0.7, 760);

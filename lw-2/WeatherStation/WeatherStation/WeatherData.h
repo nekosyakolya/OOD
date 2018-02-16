@@ -23,61 +23,37 @@ private:
 	}
 };
 
-template <typename T>
-class IStatistics
+class StatsCalculator
 {
 public:
-	virtual void Update(T const& data) = 0;
-	virtual ~IStatistics() = default;
-};
-
-class CStatistics : public IStatistics<SWeatherInfo>
-{
-private:
-	void Update(SWeatherInfo const& data) override
+	explicit StatsCalculator(const std::string& name):
+		m_name(name)
 	{
-		UpdateStatistics(data);
-		Display();
 	};
-	virtual void Display() = 0;
-	virtual void UpdateStatistics(SWeatherInfo const& data) = 0;
-};
-
-class CWeatherStatistics : public CStatistics
-{
-public:
-	void Update(double  data)
+	void Update(double value)
 	{
-		if (m_min > data)
+		if (m_min > value)
 		{
-			m_min = data;
+			m_min = value;
 		}
-		if (m_max < data)
+		if (m_max < value)
 		{
-			m_max = data;
+			m_max = value;
 		}
-		m_acc += data;
+		m_acc += value;
 		++m_countAcc;
 	};
-
-	double GetMax() const
+	void Display()
 	{
-		return m_max;
+		std::cout << "Max " << m_name << " " << m_max << std::endl;
+		
+		std::cout << "Min " << m_name << " " << m_min << std::endl;
+
+		std::cout << "Average " << m_name << " " << ((m_countAcc == 0) ? 0 : m_acc / m_countAcc) << std::endl;
+		std::cout << "----------------" << std::endl;
 	};
-
-	double GetMin() const
-	{
-		return m_min;
-	}
-
-	double GetAverage() const
-	{
-		return (m_countAcc == 0) ? 0 : (m_acc / m_countAcc);
-	}
 private:
-	virtual void Display() = 0;
-	virtual void UpdateStatistics(SWeatherInfo const& data) = 0;
-
+	std::string m_name;
 	double m_min = std::numeric_limits<double>::infinity();
 	double m_max = -std::numeric_limits<double>::infinity();
 	double m_acc = 0;
@@ -85,78 +61,15 @@ private:
 };
 
 
-class CTemperatureStatistics : public CWeatherStatistics
-{
-private:
-	void Display() override
-	{
-		std::cout << "Max Temp " << GetMax() << std::endl;
-		std::cout << "Min Temp " << GetMin() << std::endl;
-		std::cout << "Average Temp " << GetAverage() << std::endl;
-		std::cout << "----------------" << std::endl;
-	};
-	void UpdateStatistics(SWeatherInfo const& data) override
-	{
-		Update(data.temperature);
-	};
-};
-
-class CPressureStatistics : public CWeatherStatistics
-{
-private:
-	void Display() override
-	{
-		std::cout << "Max Pressure " << GetMax() << std::endl;
-		std::cout << "Min Pressure " << GetMin() << std::endl;
-		std::cout << "Average Pressure " << GetAverage() << std::endl;
-		std::cout << "----------------" << std::endl;
-	};
-	void UpdateStatistics(SWeatherInfo const& data) override
-	{
-		Update(data.pressure);
-	};
-};
-
-class CHumidityStatistics : public CWeatherStatistics
-{
-private:
-	void Display() override
-	{
-		std::cout << "Max Humidity " << GetMax() << std::endl;
-		std::cout << "Min Humidity " << GetMin() << std::endl;
-		std::cout << "Average Humidity " << GetAverage() << std::endl;
-		std::cout << "----------------" << std::endl;
-	};
-	void UpdateStatistics(SWeatherInfo const& data) override
-	{
-		Update(data.humidity);
-	};
-};
-
-
-
 class CStatsDisplay : public IObserver<SWeatherInfo>
 {
 public:
-	CStatsDisplay()
+	using WeatherParamExtractor = std::function<double(const SWeatherInfo& data)>;
+	void AddWeatherCalculator(const WeatherParamExtractor& extractor, const std::string& name)
 	{
-		std::unique_ptr<IStatistics<SWeatherInfo>> temperatureStatistics = 
-			std::make_unique<CTemperatureStatistics>();
-
-		m_statistics.push_back(std::move(temperatureStatistics));
-
-
-		std::unique_ptr<IStatistics<SWeatherInfo>> pressureStatistics =
-			std::make_unique<CPressureStatistics>();
-
-		m_statistics.push_back(std::move(pressureStatistics));
-
-		std::unique_ptr<IStatistics<SWeatherInfo>> humidityStatistics =
-			std::make_unique<CHumidityStatistics>();
-
-		m_statistics.push_back(std::move(humidityStatistics));
-
-	};
+		StatsCalculator calc(name);
+		m_calculators.emplace(m_calculators.end(), std::make_pair(calc, extractor));
+	}
 
 private:
 	/* Метод Update сделан приватным, чтобы ограничить возможность его вызова напрямую
@@ -165,13 +78,15 @@ private:
 	*/
 	void Update(SWeatherInfo const& data) override
 	{
-		for (auto & sensorStatistics : m_statistics)
+		for (auto&& calc : m_calculators)
 		{
-			sensorStatistics->Update(data);
+			double extractedParam = calc.second(data);
+			calc.first.Update(extractedParam);
+			calc.first.Display();
 		}
 
 	}
-	std::vector<std::unique_ptr<IStatistics<SWeatherInfo>>> m_statistics;
+	std::vector<std::pair<StatsCalculator, WeatherParamExtractor>> m_calculators;
 
 };
 
