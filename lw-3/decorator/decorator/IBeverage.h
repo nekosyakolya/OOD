@@ -1,10 +1,10 @@
-#pragma once
+п»ї#pragma once
 
 #include <string>
 #include <memory>
 
 
-// Интерфейс "напиток"
+// РРЅС‚РµСЂС„РµР№СЃ "РЅР°РїРёС‚РѕРє"
 class IBeverage
 {
 public:

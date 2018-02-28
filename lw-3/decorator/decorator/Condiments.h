@@ -1,24 +1,24 @@
-#pragma once
+п»ї#pragma once
 
 #include "IBeverage.h"
 
-// Базовый декоратор "Добавка к напитку". Также является напитком
+// Р‘Р°Р·РѕРІС‹Р№ РґРµРєРѕСЂР°С‚РѕСЂ "Р”РѕР±Р°РІРєР° Рє РЅР°РїРёС‚РєСѓ". РўР°РєР¶Рµ СЏРІР»СЏРµС‚СЃСЏ РЅР°РїРёС‚РєРѕРј
 class CCondimentDecorator : public IBeverage
 {
 public:
 	std::string GetDescription()const override
 	{
-		// Описание декорированного напитка добавляется к описанию оборачиваемого напитка
+		// РћРїРёСЃР°РЅРёРµ РґРµРєРѕСЂРёСЂРѕРІР°РЅРЅРѕРіРѕ РЅР°РїРёС‚РєР° РґРѕР±Р°РІР»СЏРµС‚СЃСЏ Рє РѕРїРёСЃР°РЅРёСЋ РѕР±РѕСЂР°С‡РёРІР°РµРјРѕРіРѕ РЅР°РїРёС‚РєР°
 		return m_beverage->GetDescription() + ", " + GetCondimentDescription();
 	}
 
 	double GetCost()const override
 	{
-		// Стоимость складывается из стоимости добавки и стоимости декорируемого напитка
+		// РЎС‚РѕРёРјРѕСЃС‚СЊ СЃРєР»Р°РґС‹РІР°РµС‚СЃСЏ РёР· СЃС‚РѕРёРјРѕСЃС‚Рё РґРѕР±Р°РІРєРё Рё СЃС‚РѕРёРјРѕСЃС‚Рё РґРµРєРѕСЂРёСЂСѓРµРјРѕРіРѕ РЅР°РїРёС‚РєР°
 		return m_beverage->GetCost() + GetCondimentCost();
 	}
 
-	// Стоимость и описание добавки вычисляется в классах конкретных декораторов
+	// РЎС‚РѕРёРјРѕСЃС‚СЊ Рё РѕРїРёСЃР°РЅРёРµ РґРѕР±Р°РІРєРё РІС‹С‡РёСЃР»СЏРµС‚СЃСЏ РІ РєР»Р°СЃСЃР°С… РєРѕРЅРєСЂРµС‚РЅС‹С… РґРµРєРѕСЂР°С‚РѕСЂРѕРІ
 	virtual std::string GetCondimentDescription()const = 0;
 	virtual double GetCondimentCost()const = 0;
 protected:
@@ -30,7 +30,7 @@ private:
 	IBeveragePtr m_beverage;
 };
 
-// Добавка из корицы
+// Р”РѕР±Р°РІРєР° РёР· РєРѕСЂРёС†С‹
 class CCinnamon : public CCondimentDecorator
 {
 public:
@@ -49,7 +49,7 @@ protected:
 	}
 };
 
-// Лимонная добавка
+// Р›РёРјРѕРЅРЅР°СЏ РґРѕР±Р°РІРєР°
 class CLemon : public CCondimentDecorator
 {
 public:
@@ -73,12 +73,12 @@ private:
 
 enum class IceCubeType
 {
-	Dry,	// Сухой лед (для суровых сибирских мужиков)
-	Water	// Обычные кубики из воды
+	Dry,	// РЎСѓС…РѕР№ Р»РµРґ (РґР»СЏ СЃСѓСЂРѕРІС‹С… СЃРёР±РёСЂСЃРєРёС… РјСѓР¶РёРєРѕРІ)
+	Water	// РћР±С‹С‡РЅС‹Рµ РєСѓР±РёРєРё РёР· РІРѕРґС‹
 };
 
-// Добавка "Кубики льда". Определяется типом и количеством кубиков, что влияет на стоимость
-// и описание
+// Р”РѕР±Р°РІРєР° "РљСѓР±РёРєРё Р»СЊРґР°". РћРїСЂРµРґРµР»СЏРµС‚СЃСЏ С‚РёРїРѕРј Рё РєРѕР»РёС‡РµСЃС‚РІРѕРј РєСѓР±РёРєРѕРІ, С‡С‚Рѕ РІР»РёСЏРµС‚ РЅР° СЃС‚РѕРёРјРѕСЃС‚СЊ
+// Рё РѕРїРёСЃР°РЅРёРµ
 class CIceCubes : public CCondimentDecorator
 {
 public:
@@ -90,8 +90,8 @@ public:
 protected:
 	double GetCondimentCost()const override
 	{
-		// Чем больше кубиков, тем больше стоимость.
-		// Сухой лед стоит дороже
+		// Р§РµРј Р±РѕР»СЊС€Рµ РєСѓР±РёРєРѕРІ, С‚РµРј Р±РѕР»СЊС€Рµ СЃС‚РѕРёРјРѕСЃС‚СЊ.
+		// РЎСѓС…РѕР№ Р»РµРґ СЃС‚РѕРёС‚ РґРѕСЂРѕР¶Рµ
 		return (m_type == IceCubeType::Dry ? 10 : 5) * m_quantity;
 	}
 	std::string GetCondimentDescription()const override
@@ -104,14 +104,14 @@ private:
 	IceCubeType m_type;
 };
 
-// Тип сиропа
+// РўРёРї СЃРёСЂРѕРїР°
 enum class SyrupType
 {
-	Chocolate,	// Шоколадный
-	Maple,		// Кленовый
+	Chocolate,	// РЁРѕРєРѕР»Р°РґРЅС‹Р№
+	Maple,		// РљР»РµРЅРѕРІС‹Р№
 };
 
-// Добавка "Сироп"
+// Р”РѕР±Р°РІРєР° "РЎРёСЂРѕРї"
 class CSyrup : public CCondimentDecorator
 {
 public:
@@ -133,7 +133,7 @@ private:
 	SyrupType m_syrupType;
 };
 
-// Шоколадная крошка
+// РЁРѕРєРѕР»Р°РґРЅР°СЏ РєСЂРѕС€РєР°
 class CChocolateCrumbs : public CCondimentDecorator
 {
 public:
@@ -156,7 +156,7 @@ private:
 	unsigned m_mass;
 };
 
-// Кокосовая стружка
+// РљРѕРєРѕСЃРѕРІР°СЏ СЃС‚СЂСѓР¶РєР°
 class CCoconutFlakes : public CCondimentDecorator
 {
 public:
