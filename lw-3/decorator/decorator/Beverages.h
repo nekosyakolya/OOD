@@ -40,19 +40,12 @@ class CCoffee : public CBeverage
 public:
 	CCoffee(const Coffee::Portion &portion = Coffee::STANDARD, const std::string& description = " Coffee")
 		:m_portion(portion),
-		CBeverage(GetFullDescription(description, portion))
+		CBeverage(Coffee::toString(portion) + description)
 	{}
 	double GetCost() const override
 	{
 		return 60;
 	}
-private:
-	const std::string GetFullDescription(const std::string& description, const Coffee::Portion &portion) const
-	{
-		std::string result = Coffee::toString(portion);
-		result += description;
-		return result;
-	};
 protected:
 	Coffee::Portion m_portion;
 };
@@ -108,21 +101,13 @@ public:
 	using GradeTea = Tea::Grade;
 
 	CTea(const GradeTea &grade = GradeTea::CEYLON)
-		:CBeverage(GetFullDescription(grade))
+		:CBeverage(Tea::toString(grade) + " tea")
 	{}
 
 	double GetCost() const override
 	{
 		return 30;
 	}
-private:
-	const std::string GetFullDescription(const GradeTea &grade) const
-	{
-		std::string result = Tea::toString(grade);
-		result += " Tea";
-		return result;
-	};
-
 };
 
 namespace Milkshake {
@@ -155,7 +140,7 @@ public:
 
 	CMilkshake(const MilkshakePortion &portion = MilkshakePortion::MIDDLE)
 		:m_portion(portion),
-		CBeverage(GetFullDescription(portion))
+		CBeverage(Milkshake::toString(portion) + " milkshake")
 	{}
 
 	double GetCost() const override
@@ -164,13 +149,4 @@ public:
 	}
 private:
 	Milkshake::Portion m_portion;
-	const std::string GetFullDescription(const Milkshake::Portion &portion) const
-	{
-
-		std::string result = Milkshake::toString(portion);
-		result += " Milkshake";
-
-		return result;
-	};
-
 };
