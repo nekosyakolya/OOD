@@ -41,5 +41,8 @@
     <ClCompile Include="decorator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Beverages.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

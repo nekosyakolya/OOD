@@ -17,8 +17,6 @@ public:
 private:
 	std::string m_description;
 };
-
-
 namespace Coffee
 {
 	enum Portion
@@ -27,20 +25,22 @@ namespace Coffee
 		DOUBLE
 	};
 
-	const auto toString = [](const Portion & portion) {
+	inline const std::string ToString(const Portion & portion) {
 		std::string result;
 		switch (portion)
 		{
-			case DOUBLE:
-				result = "Double";
-				break;
-			default:
-				result = "Standart";
+		case DOUBLE:
+			result = "Double";
+			break;
+		default:
+			result = "Standart";
 		}
 		return result;
 
 	};
 }
+
+
 
 
 // Кофе
@@ -49,7 +49,7 @@ class CCoffee : public CBeverage
 public:
 	CCoffee(const Coffee::Portion &portion = Coffee::STANDARD, const std::string& description = " Coffee")
 		:m_portion(portion),
-		CBeverage(Coffee::toString(portion) + description)
+		CBeverage(Coffee::ToString(portion) + description)
 	{}
 	double GetCost() const override
 	{
@@ -97,7 +97,7 @@ namespace Tea
 		CHINESE,
 		AFRICAN
 	};
-	const auto toString = [](const Grade & grade) {
+	inline const std::string ToString(const Grade & grade) {
 		std::string result;
 		switch (grade)
 		{
@@ -124,7 +124,7 @@ public:
 	using GradeTea = Tea::Grade;
 
 	CTea(const GradeTea &grade = GradeTea::CEYLON)
-		:CBeverage(Tea::toString(grade) + " tea")
+		:CBeverage(Tea::ToString(grade) + " tea")
 	{}
 
 	double GetCost() const override
@@ -141,7 +141,7 @@ namespace Milkshake {
 		BIG
 	};
 
-	const auto toString = [](const Portion & portion) {
+	inline const std::string ToString(const Portion & portion) {
 		std::string result;
 		switch (portion)
 		{
@@ -158,7 +158,7 @@ namespace Milkshake {
 	};
 
 
-	const auto getCost = [](const Portion & portion) {
+	inline const double GetCost(const Portion & portion) {
 		double cost;
 		switch (portion)
 		{
@@ -185,12 +185,12 @@ public:
 
 	CMilkshake(const MilkshakePortion &portion = MilkshakePortion::MIDDLE)
 		:m_portion(portion),
-		CBeverage(Milkshake::toString(portion) + " milkshake")
+		CBeverage(Milkshake::ToString(portion) + " milkshake")
 	{}
 
 	double GetCost() const override
 	{
-		return Milkshake::getCost(m_portion);
+		return Milkshake::GetCost(m_portion);
 	}
 private:
 	Milkshake::Portion m_portion;
