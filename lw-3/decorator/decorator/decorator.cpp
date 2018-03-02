@@ -111,20 +111,21 @@ auto operator << (Component && component, const Decorator & decorate)
 
 unique_ptr<IBeverage> CreateTea()
 {
-	cout << "Type 1 for Ceylon or 2 for Indian or 3 for Chinese or 4 for African\n";
+	cout << "You selected a Ceylon tea\n";
+	cout << "Type 1 for Indian or 2 for Chinese or 3 for African\n";
 	int gradeChoice;
 	cin >> gradeChoice;
 	unique_ptr<IBeverage> tea = make_unique<CTea>();
 	
-	if (gradeChoice == 2)
+	if (gradeChoice == 1)
 	{
 		tea = make_unique<CTea>(Tea::INDIAN);
 	}
-	else if (gradeChoice == 3)
+	else if (gradeChoice == 2)
 	{
 		tea = make_unique<CTea>(Tea::CHINESE);
 	}
-	else if (gradeChoice == 4)
+	else if (gradeChoice == 3)
 	{
 		tea = make_unique<CTea>(Tea::AFRICAN);
 	}
@@ -134,7 +135,9 @@ unique_ptr<IBeverage> CreateTea()
 
 unique_ptr<IBeverage> CreateMilkshake()
 {
-	cout << "Type 1 for small or 2 for big or 3 for middle\n";
+
+	cout << "You selected a middle milkshake\n";
+	cout << "Type 1 for small or 2 for big\n";
 	int portion;
 	cin >> portion;
 	unique_ptr<IBeverage> milkshake = make_unique<CMilkshake>();
@@ -153,12 +156,13 @@ unique_ptr<IBeverage> CreateMilkshake()
 
 unique_ptr<IBeverage> CreateLatte()
 {
-	cout << "Type 1 for standard or 2 for double\n";
+	cout << "You selected a standard latte\n";
+	cout << "Type 1 for double\n";
 	int portion;
 	cin >> portion;
 	unique_ptr<IBeverage> latte = make_unique<CLatte>();
 
-	if (portion == 2)
+	if (portion == 1)
 	{
 		latte = make_unique<CLatte>(Coffee::DOUBLE);
 	}
@@ -169,12 +173,13 @@ unique_ptr<IBeverage> CreateLatte()
 
 unique_ptr<IBeverage> CreateCappuchino()
 {
-	cout << "Type 1 for standard or 2 for double\n";
+	cout << "You selected a standard cappuchino\n";
+	cout << "Type 1 for double\n";
 	int portion;
 	cin >> portion;
 	unique_ptr<IBeverage> capuccino = make_unique<CCapuccino>();
 
-	if (portion == 2)
+	if (portion == 1)
 	{
 		capuccino = make_unique<CCapuccino>(Coffee::DOUBLE);
 	}

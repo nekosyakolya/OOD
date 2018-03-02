@@ -28,8 +28,17 @@ namespace Coffee
 	};
 
 	const auto toString = [](const Portion & portion) {
-		static const std::string names[] = { "Standart", "Double" };
-		return names[portion];
+		std::string result;
+		switch (portion)
+		{
+			case DOUBLE:
+				result = "Double";
+				break;
+			default:
+				result = "Standart";
+		}
+		return result;
+
 	};
 }
 
@@ -89,8 +98,22 @@ namespace Tea
 		AFRICAN
 	};
 	const auto toString = [](const Grade & grade) {
-		static const std::string names[] = { "Ceylon", "Indian", "Chinese", "African" };
-		return names[grade];
+		std::string result;
+		switch (grade)
+		{
+			case AFRICAN:
+				result = "African";
+				break;
+			case INDIAN:
+				result = "Indian";
+				break;
+			case CHINESE:
+				result = "Chinese";
+				break;
+			default:
+				result = "Ceylon";
+		}
+		return result;
 	};
 }
 
@@ -119,14 +142,36 @@ namespace Milkshake {
 	};
 
 	const auto toString = [](const Portion & portion) {
-		static const std::string names[] = {"Small", "Middle", "Big"};
-		return names[portion];
+		std::string result;
+		switch (portion)
+		{
+			case SMALL:
+				result = "Small";
+				break;
+			case BIG:
+				result = "Big";
+				break;
+			default:
+				result = "Middle";
+		}
+		return result;
 	};
 
 
 	const auto getCost = [](const Portion & portion) {
-		static const double cost[] = {50, 60, 80};
-		return cost[portion];
+		double cost;
+		switch (portion)
+		{
+			case SMALL:
+				cost = 50;
+				break;
+			case BIG:
+				cost = 80;
+				break;
+			default:
+				cost = 60;
+		}
+		return cost;
 	};
 
 }
