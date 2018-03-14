@@ -6,7 +6,19 @@ struct SWeatherInfo
 	double humidity = 0;
 	double pressure = 0;
 	double speed = 0;
-	double directionWind = 0;
+	double windDirection = 0;
+};
+
+struct Point
+{
+	double x = 0.0;
+	double y = 0.0;
+	Point & Point::operator+=(const Point & point)
+	{
+		x += point.x;
+		y += point.y;
+		return *this;
+	}
 };
 
 class CDisplay : public IObserver<SWeatherInfo>
@@ -80,18 +92,29 @@ public:
 	};
 	void Update(double value) override
 	{
-		m_acc += value;
-		++m_countAcc;
+		Point current;
+		current.x = cos(value * M_PI / 180);
+		current.y = sin(value * M_PI / 180);
+
+		m_point += current;
+		++m_accumulationsCount;
+
 	};
 	void Display() override
 	{
-		std::cout << "Average " << m_name << " " << ((m_countAcc == 0) ? 0 : m_acc / m_countAcc) << std::endl;
+		std::cout << "Average " << m_name << " " << CalculateWindDirection() << std::endl;
 		std::cout << "----------------" << std::endl;
 	};
 private:
 	std::string m_name;
-	double m_acc = 0;
-	unsigned m_countAcc = 0;
+	Point m_point;
+	unsigned m_accumulationsCount = 0;
+	const double CalculateWindDirection() const
+	{
+		double result = (atan2(m_point.y/m_accumulationsCount, m_point.x / m_accumulationsCount) * 180.0) / M_PI;
+		return result > 0.0 ? result : 360 + result;
+
+	}
 };
 
 
@@ -149,9 +172,9 @@ public:
 		return m_speed;
 	}
 
-	double GetDirectionWind()const
+	double GetWindDirection()const
 	{
-		return m_directionWind;
+		return m_windDirection;
 	}
 
 	void MeasurementsChanged()
@@ -159,14 +182,14 @@ public:
 		NotifyObservers();
 	}
 
-	void SetMeasurements(double temp, double humidity, double pressure, double speed, double directionWind)
+	void SetMeasurements(double temp, double humidity, double pressure, double speed, double windDirection)
 	{
 		m_humidity = humidity;
 		m_temperature = temp;
 		m_pressure = pressure;
 
 		m_speed = speed;
-		m_directionWind = directionWind;
+		m_windDirection = windDirection;
 
 		MeasurementsChanged();
 	}
@@ -178,7 +201,7 @@ protected:
 		info.humidity = GetHumidity();
 		info.pressure = GetPressure();
 		info.speed = GetSpeed();
-		info.directionWind = GetDirectionWind();
+		info.windDirection = GetWindDirection();
 		return info;
 	}
 private:
@@ -186,5 +209,5 @@ private:
 	double m_humidity = 0.0;
 	double m_pressure = 760.0;
 	double m_speed = 0.0;
-	double m_directionWind = 0;
+	double m_windDirection = 0;
 };
