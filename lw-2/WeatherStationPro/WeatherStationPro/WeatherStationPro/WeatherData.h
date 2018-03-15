@@ -13,29 +13,11 @@ struct Point
 {
 	double x = 0.0;
 	double y = 0.0;
-	Point & Point::operator+=(const Point & point)
+	Point & operator+=(const Point & point)
 	{
 		x += point.x;
 		y += point.y;
 		return *this;
-	}
-};
-
-class CDisplay : public IObserver<SWeatherInfo>
-{
-private:
-	/* Метод Update сделан приватным, чтобы ограничить возможность его вызова напрямую
-	Классу CObservable он будет доступен все равно, т.к. в интерфейсе IObserver он
-	остается публичным
-	*/
-	void Update(SWeatherInfo const& data) override
-	{
-		std::cout << "Current Temp " << data.temperature << std::endl;
-		std::cout << "Current Hum " << data.humidity << std::endl;
-		std::cout << "Current Pressure " << data.pressure << std::endl;
-		std::cout << "Current Speed " << data.speed << std::endl;
-		std::cout << "Current Wind Direction " << data.windDirection << std::endl;
-		std::cout << "----------------" << std::endl;
 	}
 };
 
@@ -144,34 +126,6 @@ private:
 
 
 
-class CStatsDisplay : public IObserver<SWeatherInfo>
-{
-public:
-	using WeatherParamExtractor = std::function<double(const SWeatherInfo& data)>;
-	void AddWeatherCalculator(const WeatherParamExtractor& extractor, std::unique_ptr<IStatsCalculator> calculator)
-	{
-		m_calculators.emplace_back(std::move(calculator), extractor);
-	}
-
-private:
-	/* Метод Update сделан приватным, чтобы ограничить возможность его вызова напрямую
-	Классу CObservable он будет доступен все равно, т.к. в интерфейсе IObserver он
-	остается публичным
-	*/
-	void Update(SWeatherInfo const& data) override
-	{
-		for (auto&& calc : m_calculators)
-		{
-			double extractedParam = calc.second(data);
-			calc.first->Update(extractedParam);
-			calc.first->Display();
-		}
-
-	}
-	std::vector<std::pair<std::unique_ptr<IStatsCalculator>, WeatherParamExtractor>> m_calculators;
-
-};
-
 class CWeatherData : public CObservable<SWeatherInfo>
 {
 public:
@@ -234,4 +188,86 @@ private:
 	double m_pressure = 760.0;
 	double m_speed = 0.0;
 	double m_windDirection = 0.0;
+};
+
+
+class CStatsDisplay : public IObserver<SWeatherInfo>
+{
+public:
+	CStatsDisplay(const CWeatherData& in, const CWeatherData& out) :
+		m_in(in),
+		m_out(out)
+	{
+	}
+	using WeatherParamExtractor = std::function<double(const SWeatherInfo& data)>;
+	void AddWeatherCalculator(const WeatherParamExtractor& extractor, std::unique_ptr<IStatsCalculator> calculator)
+	{
+		m_calculators.emplace_back(std::move(calculator), extractor);
+	}
+
+private:
+	/* Метод Update сделан приватным, чтобы ограничить возможность его вызова напрямую
+	Классу CObservable он будет доступен все равно, т.к. в интерфейсе IObserver он
+	остается публичным
+	*/
+	void Update(SWeatherInfo const& data, const IObservable<SWeatherInfo>& observable) override
+	{
+		if (&observable == &m_in)
+		{
+			std::cout << "in station" << std::endl;
+		}
+		else if (&observable == &m_out)
+		{
+			std::cout << "out station" << std::endl;
+		}
+
+		for (auto&& calc : m_calculators)
+		{
+			double extractedParam = calc.second(data);
+			calc.first->Update(extractedParam);
+			calc.first->Display();
+		}
+
+	}
+	const CWeatherData & m_in;
+	const CWeatherData & m_out;
+	std::vector<std::pair<std::unique_ptr<IStatsCalculator>, WeatherParamExtractor>> m_calculators;
+
+};
+
+
+
+class CDisplay : public IObserver<SWeatherInfo>
+{
+public:
+	CDisplay(const CWeatherData& in, const CWeatherData& out) :
+		m_in(in),
+		m_out(out)
+	{
+	}
+private:
+	const CWeatherData & m_in;
+	const CWeatherData & m_out;
+	/* Метод Update сделан приватным, чтобы ограничить возможность его вызова напрямую
+	Классу CObservable он будет доступен все равно, т.к. в интерфейсе IObserver он
+	остается публичным
+	*/
+	void Update(SWeatherInfo const& data, const IObservable<SWeatherInfo>& observable) override
+	{
+		if (&observable == &m_in)
+		{
+			std::cout << "in station" << std::endl;
+		}
+		else if (&observable == &m_out)
+		{
+			std::cout << "out station" << std::endl;
+		}
+
+		std::cout << "Current Temp " << data.temperature << std::endl;
+		std::cout << "Current Hum " << data.humidity << std::endl;
+		std::cout << "Current Pressure " << data.pressure << std::endl;
+		std::cout << "Current Speed " << data.speed << std::endl;
+		std::cout << "Current Wind Direction " << data.windDirection << std::endl;
+		std::cout << "----------------" << std::endl;
+	}
 };
