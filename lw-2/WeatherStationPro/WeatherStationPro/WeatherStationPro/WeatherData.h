@@ -124,7 +124,6 @@ private:
 	Point m_point;
 	double m_min = std::numeric_limits<double>::infinity();
 	double m_max = -std::numeric_limits<double>::infinity();
-	const double COEFFICIENT = M_PI / 180.0;
 
 	const double CalculateWindDirection() const
 	{
@@ -132,13 +131,13 @@ private:
 		return result >= 0.0 ? result : 360 + result;
 	}
 
-	const double ConvertDegreesToRadians(double degrees) const
+	static const double ConvertDegreesToRadians(double degrees)
 	{
-		return degrees * COEFFICIENT;
+		return degrees * M_PI / 180.0;
 	}
-	const double ConvertRadiansToDegrees(double degrees) const
+	static const double ConvertRadiansToDegrees(double degrees)
 	{
-		return degrees / COEFFICIENT;
+		return degrees * 180.0 / M_PI;
 	}
 };
 
