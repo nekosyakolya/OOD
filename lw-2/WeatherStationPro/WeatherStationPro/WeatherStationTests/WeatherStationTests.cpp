@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_SUITE(Weather_station)
 	}
 
 
-	BOOST_AUTO_TEST_CASE(observers_priority)
+	BOOST_AUTO_TEST_CASE(observers_have_priority)
 	{
 	
 		CWeatherData wd;
