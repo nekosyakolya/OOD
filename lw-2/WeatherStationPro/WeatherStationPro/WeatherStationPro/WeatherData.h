@@ -2,11 +2,11 @@
 
 struct SWeatherInfo
 {
-	double temperature = 0;
-	double humidity = 0;
-	double pressure = 0;
-	double speed = 0;
-	double windDirection = 0;
+	double temperature = 0.0;
+	double humidity = 0.0;
+	double pressure = 0.0;
+	double speed = 0.0;
+	double windDirection = 0.0;
 };
 
 struct Point
@@ -33,6 +33,8 @@ private:
 		std::cout << "Current Temp " << data.temperature << std::endl;
 		std::cout << "Current Hum " << data.humidity << std::endl;
 		std::cout << "Current Pressure " << data.pressure << std::endl;
+		std::cout << "Current Speed " << data.speed << std::endl;
+		std::cout << "Current Wind Direction " << data.windDirection << std::endl;
 		std::cout << "----------------" << std::endl;
 	}
 };
@@ -83,37 +85,60 @@ private:
 	unsigned m_countAcc = 0;
 };
 
-class StatsDirectionCalculator : public IStatsCalculator
+class StatsWindDirectionCalculator : public IStatsCalculator
 {
 public:
-	explicit StatsDirectionCalculator(const std::string& name) :
+	explicit StatsWindDirectionCalculator(const std::string& name) :
 		m_name(name)
 	{
 	};
 	void Update(double value) override
 	{
+		if (m_min > value)
+		{
+			m_min = value;
+		}
+		if (m_max < value)
+		{
+			m_max = value;
+		}
 		Point current;
-		current.x = cos(value * M_PI / 180);
-		current.y = sin(value * M_PI / 180);
+		const double radians = ConvertDegreesToRadians(value);
+		current.x = cos(radians);
+		current.y = sin(radians);
 
 		m_point += current;
-		++m_accumulationsCount;
 
 	};
 	void Display() override
 	{
+		std::cout << "Max " << m_name << " " << m_max << std::endl;
+
+		std::cout << "Min " << m_name << " " << m_min << std::endl;
+
 		std::cout << "Average " << m_name << " " << CalculateWindDirection() << std::endl;
 		std::cout << "----------------" << std::endl;
 	};
 private:
 	std::string m_name;
 	Point m_point;
-	unsigned m_accumulationsCount = 0;
+	double m_min = std::numeric_limits<double>::infinity();
+	double m_max = -std::numeric_limits<double>::infinity();
+	const double COEFFICIENT = M_PI / 180.0;
+
 	const double CalculateWindDirection() const
 	{
-		double result = (atan2(m_point.y/m_accumulationsCount, m_point.x / m_accumulationsCount) * 180.0) / M_PI;
-		return result > 0.0 ? result : 360 + result;
+		double result = ConvertRadiansToDegrees(atan2(m_point.y, m_point.x));
+		return result >= 0.0 ? result : 360 + result;
+	}
 
+	const double ConvertDegreesToRadians(double degrees) const
+	{
+		return degrees * COEFFICIENT;
+	}
+	const double ConvertRadiansToDegrees(double degrees) const
+	{
+		return degrees / COEFFICIENT;
 	}
 };
 
@@ -209,5 +234,5 @@ private:
 	double m_humidity = 0.0;
 	double m_pressure = 760.0;
 	double m_speed = 0.0;
-	double m_windDirection = 0;
+	double m_windDirection = 0.0;
 };
