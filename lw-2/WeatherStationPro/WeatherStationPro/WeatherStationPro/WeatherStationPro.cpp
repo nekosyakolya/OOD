@@ -10,44 +10,44 @@ int main()
 	out.RegisterObserver(display, 1);
 
 	CStatsDisplay statsDisplay(in, out);
-	statsDisplay.AddWeatherCalculator(in, [](const SWeatherInfo& wd) {
+	statsDisplay.AddInnerWeatherCalculator([](const SWeatherInfo& wd) {
 		return wd.temperature;
 	}, std::make_unique<StatsCalculator>("temperature"));
 
-	statsDisplay.AddWeatherCalculator(in, [](const SWeatherInfo& wd) {
+	statsDisplay.AddInnerWeatherCalculator([](const SWeatherInfo& wd) {
 		return wd.humidity;
 	}, std::make_unique<StatsCalculator>("humidity"));
 
-	statsDisplay.AddWeatherCalculator(in, [](const SWeatherInfo& wd) {
+	statsDisplay.AddInnerWeatherCalculator([](const SWeatherInfo& wd) {
 		return wd.pressure;
 	}, std::make_unique<StatsCalculator>("pressure"));
 
-	statsDisplay.AddWeatherCalculator(in, [](const SWeatherInfo& wd) {
+	statsDisplay.AddInnerWeatherCalculator([](const SWeatherInfo& wd) {
 		return wd.speed;
 	}, std::make_unique<StatsCalculator>("speed"));
 
-	statsDisplay.AddWeatherCalculator(in, [](const SWeatherInfo& wd) {
+	statsDisplay.AddInnerWeatherCalculator([](const SWeatherInfo& wd) {
 		return wd.windDirection;
 	}, std::make_unique<StatsWindDirectionCalculator>("wind direction"));
 
 
-	statsDisplay.AddWeatherCalculator(out, [](const SWeatherInfo& wd) {
+	statsDisplay.AddOuterWeatherCalculator([](const SWeatherInfo& wd) {
 		return wd.temperature;
 	}, std::make_unique<StatsCalculator>("temperature"));
 
-	statsDisplay.AddWeatherCalculator(out, [](const SWeatherInfo& wd) {
+	statsDisplay.AddOuterWeatherCalculator([](const SWeatherInfo& wd) {
 		return wd.humidity;
 	}, std::make_unique<StatsCalculator>("humidity"));
 
-	statsDisplay.AddWeatherCalculator(out, [](const SWeatherInfo& wd) {
+	statsDisplay.AddOuterWeatherCalculator([](const SWeatherInfo& wd) {
 		return wd.pressure;
 	}, std::make_unique<StatsCalculator>("pressure"));
 
-	statsDisplay.AddWeatherCalculator(out, [](const SWeatherInfo& wd) {
+	statsDisplay.AddOuterWeatherCalculator([](const SWeatherInfo& wd) {
 		return wd.speed;
 	}, std::make_unique<StatsCalculator>("speed"));
 
-	statsDisplay.AddWeatherCalculator(out, [](const SWeatherInfo& wd) {
+	statsDisplay.AddOuterWeatherCalculator([](const SWeatherInfo& wd) {
 		return wd.windDirection;
 	}, std::make_unique<StatsWindDirectionCalculator>("wind direction"));
 

@@ -76,14 +76,6 @@ public:
 	};
 	void Update(double value) override
 	{
-		if (m_min > value)
-		{
-			m_min = value;
-		}
-		if (m_max < value)
-		{
-			m_max = value;
-		}
 		Point current;
 		const double radians = ConvertDegreesToRadians(value);
 		current.x = cos(radians);
@@ -94,19 +86,12 @@ public:
 	};
 	void Display() override
 	{
-		std::cout << "Max " << m_name << " " << m_max << std::endl;
-
-		std::cout << "Min " << m_name << " " << m_min << std::endl;
-
 		std::cout << "Average " << m_name << " " << CalculateWindDirection() << std::endl;
 		std::cout << "----------------" << std::endl;
 	};
 private:
 	std::string m_name;
 	Point m_point;
-	double m_min = std::numeric_limits<double>::infinity();
-	double m_max = -std::numeric_limits<double>::infinity();
-
 	const double CalculateWindDirection() const
 	{
 		double result = ConvertRadiansToDegrees(atan2(m_point.y, m_point.x));
@@ -200,16 +185,13 @@ public:
 	{
 	}
 	using WeatherParamExtractor = std::function<double(const SWeatherInfo& data)>;
-	void AddWeatherCalculator(const IObservable<SWeatherInfo>& observable, const WeatherParamExtractor& extractor, std::unique_ptr<IStatsCalculator> calculator)
+	void AddInnerWeatherCalculator(const WeatherParamExtractor& extractor, std::unique_ptr<IStatsCalculator> calculator)
 	{
-		if (&observable == &m_in)
-		{
-			m_calculatorsInner.emplace_back(std::move(calculator), extractor);
-		}
-		else if (&observable == &m_out)
-		{
-			m_calculatorsOut.emplace_back(std::move(calculator), extractor);
-		}
+		m_calculatorsInner.emplace_back(std::move(calculator), extractor);
+	}
+	void AddOuterWeatherCalculator(const WeatherParamExtractor& extractor, std::unique_ptr<IStatsCalculator> calculator)
+	{
+		m_calculatorsOut.emplace_back(std::move(calculator), extractor);
 	}
 
 private:
