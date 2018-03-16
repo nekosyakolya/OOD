@@ -113,11 +113,11 @@ private:
 		return result >= 0.0 ? result : 360 + result;
 	}
 
-	static const double ConvertDegreesToRadians(double degrees)
+	const double ConvertDegreesToRadians(double degrees) const
 	{
 		return degrees * M_PI / 180.0;
 	}
-	static const double ConvertRadiansToDegrees(double degrees)
+	const double ConvertRadiansToDegrees(double degrees) const
 	{
 		return degrees * 180.0 / M_PI;
 	}
@@ -200,9 +200,16 @@ public:
 	{
 	}
 	using WeatherParamExtractor = std::function<double(const SWeatherInfo& data)>;
-	void AddWeatherCalculator(const WeatherParamExtractor& extractor, std::unique_ptr<IStatsCalculator> calculator)
+	void AddWeatherCalculator(const IObservable<SWeatherInfo>& observable, const WeatherParamExtractor& extractor, std::unique_ptr<IStatsCalculator> calculator)
 	{
-		m_calculators.emplace_back(std::move(calculator), extractor);
+		if (&observable == &m_in)
+		{
+			m_calculatorsInner.emplace_back(std::move(calculator), extractor);
+		}
+		else if (&observable == &m_out)
+		{
+			m_calculatorsOut.emplace_back(std::move(calculator), extractor);
+		}
 	}
 
 private:
@@ -215,23 +222,30 @@ private:
 		if (&observable == &m_in)
 		{
 			std::cout << "in station" << std::endl;
+			for (auto&& calc : m_calculatorsInner)
+			{
+				double extractedParam = calc.second(data);
+				calc.first->Update(extractedParam);
+				calc.first->Display();
+			}
 		}
 		else if (&observable == &m_out)
 		{
 			std::cout << "out station" << std::endl;
+			for (auto&& calc : m_calculatorsOut)
+			{
+				double extractedParam = calc.second(data);
+				calc.first->Update(extractedParam);
+				calc.first->Display();
+			}
 		}
 
-		for (auto&& calc : m_calculators)
-		{
-			double extractedParam = calc.second(data);
-			calc.first->Update(extractedParam);
-			calc.first->Display();
-		}
 
 	}
 	const CWeatherData & m_in;
 	const CWeatherData & m_out;
-	std::vector<std::pair<std::unique_ptr<IStatsCalculator>, WeatherParamExtractor>> m_calculators;
+	std::vector<std::pair<std::unique_ptr<IStatsCalculator>, WeatherParamExtractor>> m_calculatorsInner;
+	std::vector<std::pair<std::unique_ptr<IStatsCalculator>, WeatherParamExtractor>> m_calculatorsOut;
 
 };
 
