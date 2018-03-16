@@ -81,8 +81,8 @@ BOOST_AUTO_TEST_SUITE(Weather_station)
 	BOOST_AUTO_TEST_CASE(observers_have_priority)
 	{
 	
-		CWeatherData wd;
 		{
+			CWeatherData wd;
 			std::stringstream strm;
 
 			CTestObserverPriority first(strm);
@@ -97,6 +97,7 @@ BOOST_AUTO_TEST_SUITE(Weather_station)
 		}
 
 		{
+			CWeatherData wd;
 			std::stringstream strm;
 
 			CTestObserverPriority first(strm);
@@ -113,6 +114,7 @@ BOOST_AUTO_TEST_SUITE(Weather_station)
 
 			BOOST_CHECK_EQUAL(strm.str(), "0255");
 		}
+
 	}
 BOOST_AUTO_TEST_SUITE_END()
 
