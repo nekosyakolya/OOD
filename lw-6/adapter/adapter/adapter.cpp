@@ -175,7 +175,7 @@ namespace modern_graphics_lib
 			{
 				throw logic_error("DrawLine is allowed between BeginDraw()/EndDraw() only");
 			}
-			m_out << boost::format(R"(  <line fromX="%1%" fromY="%2" toX="%3%" toY="%4%"/>)") << endl;
+			m_out << boost::format(R"(<line fromX="%1%" fromY="%2%" toX="%3%" toY="%4%"/>)") % start.x % start.y % end.x % end.y << std::endl;
 		}
 
 		// Этот метод должен быть вызван в конце рисования
@@ -193,6 +193,37 @@ namespace modern_graphics_lib
 		bool m_drawing = false;
 	};
 }
+
+class CModernGraphicsRendererAdapter : public graphics_lib::ICanvas
+{
+public:
+	CModernGraphicsRendererAdapter(modern_graphics_lib::CModernGraphicsRenderer & render) :
+		m_render(render),
+		m_currentPoint(modern_graphics_lib::CPoint(0,0))
+	{
+		m_render.BeginDraw();
+	}
+
+	void MoveTo(int x, int y) override
+	{
+		m_currentPoint.x = x;
+		m_currentPoint.y = y;
+	}
+
+	void LineTo(int x, int y) override
+	{
+		modern_graphics_lib::CPoint endPoint(x, y);
+		m_render.DrawLine(m_currentPoint, endPoint);
+
+		m_currentPoint.x = x;
+		m_currentPoint.y = y;
+	}
+
+private:
+	modern_graphics_lib::CPoint m_currentPoint;
+	modern_graphics_lib::CModernGraphicsRenderer & m_render;
+};
+
 
 // Пространство имен приложения (доступно для модификации)
 namespace app
@@ -225,9 +256,9 @@ namespace app
 						 // TODO: при помощи существующей функции PaintPicture() нарисовать
 						 // картину на renderer
 						 // Подсказка: используйте паттерн "Адаптер"
-
-		/*shape_drawing_lib::CCanvasPainter painter(simpleCanvas);
-		PaintPicture(painter);*/
+		CModernGraphicsRendererAdapter adapter(renderer);
+		shape_drawing_lib::CCanvasPainter painter(adapter);
+		PaintPicture(painter);
 	}
 }
 
