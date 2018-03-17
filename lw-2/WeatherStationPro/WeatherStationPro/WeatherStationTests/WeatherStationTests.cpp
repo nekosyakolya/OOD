@@ -10,7 +10,7 @@ public:
 	}
 
 private:
-	void Update(SWeatherInfo const& data, const IObservable<SWeatherInfo>& observable) override
+	void Update(SWeatherInfo const& data, IObservable<SWeatherInfo>& observable) override
 	{
 		if (&observable == &m_in)
 		{
@@ -37,14 +37,30 @@ public:
 	}
 
 private:
-	void Update(SWeatherInfo const& data, const IObservable<SWeatherInfo>& observable) override
+	void Update(SWeatherInfo const& data, IObservable<SWeatherInfo>& observable) override
 	{
 		m_strm << m_priority;
-	};
+	}
 	unsigned m_priority = 0;
 	std::stringstream& m_strm;
 };
 
+class CTestSafeNotificationObservers : public IObserver<SWeatherInfo>
+{
+public:
+	CTestSafeNotificationObservers(std::stringstream& strm)
+		: m_strm(strm)
+	{
+	}
+
+private:
+	void Update(SWeatherInfo const& data, IObservable<SWeatherInfo>& observable) override
+	{
+		m_strm << "[update]";
+		observable.RemoveObserver(*this);
+	};
+	std::stringstream& m_strm;
+};
 
 BOOST_AUTO_TEST_SUITE(Weather_station)
 	BOOST_AUTO_TEST_CASE(observer_identifies_changed_subject)
@@ -80,9 +96,10 @@ BOOST_AUTO_TEST_SUITE(Weather_station)
 
 	BOOST_AUTO_TEST_CASE(observers_have_priority)
 	{
-	
+
 		{
 			CWeatherData wd;
+
 			std::stringstream strm;
 
 			CTestObserverPriority first(strm);
@@ -98,6 +115,7 @@ BOOST_AUTO_TEST_SUITE(Weather_station)
 
 		{
 			CWeatherData wd;
+
 			std::stringstream strm;
 
 			CTestObserverPriority first(strm);
@@ -114,6 +132,32 @@ BOOST_AUTO_TEST_SUITE(Weather_station)
 
 			BOOST_CHECK_EQUAL(strm.str(), "0255");
 		}
+
+	}
+
+	BOOST_AUTO_TEST_CASE(safe_notification_of_observers)
+	{
+
+		{
+			CWeatherData wd;
+
+			std::stringstream strm;
+
+			CTestSafeNotificationObservers first(strm);
+			CTestSafeNotificationObservers second(strm);
+
+			wd.RegisterObserver(second);
+			wd.RegisterObserver(first);
+
+			wd.NotifyObservers();
+
+			strm.clear();
+			wd.NotifyObservers();
+
+			BOOST_CHECK_EQUAL(strm.str(), "[update][update]");
+		}
+
+
 
 	}
 BOOST_AUTO_TEST_SUITE_END()

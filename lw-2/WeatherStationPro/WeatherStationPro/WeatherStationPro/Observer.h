@@ -14,7 +14,7 @@ template <typename T>
 class IObserver
 {
 public:
-	virtual void Update(T const& data, const IObservable<T>& observable) = 0;
+	virtual void Update(T const& data, IObservable<T>& observable) = 0;
 	virtual ~IObserver() = default;
 };
 
@@ -47,7 +47,8 @@ public:
 	void NotifyObservers() override
 	{
 		T data = GetChangedData();
-		for (auto &item : m_observersMap)
+		const auto tmp = m_observersMap;
+		for (auto &item : tmp)
 		{
 			item.second->Update(data, *this);
 		}

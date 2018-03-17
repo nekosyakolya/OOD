@@ -199,7 +199,7 @@ private:
 	Классу CObservable он будет доступен все равно, т.к. в интерфейсе IObserver он
 	остается публичным
 	*/
-	void Update(SWeatherInfo const& data, const IObservable<SWeatherInfo>& observable) override
+	void Update(SWeatherInfo const& data, IObservable<SWeatherInfo>& observable) override
 	{
 		if (&observable == &m_in)
 		{
@@ -248,7 +248,7 @@ private:
 	Классу CObservable он будет доступен все равно, т.к. в интерфейсе IObserver он
 	остается публичным
 	*/
-	void Update(SWeatherInfo const& data, const IObservable<SWeatherInfo>& observable) override
+	void Update(SWeatherInfo const& data, IObservable<SWeatherInfo>& observable) override
 	{
 		if (&observable == &m_in)
 		{

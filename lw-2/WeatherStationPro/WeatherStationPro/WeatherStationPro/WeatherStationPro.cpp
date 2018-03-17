@@ -9,6 +9,8 @@ int main()
 	in.RegisterObserver(display, 1);
 	out.RegisterObserver(display, 1);
 
+	
+	
 	CStatsDisplay statsDisplay(in, out);
 	statsDisplay.AddInnerWeatherCalculator([](const SWeatherInfo& wd) {
 		return wd.temperature;
@@ -51,15 +53,16 @@ int main()
 		return wd.windDirection;
 	}, std::make_unique<StatsWindDirectionCalculator>("wind direction"));
 
-
-	in.RegisterObserver(statsDisplay, 14);
-	out.RegisterObserver(statsDisplay, 5);
-
-	in.SetMeasurements(4, 0.8, 761, 10, 0);
 	
-	out.SetMeasurements(4, 0.8, 761, 10, 0);
+		in.RegisterObserver(statsDisplay, 14);
+		out.RegisterObserver(statsDisplay, 5);
+	
 
 	in.SetMeasurements(4, 0.8, 761, 10, 90);
+	
+	in.SetMeasurements(4, 0.8, 761, 10, 180);
+
+	in.SetMeasurements(4, 0.8, 761, 10, 270);
 
 	return EXIT_SUCCESS;
 }
