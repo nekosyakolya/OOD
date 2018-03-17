@@ -194,40 +194,40 @@ namespace modern_graphics_lib
 	};
 }
 
-class CModernGraphicsRendererAdapter : public graphics_lib::ICanvas
-{
-public:
-	CModernGraphicsRendererAdapter(modern_graphics_lib::CModernGraphicsRenderer & render) :
-		m_render(render),
-		m_currentPoint(modern_graphics_lib::CPoint(0,0))
-	{
-		m_render.BeginDraw();
-	}
-
-	void MoveTo(int x, int y) override
-	{
-		m_currentPoint.x = x;
-		m_currentPoint.y = y;
-	}
-
-	void LineTo(int x, int y) override
-	{
-		modern_graphics_lib::CPoint endPoint(x, y);
-		m_render.DrawLine(m_currentPoint, endPoint);
-
-		m_currentPoint.x = x;
-		m_currentPoint.y = y;
-	}
-
-private:
-	modern_graphics_lib::CPoint m_currentPoint;
-	modern_graphics_lib::CModernGraphicsRenderer & m_render;
-};
-
 
 // Пространство имен приложения (доступно для модификации)
 namespace app
 {
+	class CModernGraphicsRendererAdapter : public graphics_lib::ICanvas
+	{
+	public:
+		CModernGraphicsRendererAdapter(modern_graphics_lib::CModernGraphicsRenderer & render) :
+			m_render(render),
+			m_currentPoint(modern_graphics_lib::CPoint(0, 0))
+		{
+			m_render.BeginDraw();
+		}
+
+		void MoveTo(int x, int y) override
+		{
+			m_currentPoint.x = x;
+			m_currentPoint.y = y;
+		}
+
+		void LineTo(int x, int y) override
+		{
+			modern_graphics_lib::CPoint endPoint(x, y);
+			m_render.DrawLine(m_currentPoint, endPoint);
+
+			m_currentPoint.x = x;
+			m_currentPoint.y = y;
+		}
+
+	private:
+		modern_graphics_lib::CPoint m_currentPoint;
+		modern_graphics_lib::CModernGraphicsRenderer & m_render;
+	};
+
 	void PaintPicture(shape_drawing_lib::CCanvasPainter & painter)
 	{
 		using namespace shape_drawing_lib;
@@ -251,8 +251,6 @@ namespace app
 	void PaintPictureOnModernGraphicsRenderer()
 	{
 		modern_graphics_lib::CModernGraphicsRenderer renderer(cout);
-		(void)&renderer; // устраняем предупреждение о неиспользуемой переменной
-
 						 // TODO: при помощи существующей функции PaintPicture() нарисовать
 						 // картину на renderer
 						 // Подсказка: используйте паттерн "Адаптер"
