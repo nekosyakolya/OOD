@@ -1,8 +1,6 @@
 ﻿#pragma once
 #include "stdafx.h"
 
-
-
 // Пространство имен графической библиотеки (недоступно для изменения)
 namespace graphics_lib
 {
@@ -194,31 +192,32 @@ namespace modern_graphics_lib
 // Пространство имен приложения (доступно для модификации)
 namespace app
 {
-	class CModernGraphicsRendererAdapter : public graphics_lib::CCanvas, private modern_graphics_lib::CModernGraphicsRenderer
+	class CModernGraphicsRendererAdapter : public graphics_lib::ICanvas
 	{
 	public:
-		CModernGraphicsRendererAdapter(std::ostream & strm) :
-			modern_graphics_lib::CModernGraphicsRenderer(strm),
+		CModernGraphicsRendererAdapter(modern_graphics_lib::CModernGraphicsRenderer & render) :
+			m_render(render),
 			m_currentPoint(modern_graphics_lib::CPoint(0, 0))
 		{
-			BeginDraw();
+			m_render.BeginDraw();
 		}
 
-		void MoveTo(int x, int y)
+		void MoveTo(int x, int y) override
 		{
 			m_currentPoint = modern_graphics_lib::CPoint(x, y);
 		}
 
-		void LineTo(int x, int y)
+		void LineTo(int x, int y) override
 		{
 			modern_graphics_lib::CPoint endPoint(x, y);
-			DrawLine(m_currentPoint, endPoint);
+			m_render.DrawLine(m_currentPoint, endPoint);
 
 			m_currentPoint = endPoint;
 		}
 
 	private:
 		modern_graphics_lib::CPoint m_currentPoint;
+		modern_graphics_lib::CModernGraphicsRenderer & m_render;
 	};
 
 	inline void PaintPicture(shape_drawing_lib::CCanvasPainter & painter)
@@ -243,16 +242,12 @@ namespace app
 
 	inline void PaintPictureOnModernGraphicsRenderer()
 	{
+		modern_graphics_lib::CModernGraphicsRenderer renderer(std::cout);
 		// TODO: при помощи существующей функции PaintPicture() нарисовать
 		// картину на renderer
 		// Подсказка: используйте паттерн "Адаптер"
-		CModernGraphicsRendererAdapter adapter(std::cout);
-		
+		CModernGraphicsRendererAdapter adapter(renderer);
 		shape_drawing_lib::CCanvasPainter painter(adapter);
-
 		PaintPicture(painter);
 	}
 }
-
-
-

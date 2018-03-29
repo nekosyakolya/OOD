@@ -21,7 +21,7 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="adapterPro.h">
+    <ClInclude Include="..\adapter\adapter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -29,7 +29,10 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="adapterPro.cpp">
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
