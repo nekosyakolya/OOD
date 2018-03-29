@@ -10,12 +10,23 @@
 #include <stdio.h>
 #include <tchar.h>
 
+#define _USE_MATH_DEFINES
+// TODO: reference additional headers your program requires here
+#include <string>
+#include <iostream>
+
 #include <iostream>
 #include <stdexcept>
 #include <string>
 #include <boost/format.hpp>
 #include <cstdint>
 
+#include "../classesAdapter/classesAdapter.h"
 
 
-// TODO: reference additional headers your program requires here
+
+
+
+#define BOOST_TEST_INCLUDED
+#pragma warning (disable: 4702)
+#include <boost/test/unit_test.hpp>
