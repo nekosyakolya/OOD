@@ -1,7 +1,6 @@
 ﻿#include "stdafx.h"
 #include "classesAdapter.h"
 
-
 int main()
 {
 	std::cout << "Should we use new API (y)?";
@@ -17,5 +16,3 @@ int main()
 
 	return 0;
 }
-
-
