@@ -204,12 +204,12 @@ namespace app
 			BeginDraw();
 		}
 
-		void MoveTo(int x, int y)
+		void MoveTo(int x, int y) override
 		{
 			m_currentPoint = modern_graphics_lib::CPoint(x, y);
 		}
 
-		void LineTo(int x, int y)
+		void LineTo(int x, int y) override
 		{
 			modern_graphics_lib::CPoint endPoint(x, y);
 			DrawLine(m_currentPoint, endPoint);
