@@ -254,7 +254,7 @@ public:
 	{
 		m_rgbaColor.r = ((rgbColor >> 16) & 0xff) / 255.f;
 		m_rgbaColor.g = ((rgbColor >> 8) & 0xff) / 255.f;
-		m_rgbaColor.b = ((rgbColor)&0xff) / 255.f;
+		m_rgbaColor.b = (rgbColor & 0xff) / 255.f;
 	}
 
 private:
