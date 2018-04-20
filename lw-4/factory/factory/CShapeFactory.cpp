@@ -18,7 +18,7 @@ std::unique_ptr<CShape> CShapeFactory::CreateShape(const std::string& descriptio
 	return result->second(stream);
 }
 
-std::unique_ptr<CTriangle> CShapeFactory::TriangleExtractor(std::istringstream& stream) const
+std::unique_ptr<CTriangle> CShapeFactory::CreateTriangle(std::istringstream& stream) const
 {
 	Point first;
 	Point second;
@@ -34,7 +34,7 @@ std::unique_ptr<CTriangle> CShapeFactory::TriangleExtractor(std::istringstream& 
 	return std::make_unique<CTriangle>(first, second, third, color);
 }
 
-std::unique_ptr<CRectangle> CShapeFactory::RectangleExtractor(std::istringstream& stream) const
+std::unique_ptr<CRectangle> CShapeFactory::CreateRectangle(std::istringstream& stream) const
 {
 	Point leftTop;
 	Point rightBottom;
@@ -49,7 +49,7 @@ std::unique_ptr<CRectangle> CShapeFactory::RectangleExtractor(std::istringstream
 	return std::make_unique<CRectangle>(leftTop, rightBottom, color);
 }
 
-std::unique_ptr<CEllipse> CShapeFactory::EllipseExtractor(std::istringstream& stream) const
+std::unique_ptr<CEllipse> CShapeFactory::CreateEllipse(std::istringstream& stream) const
 {
 	Point center;
 	float horizontalRadius = 0;
@@ -64,7 +64,7 @@ std::unique_ptr<CEllipse> CShapeFactory::EllipseExtractor(std::istringstream& st
 	return std::make_unique<CEllipse>(center, horizontalRadius, verticalRadius, color);
 }
 
-std::unique_ptr<CRegularPolygon> CShapeFactory::RegularPolygonExtractor(std::istringstream& stream) const
+std::unique_ptr<CRegularPolygon> CShapeFactory::CreateRegularPolygon(std::istringstream& stream) const
 {
 	Point center;
 	float radius = 0;
