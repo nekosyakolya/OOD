@@ -39,7 +39,7 @@ inline std::istream& operator>>(std::istream& str, Color& color)
 	return str;
 }
 
-inline std::ostream& operator<<(std::ostream& str, Color& value)
+inline std::ostream& operator<<(std::ostream& str, const Color& value)
 {
 	std::string color = "";
 

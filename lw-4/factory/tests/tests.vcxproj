@@ -95,6 +95,9 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetPath)" --log_level=test_suite</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -109,6 +112,9 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetPath)" --log_level=test_suite</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -127,6 +133,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetPath)" --log_level=test_suite</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -145,13 +154,41 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetPath)" --log_level=test_suite</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\factory\CCanvas.h" />
+    <ClInclude Include="..\factory\CDesigner.h" />
+    <ClInclude Include="..\factory\CEllipse.h" />
+    <ClInclude Include="..\factory\CModernCanvas.h" />
+    <ClInclude Include="..\factory\Color.h" />
+    <ClInclude Include="..\factory\CPainter.h" />
+    <ClInclude Include="..\factory\CPictureDraft.h" />
+    <ClInclude Include="..\factory\CRectangle.h" />
+    <ClInclude Include="..\factory\CRegularPolygon.h" />
+    <ClInclude Include="..\factory\CShape.h" />
     <ClInclude Include="..\factory\CShapeFactory.h" />
+    <ClInclude Include="..\factory\CTriangle.h" />
+    <ClInclude Include="..\factory\ICanvas.h" />
+    <ClInclude Include="..\factory\IDesigner.h" />
+    <ClInclude Include="..\factory\IPainter.h" />
+    <ClInclude Include="..\factory\IShapeFactory.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\factory\CCanvas.cpp" />
+    <ClCompile Include="..\factory\CDesigner.cpp" />
+    <ClCompile Include="..\factory\CEllipse.cpp" />
+    <ClCompile Include="..\factory\CPainter.cpp" />
+    <ClCompile Include="..\factory\CPictureDraft.cpp" />
+    <ClCompile Include="..\factory\CRectangle.cpp" />
+    <ClCompile Include="..\factory\CRegularPolygon.cpp" />
+    <ClCompile Include="..\factory\CShape.cpp" />
+    <ClCompile Include="..\factory\CShapeFactory.cpp" />
+    <ClCompile Include="..\factory\CTriangle.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -159,7 +196,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="tests.cpp" />
+    <ClCompile Include="shapesTests.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

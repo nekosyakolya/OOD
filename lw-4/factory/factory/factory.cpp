@@ -23,6 +23,8 @@ int main()
 	CShapeFactory shapeFactory;
 	CDesigner designer(shapeFactory);
 
+	CPictureDraft pictureDraft = designer.CreateDraft(std::cin);
+
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 
@@ -30,7 +32,6 @@ int main()
 
 	CModernCanvas canvas(window);
 	CPainter painter;
-	CPictureDraft pictureDraft = designer.CreateDraft(std::cin);
 
 	while (window.isOpen())
 	{

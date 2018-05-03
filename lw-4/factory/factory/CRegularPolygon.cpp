@@ -45,7 +45,7 @@ std::vector<Point> CRegularPolygon::GetVertices() const
 	for (float angle = 0; angle != 360.0f; angle += STEP)
 	{
 		Point vertex;
-		const float radians = static_cast<float>(angle * M_PI / 180.0f);
+		float radians = static_cast<float>(angle * M_PI / 180.0f);
 		vertex.x = m_center.x + m_radius * cos(radians);
 		vertex.y = m_center.y + m_radius * sin(radians);
 
