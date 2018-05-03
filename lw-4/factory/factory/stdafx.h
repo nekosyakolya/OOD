@@ -24,4 +24,5 @@
 #include <functional>
 #include <unordered_map>
 
+#include <SFML/Graphics.hpp>
 #include <iostream>

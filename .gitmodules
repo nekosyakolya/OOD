@@ -1,0 +1,3 @@
+[submodule "lw-4/factory/factory/lib"]
+	path = lw-4/factory/factory/lib
+	url = https://github.com/nekosyakolya/SFML2.git

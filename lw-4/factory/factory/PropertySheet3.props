@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <PropertySheetPath>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))</PropertySheetPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_PropertySheetDisplayName>PropertySheet.x64.r</_PropertySheetDisplayName>
+    <ExecutablePath>$(PropertySheetPath)lib\x64\include;$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH);</ExecutablePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <PreLinkEvent>
+      <Command>xcopy /e /Y "$(PropertySheetPath)lib\x64\bin\*.dll" "$(OutDir)"</Command>
+    </PreLinkEvent>
+    <Link>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-system.lib;sfml-window.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(PropertySheetPath)lib\x64\lib</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="PropertySheetPath">
+      <Value>$(PropertySheetPath)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
