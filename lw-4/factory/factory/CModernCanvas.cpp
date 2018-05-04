@@ -15,15 +15,34 @@ void CModernCanvas::SetColor(const Color& color)
 
 void CModernCanvas::DrawLine(const Point& from, const Point& to)
 {
-	sf::VertexArray line(sf::Lines, 2);
-	line[0].position = sf::Vector2f(from.x, from.y);
-	line[0].color = m_color;
-	line[1].position = sf::Vector2f(to.x, to.y);
-	line[1].color = m_color;
+	sf::VertexArray line = CreateLine(from, to);
 	m_window.draw(line);
 }
 
 void CModernCanvas::DrawEllipse(float left, float top, float width, float height)
+{
+
+	sf::CircleShape ellipse = CreateEllipse(left, top, width, height);
+	m_window.draw(ellipse);
+}
+
+sf::Vertex CModernCanvas::CreateVertex(const Point& point) const
+{
+	sf::Vertex result;
+	result.position = sf::Vector2f(point.x, point.y);
+	result.color = m_color;
+	return result;
+}
+
+sf::VertexArray CModernCanvas::CreateLine(const Point& from, const Point& to) const
+{
+	sf::VertexArray line(sf::Lines, 2);
+	line[0] = CreateVertex(from);
+	line[1] = CreateVertex(to);
+	return line;
+}
+
+sf::CircleShape CModernCanvas::CreateEllipse(float left, float top, float width, float height) const
 {
 
 	float horizontalRadius = width / 2.f;
@@ -35,6 +54,5 @@ void CModernCanvas::DrawEllipse(float left, float top, float width, float height
 	ellipse.setScale(1.f, verticalRadius / horizontalRadius);
 
 	ellipse.setPosition(left, top);
-
-	m_window.draw(ellipse);
+	return ellipse;
 }

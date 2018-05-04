@@ -19,4 +19,7 @@ private:
 		{ Color::PINK, sf::Color(255, 105, 180) },
 		{ Color::RED, sf::Color::Red },
 		{ Color::YELLOW, sf::Color::Yellow } };
+	sf::Vertex CreateVertex(const Point& point) const;
+	sf::VertexArray CreateLine(const Point& from, const Point& to) const;
+	sf::CircleShape CreateEllipse(float left, float top, float width, float height) const;
 };
