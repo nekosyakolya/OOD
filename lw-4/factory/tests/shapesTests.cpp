@@ -46,9 +46,9 @@ struct Ellipse_
 	}
 };
 
-bool operator==(const Point& p1, const Point& p2)
+bool operator==(const Point& first, const Point& second)
 {
-	return p1.x == p2.x && p1.y == p2.y;
+	return first.x == second.x && first.y == second.y;
 }
 
 } // namespace

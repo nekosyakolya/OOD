@@ -189,7 +189,11 @@
     <ClCompile Include="..\factory\CShape.cpp" />
     <ClCompile Include="..\factory\CShapeFactory.cpp" />
     <ClCompile Include="..\factory\CTriangle.cpp" />
+    <ClCompile Include="designerTests.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PainterTests.cpp" />
+    <ClCompile Include="PictureDraftTests.cpp" />
+    <ClCompile Include="ShapeFactoryTests.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
