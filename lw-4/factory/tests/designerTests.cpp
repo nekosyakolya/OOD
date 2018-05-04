@@ -60,8 +60,7 @@ BOOST_FIXTURE_TEST_SUITE(Designer, Designer_)
 		std::vector<std::string> shapeDescriptions = {
 			"rectangle 10 10 180 180 red",
 			"triangle 20 40 60 80 80 40 green",
-			"ellipse 500 300 20 50 pink",
-			"regularPolygon 300 500 20 8 black"
+			"ellipse 500 300 20 50 pink"
 		};
 
 		std::stringstream str;
@@ -72,7 +71,7 @@ BOOST_FIXTURE_TEST_SUITE(Designer, Designer_)
 
 		auto draft = designer.CreateDraft(str);
 		BOOST_CHECK(!draft.IsEmpty());
-		BOOST_CHECK_EQUAL(stream.str(), "rectangle 10 10 180 180 red\ntriangle 20 40 60 80 80 40 green\nellipse 500 300 20 50 pink\nregularPolygon 300 500 20 8 black\n");
+		BOOST_CHECK_EQUAL(stream.str(), "rectangle 10 10 180 180 red\ntriangle 20 40 60 80 80 40 green\nellipse 500 300 20 50 pink\n");
 	}
 
 	BOOST_AUTO_TEST_CASE(returns_empty_draft_if_stream_is_empty)
