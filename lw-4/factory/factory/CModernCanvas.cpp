@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CModernCanvas.h"
 
-CModernCanvas::CModernCanvas(sf::RenderWindow& window)
+CModernCanvas::CModernCanvas(sf::RenderTarget& window)
 	: m_window(window)
 	, m_color(sf::Color::Black)
 {
