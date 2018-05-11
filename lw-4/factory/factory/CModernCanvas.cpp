@@ -2,7 +2,7 @@
 #include "CModernCanvas.h"
 
 CModernCanvas::CModernCanvas(sf::RenderTarget& window)
-	: m_window(window)
+	: m_target(window)
 	, m_color(sf::Color::Black)
 {
 }
@@ -16,14 +16,14 @@ void CModernCanvas::SetColor(const Color& color)
 void CModernCanvas::DrawLine(const Point& from, const Point& to)
 {
 	sf::VertexArray line = CreateLine(from, to);
-	m_window.draw(line);
+	m_target.draw(line);
 }
 
 void CModernCanvas::DrawEllipse(float left, float top, float width, float height)
 {
 
 	sf::CircleShape ellipse = CreateEllipse(left, top, width, height);
-	m_window.draw(ellipse);
+	m_target.draw(ellipse);
 }
 
 sf::Vertex CModernCanvas::CreateVertex(const Point& point) const

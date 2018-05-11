@@ -11,7 +11,7 @@ public:
 	void DrawEllipse(float left, float top, float width, float height) override;
 
 private:
-	sf::RenderTarget& m_window;
+	sf::RenderTarget& m_target;
 	sf::Color m_color;
 	const std::unordered_map<Color, sf::Color> COLORS = { { Color::BLACK, sf::Color::Black },
 		{ Color::BLUE, sf::Color::Blue },
