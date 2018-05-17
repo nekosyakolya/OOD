@@ -31,21 +31,8 @@ void CCommandHistory::Redo()
 
 void CCommandHistory::SetAndExecuteCommand(std::unique_ptr<ICommand>&& command)
 {
-	if (m_nextCommandIndex == MAX_SIZE)
-	{
-		//удаляем из начала,если история заполнилась
-		m_commands.pop_front();
-		--m_nextCommandIndex;
-	}
-
 	if (m_nextCommandIndex < m_commands.size()) // Не происходит расширения истории команд
 	{
-		//удаляем из конца до индекса
-		for (size_t i = m_commands.size() - m_nextCommandIndex; i != 0; --i)
-		{
-			m_commands.pop_back();
-		}
-
 		command->Execute(); // может бросить исключение
 		++m_nextCommandIndex; //
 		m_commands.resize(m_nextCommandIndex); // исключение выброшено не будет, т.к. размер <= текущему
@@ -61,6 +48,14 @@ void CCommandHistory::SetAndExecuteCommand(std::unique_ptr<ICommand>&& command)
 		{
 			command->Execute(); // может выбросить исключение
 			// заменяем команду-заглушку
+
+			if (m_nextCommandIndex == MAX_SIZE)
+			{
+				//удаляем из начала,если история заполнилась
+				m_commands.pop_front();
+				--m_nextCommandIndex;
+			}
+
 			m_commands.back() = move(command); // не бросает исключений
 			++m_nextCommandIndex; // теперь можно обновить индекс следующей команды
 		}
