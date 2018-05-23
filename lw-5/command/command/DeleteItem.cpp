@@ -16,9 +16,16 @@ CDeleteItem::~CDeleteItem()
 {
 
 	//если выполнена и это картинка то из images удаляем
-	if (m_executed && m_image != nullptr)
+	if (m_executed && m_image)
 	{
-
+		try
+		{
+			boost::filesystem::remove(m_image->GetPath());
+		}
+		catch (std::exception &e)
+		{
+			std::cerr << e.what() << std::endl;
+		}
 	}
 }
 

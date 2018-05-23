@@ -3,7 +3,7 @@
 #include "ChangeStringCommand.h"
 #include "InsertParagraph.h"
 #include "DeleteItem.h"
-
+#include "InsertImage.h"
 
 void CDocument::SetTitle(const std::string & title)
 {
@@ -63,10 +63,15 @@ void CDocument::Save(const boost::filesystem::path & path) const
 {
 	for (size_t i = 0; i < m_items.size(); ++i)
 	{
-		std::cout << i << " " << GetItem(i).GetParagraph()->GetText() << std::endl;
-		if (GetItem(i).GetImage() == nullptr)
+		
+		if (!GetItem(i).GetImage())
 		{
+			std::cout << i << " " << GetItem(i).GetParagraph()->GetText() << std::endl;
 			std::cout << "img null " << std::endl;
+		}
+		else
+		{
+			std::cout << "img ne null " << std::endl;
 		}
 	}
 	std::cout << "-------------------------------------- " << std::endl;
@@ -75,20 +80,29 @@ void CDocument::Save(const boost::filesystem::path & path) const
 
 void CDocument::DeleteItem(size_t index)
 {
-	CDeleteItem command(m_items, index);
-	m_history.SetAndExecuteCommand(std::make_unique<CDeleteItem>(command));
+	m_history.SetAndExecuteCommand(std::make_unique<CDeleteItem>(m_items, index));
 
 }
 
 std::shared_ptr<IImage> CDocument::InsertImage(const boost::filesystem::path & path, int width, int height, boost::optional<size_t> position)
 {
-	return std::shared_ptr<IImage>();
+	m_history.SetAndExecuteCommand(std::make_unique<CInsertImage>(m_history, m_items, path, width, height, position));
+
+	size_t index = m_items.size() - 1;
+
+
+
+	if (position != boost::none)
+	{
+		index = position.get();
+	}
+
+	return m_items[index].GetImage();
 }
 
 std::shared_ptr<IParagraph> CDocument::InsertParagraph(const std::string & text, boost::optional<size_t> position)
 {
-	CInsertParagraph command(m_history, m_items, text, position);
-	m_history.SetAndExecuteCommand(std::make_unique<CInsertParagraph>(command));
+	m_history.SetAndExecuteCommand(std::make_unique<CInsertParagraph>(m_history, m_items, text, position));
 
 	size_t index = m_items.size() - 1;
 
