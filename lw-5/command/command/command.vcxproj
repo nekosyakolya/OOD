@@ -163,6 +163,7 @@
     <ClInclude Include="InsertParagraph.h" />
     <ClInclude Include="IParagraph.h" />
     <ClInclude Include="Paragraph.h" />
+    <ClInclude Include="ResizeImage.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -180,6 +181,7 @@
     <ClCompile Include="InsertImage.cpp" />
     <ClCompile Include="InsertParagraph.cpp" />
     <ClCompile Include="Paragraph.cpp" />
+    <ClCompile Include="ResizeImage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

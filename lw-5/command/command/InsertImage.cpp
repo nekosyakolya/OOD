@@ -77,17 +77,19 @@ void CInsertImage::DoUnexecute()
 
 void CInsertImage::InitializationImage(CCommandHistory & history, const boost::filesystem::path & path, int width, int height)
 {
-	boost::filesystem::path directory = boost::filesystem::complete(boost::filesystem::path("images", boost::filesystem::native));
+	boost::filesystem::path newPath = boost::filesystem::complete(boost::filesystem::path("images", boost::filesystem::native));
 
 
 	//генерим имя и копируем
-	boost::filesystem::create_directory(directory);
+	boost::filesystem::create_directory(newPath);
 
-	directory /= path.filename();
+	newPath /= path.filename();
 
-	boost::filesystem::path newPath = boost::filesystem::complete(boost::filesystem::path(directory.string(), boost::filesystem::native));
+	boost::filesystem::path newRelativePath = boost::filesystem::path("images");
+	newRelativePath /= path.filename();
+
 
 	boost::filesystem::copy_file(path, newPath);
 	//копируем в подкаталог отдаем ноый путь
-	m_image = std::make_shared<CImage>(history, newPath, width, height);
+	m_image = std::make_shared<CImage>(history, newRelativePath, width, height);
 }

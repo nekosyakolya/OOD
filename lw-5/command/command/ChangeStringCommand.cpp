@@ -15,5 +15,5 @@ void CChangeStringCommand::DoExecute()
 
 void CChangeStringCommand::DoUnexecute()
 {
-	m_newValue.swap(m_target);
+	DoExecute();
 }

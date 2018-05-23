@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Image.h"
+#include "ResizeImage.h"
 
 CImage::CImage(CCommandHistory & history, const boost::filesystem::path & path, int width, int height):
 	m_height(height),
@@ -26,8 +27,7 @@ int CImage::GetHeight() const
 
 void CImage::Resize(int width, int height)
 {
-	m_width = width;
-	m_height = height;
+	m_history.SetAndExecuteCommand(std::make_unique<CResizeImage>(m_width, width, m_height, height));
 }
 
 void CImage::InitializationPath(const boost::filesystem::path & path)
