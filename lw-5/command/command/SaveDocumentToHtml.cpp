@@ -13,35 +13,7 @@ CSaveDocumentToHtml::CSaveDocumentToHtml(const boost::filesystem::path & path, c
 void CSaveDocumentToHtml::Execute() const
 {
 	CopyImages();
-	
-	std::ofstream output(m_path.string()); ///??????
-	
-	output << "<html>" << std::endl;
-	output << "<head>" << std::endl;
-	output << "<title>" << m_document.GetTitle() << "</title>" << std::endl;
-	output << "</head>" << std::endl;
-	output << "<body>" << std::endl;
-
-	for (size_t i = 0; i <m_document.GetItemsCount(); ++i)
-	{
-
-		if (!m_document.GetItem(i).GetImage())
-		{
-			std::string text = m_document.GetItem(i).GetParagraph()->GetText();
-			CReplaceSpecialHtmlCharacters::Execute(text);
-
-			output << "<p>" << text << "</p>" << std::endl;
-	}
-		else
-		{			output << "<img src=" << m_document.GetItem(i).GetImage()->GetPath() << " width=\""
-				<< m_document.GetItem(i).GetImage()->GetWidth() << "\" height=\""
-				<< m_document.GetItem(i).GetImage()->GetHeight() << "\" />"
-				<< std::endl;
-		}
-	}
-	output << "</body>" << std::endl;
-
-	output << "</html>" << std::endl;
+	OutputHtml();
 }
 
 CSaveDocumentToHtml::~CSaveDocumentToHtml()
@@ -83,4 +55,47 @@ void CSaveDocumentToHtml::CopyImages() const
 			boost::filesystem::copy_file(boost::filesystem::complete(path), newPath);
 		}
 	}
+}
+
+void CSaveDocumentToHtml::OutputHead(std::ofstream & out)const
+{
+	out << "<head>" << std::endl;
+	out << "<title>" << m_document.GetTitle() << "</title>" << std::endl;
+	out << "</head>" << std::endl;
+}
+
+void CSaveDocumentToHtml::OutputBody(std::ofstream & out) const
+{
+	out << "<body>" << std::endl;
+	auto size = m_document.GetItemsCount();
+
+	for (size_t i = 0; i < size; ++i)
+	{
+
+		auto item = m_document.GetItem(i);
+		if (auto image = item.GetImage())
+		{
+			out << boost::format(R"(<img src=%1% width="%2%" height="%3%" />)") % image->GetPath() % image->GetWidth() % image->GetHeight() << std::endl;
+		}
+		else
+		{
+			auto paragraph = item.GetParagraph();
+			std::string text = paragraph->GetText();
+			CReplaceSpecialHtmlCharacters::Execute(text);
+			out << boost::format(R"(<p>%1%</p>)") %text << std::endl;
+			
+		}
+	}
+	out << "</body>" << std::endl;
+
+}
+
+void CSaveDocumentToHtml::OutputHtml() const
+{
+	std::ofstream output(m_path.string());
+
+	output << "<html>" << std::endl;
+	OutputHead(output);
+	OutputBody(output);
+	output << "</html>" << std::endl;
 }

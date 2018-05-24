@@ -13,6 +13,9 @@ private:
 	const IDocument &m_document;
 	void InitializationPath(const boost::filesystem::path &path);
 	void CopyImages() const;
+	void OutputHead(std::ofstream &out) const;
+	void OutputBody(std::ofstream &out) const;
+	void OutputHtml() const;
 
 };
 
