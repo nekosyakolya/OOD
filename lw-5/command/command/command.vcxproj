@@ -155,6 +155,7 @@
     <ClInclude Include="CommandTest.h" />
     <ClInclude Include="DeleteItem.h" />
     <ClInclude Include="Document.h" />
+    <ClInclude Include="FileNameGenerator.h" />
     <ClInclude Include="ICommand.h" />
     <ClInclude Include="IDocument.h" />
     <ClInclude Include="IImage.h" />
@@ -177,6 +178,7 @@
     <ClCompile Include="CommandTest.cpp" />
     <ClCompile Include="DeleteItem.cpp" />
     <ClCompile Include="Document.cpp" />
+    <ClCompile Include="FileNameGenerator.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="InsertImage.cpp" />
     <ClCompile Include="InsertParagraph.cpp" />

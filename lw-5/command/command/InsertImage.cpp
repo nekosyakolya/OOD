@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "InsertImage.h"
+#include "FileNameGenerator.h"
 
 #include "Image.h"
 
@@ -83,10 +84,12 @@ void CInsertImage::InitializationImage(CCommandHistory & history, const boost::f
 	//генерим имя и копируем
 	boost::filesystem::create_directory(newPath);
 
-	newPath /= path.filename();
+	std::string newName = CFileNameGenerator::Execute() + boost::filesystem::extension(path);
+
+	newPath /= boost::filesystem::path(newName);
 
 	boost::filesystem::path newRelativePath = boost::filesystem::path("images");
-	newRelativePath /= path.filename();
+	newRelativePath /= boost::filesystem::path(newName);
 
 
 	boost::filesystem::copy_file(path, newPath);
