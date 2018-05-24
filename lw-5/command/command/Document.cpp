@@ -4,6 +4,8 @@
 #include "InsertParagraph.h"
 #include "DeleteItem.h"
 #include "InsertImage.h"
+#include "SaveDocumentToHtml.h"
+
 
 void CDocument::SetTitle(const std::string & title)
 {
@@ -61,20 +63,9 @@ CDocumentItem CDocument::GetItem(size_t index)
 
 void CDocument::Save(const boost::filesystem::path & path) const
 {
-	for (size_t i = 0; i < m_items.size(); ++i)
-	{
-		
-		if (!GetItem(i).GetImage())
-		{
-			std::cout << i << " " << GetItem(i).GetParagraph()->GetText() << std::endl;
-			std::cout << "img null " << std::endl;
-		}
-		else
-		{
-			std::cout << "img ne null " << std::endl;
-		}
-	}
-	std::cout << "-------------------------------------- " << std::endl;
+	CSaveDocumentToHtml save(path, *this);
+	save.Execute();
+
 
 }
 

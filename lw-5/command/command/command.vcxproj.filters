@@ -72,7 +72,10 @@
     <ClInclude Include="ResizeImage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileNameGenerator.h">
+    <ClInclude Include="SaveDocumentToHtml.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ReplaceSpecialHtmlCharacters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -122,7 +125,10 @@
     <ClCompile Include="ResizeImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileNameGenerator.cpp">
+    <ClCompile Include="SaveDocumentToHtml.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ReplaceSpecialHtmlCharacters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
