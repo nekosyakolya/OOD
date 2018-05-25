@@ -6,6 +6,7 @@ class CDocument : public IDocument
 {
 
 public:
+	CDocument();
 	void SetTitle(const std::string& title) override;
 	std::string GetTitle() const override;
 

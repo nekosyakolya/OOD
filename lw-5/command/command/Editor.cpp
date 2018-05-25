@@ -24,14 +24,12 @@ void CEditor::Run()
 				return item.name == name;
 			});
 
-			if (it != EDITOR_COMMANDS.end())
+			if (it == EDITOR_COMMANDS.end())
 			{
-				it->command(str);
+				throw std::logic_error("Unknown command");
 			}
-			else
-			{
-				std::cout << "Unknown command\n";
-			}
+			it->command(str);
+
 		}
 		catch (const std::exception& e)
 		{

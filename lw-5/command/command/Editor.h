@@ -42,14 +42,13 @@ private:
 		Command command;
 	};
 	std::vector<EditorCommand> EDITOR_COMMANDS = {
-		{ "InsertParagraph", "Insert paragraph. Args: <position> | end <text>", std::bind(&CEditor::InsertParagraph, this, std::placeholders::_1) },
-		{ "InsertImage", "Insert Image. Args: <position> | end <width> <height> <path>", std::bind(&CEditor::InsertImage, this, std::placeholders::_1) },
-		{ "SetTitle", "Changes title. Args: <title>", std::bind(&CEditor::SetTitle, this, std::placeholders::_1) },
-		{ "ReplaceText", "Replace text of paragraph at position. Args: <position> <text>", std::bind(&CEditor::ReplaceText, this, std::placeholders::_1) },
-		{ "ResizeImage", "Resize image at position. Args: <position> <width> <height>", std::bind(&CEditor::ResizeImage, this, std::placeholders::_1) },
-		{ "DeleteItem", "Delete item at position. Args: <position>", std::bind(&CEditor::DeleteItem, this, std::placeholders::_1) },
-		{ "DeleteItem", "Delete item at position. Args: <position>", std::bind(&CEditor::DeleteItem, this, std::placeholders::_1) },
-		{ "Save", "Save document. Args: <path>", std::bind(&CEditor::Save, this, std::placeholders::_1) },
+		{ "InsertParagraph", "Insert paragraph. Arguments: <position> | end <text>", std::bind(&CEditor::InsertParagraph, this, std::placeholders::_1) },
+		{ "InsertImage", "Insert Image. Arguments: <position> | end <width> <height> <path>", std::bind(&CEditor::InsertImage, this, std::placeholders::_1) },
+		{ "SetTitle", "Changes title. Arguments: <title>", std::bind(&CEditor::SetTitle, this, std::placeholders::_1) },
+		{ "ReplaceText", "Replace text of paragraph at position. Arguments: <position> <text>", std::bind(&CEditor::ReplaceText, this, std::placeholders::_1) },
+		{ "ResizeImage", "Resize image at position. Arguments: <position> <width> <height>", std::bind(&CEditor::ResizeImage, this, std::placeholders::_1) },
+		{ "DeleteItem", "Delete item at position. Arguments: <position>", std::bind(&CEditor::DeleteItem, this, std::placeholders::_1) },
+		{ "Save", "Save document. Arguments: <path>", std::bind(&CEditor::Save, this, std::placeholders::_1) },
 		{ "Redo", "Redo undone command.", std::bind(&CEditor::Redo, this, std::placeholders::_1) },
 		{ "Undo", "Undo command.", std::bind(&CEditor::Undo, this, std::placeholders::_1) },
 		{ "List", "Show document.", std::bind(&CEditor::List, this, std::placeholders::_1) },

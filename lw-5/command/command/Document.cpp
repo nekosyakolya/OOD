@@ -97,3 +97,16 @@ std::shared_ptr<IParagraph> CDocument::InsertParagraph(const std::string& text, 
 
 	return m_items[index].GetParagraph();
 }
+
+CDocument::CDocument()
+{
+	try
+	{
+		boost::filesystem::path imagesFolderPath = boost::filesystem::complete(boost::filesystem::path("images", boost::filesystem::native));
+		boost::filesystem::remove_all(imagesFolderPath);
+	}
+	catch (std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+}
