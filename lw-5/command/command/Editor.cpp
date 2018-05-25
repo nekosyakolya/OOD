@@ -2,8 +2,8 @@
 #include "Editor.h"
 #include "Document.h"
 
-CEditor::CEditor():
-	m_document(std::make_unique<CDocument>())
+CEditor::CEditor()
+	: m_document(std::make_unique<CDocument>())
 {
 }
 
@@ -40,12 +40,11 @@ void CEditor::Run()
 	}
 }
 
-
 CEditor::~CEditor()
 {
 }
 
-void CEditor::InsertParagraph(std::istream &input)
+void CEditor::InsertParagraph(std::istream& input)
 {
 	std::string text;
 	std::string position;
@@ -63,18 +62,15 @@ void CEditor::InsertParagraph(std::istream &input)
 		if (!(s << tmp))
 		{
 			throw std::logic_error("Invalid arguments format");
-
 		}
 		index.emplace(tmp);
-
 	}
 	boost::algorithm::trim_left(text);
-	
-	m_document->InsertParagraph(text, index);
 
+	m_document->InsertParagraph(text, index);
 }
 
-void CEditor::InsertImage(std::istream &input)
+void CEditor::InsertImage(std::istream& input)
 {
 	int width = 0;
 	int height = 0;
@@ -99,10 +95,9 @@ void CEditor::InsertImage(std::istream &input)
 	}
 	boost::algorithm::trim_left(path);
 	m_document->InsertImage(boost::filesystem::path(path), width, height, index);
-
 }
 
-void CEditor::SetTitle(std::istream &input)
+void CEditor::SetTitle(std::istream& input)
 {
 	std::string title;
 	std::getline(input, title);
@@ -111,7 +106,7 @@ void CEditor::SetTitle(std::istream &input)
 	m_document->SetTitle(title);
 }
 
-void CEditor::ReplaceText(std::istream &input)
+void CEditor::ReplaceText(std::istream& input)
 {
 	size_t index;
 	std::string text;
@@ -121,18 +116,16 @@ void CEditor::ReplaceText(std::istream &input)
 		throw std::logic_error("Incorrect arguments\nUsage: ReplaceText <position> <text>");
 	}
 	auto paragraph = m_document->GetItem(index).GetParagraph();
-	
+
 	if (!paragraph)
 	{
 		throw std::logic_error("Element is not paragraph");
 	}
 	boost::algorithm::trim_left(text);
 	paragraph->SetText(text);
-
-
 }
 
-void CEditor::ResizeImage(std::istream &input)
+void CEditor::ResizeImage(std::istream& input)
 {
 	size_t index;
 	int width = 0;
@@ -141,7 +134,6 @@ void CEditor::ResizeImage(std::istream &input)
 	if (!((input >> index) && (input >> width) && (input >> height)))
 	{
 		throw std::logic_error("Incorrect arguments\nUsage: ResizeImage <position> <width> <height>");
-
 	}
 	auto image = m_document->GetItem(index).GetImage();
 
@@ -150,10 +142,9 @@ void CEditor::ResizeImage(std::istream &input)
 		throw std::logic_error("Element is not image");
 	}
 	image->Resize(width, height);
-
 }
 
-void CEditor::DeleteItem(std::istream &input)
+void CEditor::DeleteItem(std::istream& input)
 {
 	size_t index;
 	if (!(input >> index))
@@ -164,7 +155,7 @@ void CEditor::DeleteItem(std::istream &input)
 	m_document->DeleteItem(index);
 }
 
-void CEditor::Save(std::istream &input)
+void CEditor::Save(std::istream& input)
 {
 	std::string path;
 	std::getline(input, path);
@@ -173,7 +164,7 @@ void CEditor::Save(std::istream &input)
 	m_document->Save(path);
 }
 
-void CEditor::Redo(std::istream &)
+void CEditor::Redo(std::istream&)
 {
 	if (!m_document->CanRedo())
 	{
@@ -182,7 +173,7 @@ void CEditor::Redo(std::istream &)
 	m_document->Redo();
 }
 
-void CEditor::Undo(std::istream &)
+void CEditor::Undo(std::istream&)
 {
 	if (!m_document->CanUndo())
 	{
@@ -191,7 +182,7 @@ void CEditor::Undo(std::istream &)
 	m_document->Undo();
 }
 
-void CEditor::List(std::istream &)
+void CEditor::List(std::istream&)
 {
 	std::cout << "Title: " << m_document->GetTitle() << std::endl;
 	auto size = m_document->GetItemsCount();
@@ -210,10 +201,9 @@ void CEditor::List(std::istream &)
 			std::cout << "Image: " << image->GetWidth() << " " << image->GetHeight() << " " << image->GetPath() << std::endl;
 		}
 	}
-
 }
 
-void CEditor::Help(std::istream &)
+void CEditor::Help(std::istream&)
 {
 	std::cout << "Editor commands list:" << std::endl;
 

@@ -152,7 +152,6 @@
     <ClInclude Include="CConstDocumentItem.h" />
     <ClInclude Include="CDocumentItem.h" />
     <ClInclude Include="ChangeStringCommand.h" />
-    <ClInclude Include="CommandTest.h" />
     <ClInclude Include="DeleteItem.h" />
     <ClInclude Include="Document.h" />
     <ClInclude Include="Editor.h" />
@@ -177,7 +176,6 @@
     <ClCompile Include="CDocumentItem.cpp" />
     <ClCompile Include="ChangeStringCommand.cpp" />
     <ClCompile Include="command.cpp" />
-    <ClCompile Include="CommandTest.cpp" />
     <ClCompile Include="DeleteItem.cpp" />
     <ClCompile Include="Document.cpp" />
     <ClCompile Include="Editor.cpp" />
