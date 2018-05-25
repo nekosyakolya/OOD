@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "stdafx.h"
 #include "CDocumentItem.h"
-
+class IDocumentSerializer;
 /*
 Интерфес документа
 */
@@ -52,7 +52,7 @@ public:
 
 	// Сохраняет документ в формате html. Изображения сохраняются в подкаталог images
 	// пути к изображениям указываются относительно пути к сохраняемому HTML файлу
-	virtual void Save(const boost::filesystem::path& path) const = 0;
+	virtual void Save(const IDocumentSerializer &) const = 0;
 
 	virtual ~IDocument() = default;
 };

@@ -69,13 +69,16 @@
     <ClInclude Include="ResizeImage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SaveDocumentToHtml.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ReplaceSpecialHtmlCharacters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Editor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IDocumentSerializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HtmlToFileSerializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -122,13 +125,13 @@
     <ClCompile Include="ResizeImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SaveDocumentToHtml.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ReplaceSpecialHtmlCharacters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Editor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HtmlToFileSerializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

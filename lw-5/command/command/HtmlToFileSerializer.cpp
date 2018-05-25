@@ -1,31 +1,27 @@
 #include "stdafx.h"
-#include "SaveDocumentToHtml.h"
+#include "HtmlToFileSerializer.h"
 #include "ReplaceSpecialHtmlCharacters.h"
 
-CSaveDocumentToHtml::CSaveDocumentToHtml(const boost::filesystem::path& path, const IDocument& document)
-	: m_document(document)
+HtmlToFileSerializer::HtmlToFileSerializer(const boost::filesystem::path &path)
 {
 	InitializationPath(path);
 }
 
-void CSaveDocumentToHtml::Execute() const
+void HtmlToFileSerializer::Serialize(const IDocument &document) const
 {
-	CopyImages();
-	OutputHtml();
+	CopyImages(document);
+	OutputHtml(document);
+
 }
 
-CSaveDocumentToHtml::~CSaveDocumentToHtml()
-{
-}
-
-void CSaveDocumentToHtml::InitializationPath(const boost::filesystem::path& path)
+void HtmlToFileSerializer::InitializationPath(const boost::filesystem::path & path)
 {
 	if (!boost::filesystem::is_regular_file(path))
 	{
 		throw std::logic_error("File does not exist or the file name is incorrect");
 	}
 	std::string extensionFile = boost::filesystem::extension(path);
-	boost::algorithm::to_lower(extensionFile); // modifies str
+	boost::algorithm::to_lower(extensionFile);
 
 	if (extensionFile != ".html")
 	{
@@ -33,18 +29,19 @@ void CSaveDocumentToHtml::InitializationPath(const boost::filesystem::path& path
 	}
 
 	m_path = boost::filesystem::complete(path);
+
 }
 
-void CSaveDocumentToHtml::CopyImages() const
+void HtmlToFileSerializer::CopyImages(const IDocument &document) const
 {
 	boost::filesystem::path imagesFolderPath = (m_path.parent_path() /= boost::filesystem::path("images"));
 	boost::filesystem::create_directory(imagesFolderPath);
 
-	auto itemsCount = m_document.GetItemsCount();
+	auto itemsCount = document.GetItemsCount();
 	for (size_t i = 0; i < itemsCount; ++i)
 
 	{
-		auto item = m_document.GetItem(i);
+		auto item = document.GetItem(i);
 		if (auto it = item.GetImage())
 		{
 			boost::filesystem::path path = it->GetPath();
@@ -54,24 +51,26 @@ void CSaveDocumentToHtml::CopyImages() const
 			boost::filesystem::copy_file(boost::filesystem::complete(path), newPath);
 		}
 	}
+
 }
 
-void CSaveDocumentToHtml::OutputHead(std::ofstream& out) const
+void HtmlToFileSerializer::OutputHead(std::ofstream& out, const IDocument &document) const
 {
 	out << "<head>" << std::endl;
-	out << "<title>" << m_document.GetTitle() << "</title>" << std::endl;
+	out << "<title>" << document.GetTitle() << "</title>" << std::endl;
 	out << "</head>" << std::endl;
 }
 
-void CSaveDocumentToHtml::OutputBody(std::ofstream& out) const
+void HtmlToFileSerializer::OutputBody(std::ofstream & out, const IDocument & document) const
 {
+
 	out << "<body>" << std::endl;
-	auto size = m_document.GetItemsCount();
+	auto size = document.GetItemsCount();
 
 	for (size_t i = 0; i < size; ++i)
 	{
 
-		auto item = m_document.GetItem(i);
+		auto item = document.GetItem(i);
 		if (auto image = item.GetImage())
 		{
 			out << boost::format(R"(<img src=%1% width="%2%" height="%3%" />)") % image->GetPath() % image->GetWidth() % image->GetHeight() << std::endl;
@@ -87,12 +86,13 @@ void CSaveDocumentToHtml::OutputBody(std::ofstream& out) const
 	out << "</body>" << std::endl;
 }
 
-void CSaveDocumentToHtml::OutputHtml() const
+void HtmlToFileSerializer::OutputHtml(const IDocument & document) const
 {
+
 	std::ofstream output(m_path.string());
 
 	output << "<html>" << std::endl;
-	OutputHead(output);
-	OutputBody(output);
+	OutputHead(output, document);
+	OutputBody(output, document);
 	output << "</html>" << std::endl;
 }

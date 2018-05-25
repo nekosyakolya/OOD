@@ -4,8 +4,7 @@
 #include "DeleteItem.h"
 #include "InsertImage.h"
 #include "InsertParagraph.h"
-#include "SaveDocumentToHtml.h"
-
+#include "IDocumentSerializer.h"
 void CDocument::SetTitle(const std::string& title)
 {
 	m_history.SetAndExecuteCommand(std::make_unique<CChangeStringCommand>(m_title, title));
@@ -59,10 +58,9 @@ CDocumentItem CDocument::GetItem(size_t index)
 	return m_items[index];
 }
 
-void CDocument::Save(const boost::filesystem::path& path) const
+void CDocument::Save(const IDocumentSerializer& serializer) const
 {
-	CSaveDocumentToHtml save(path, *this);
-	save.Execute();
+	serializer.Serialize(*this);
 }
 
 void CDocument::DeleteItem(size_t index)

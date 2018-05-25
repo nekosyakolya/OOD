@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Editor.h"
 #include "Document.h"
-
+#include "HtmlToFileSerializer.h"
 CEditor::CEditor()
 	: m_document(std::make_unique<CDocument>())
 {
@@ -158,8 +158,8 @@ void CEditor::Save(std::istream& input)
 	std::string path;
 	std::getline(input, path);
 	boost::algorithm::trim_left(path);
-
-	m_document->Save(path);
+	HtmlToFileSerializer serializer(path);
+	m_document->Save(serializer);
 }
 
 void CEditor::Redo(std::istream&)
