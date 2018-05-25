@@ -1,4 +1,4 @@
-#include "stdafx.h"
+п»ї#include "stdafx.h"
 #include "InsertParagraph.h"
 
 #include "Paragraph.h"
@@ -12,10 +12,10 @@ CInsertParagraph::CInsertParagraph(CCommandHistory& history, std::vector<CDocume
 
 void CInsertParagraph::DoExecute()
 {
-	//добавляем в вектор
+	//РґРѕР±Р°РІР»СЏРµРј РІ РІРµРєС‚РѕСЂ
 	if (m_position >= m_items.size())
 	{
-		//кидаем искл
+		//РєРёРґР°РµРј РёСЃРєР»
 		throw std::logic_error("Index should be less than the size of the document");
 	}
 	if (m_position == boost::none)
@@ -31,7 +31,7 @@ void CInsertParagraph::DoExecute()
 
 void CInsertParagraph::DoUnexecute()
 {
-	//удаляем из вектора
+	//СѓРґР°Р»СЏРµРј РёР· РІРµРєС‚РѕСЂР°
 
 	if (m_position == boost::none)
 	{

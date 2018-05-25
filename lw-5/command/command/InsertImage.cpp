@@ -1,4 +1,4 @@
-#include "stdafx.h"
+п»ї#include "stdafx.h"
 #include "InsertImage.h"
 
 #include "Image.h"
@@ -13,7 +13,7 @@ CInsertImage::CInsertImage(CCommandHistory& history, std::vector<CDocumentItem>&
 
 CInsertImage::~CInsertImage()
 {
-	//если не выполнена , то удаляем из подкаталога файл
+	//РµСЃР»Рё РЅРµ РІС‹РїРѕР»РЅРµРЅР° , С‚Рѕ СѓРґР°Р»СЏРµРј РёР· РїРѕРґРєР°С‚Р°Р»РѕРіР° С„Р°Р№Р»
 	if (!m_executed)
 	{
 		try
@@ -29,15 +29,15 @@ CInsertImage::~CInsertImage()
 
 void CInsertImage::DoExecute()
 {
-	//добавляем в вектор
+	//РґРѕР±Р°РІР»СЏРµРј РІ РІРµРєС‚РѕСЂ
 	if (m_position >= m_items.size())
 	{
-		//кидаем искл
+		//РєРёРґР°РµРј РёСЃРєР»
 		throw std::logic_error("Index should be less than the size of the document");
 	}
-	//копируем в подкаталог images
+	//РєРѕРїРёСЂСѓРµРј РІ РїРѕРґРєР°С‚Р°Р»РѕРі images
 
-	//Имя для изображения должно быть сгенерировано автоматически, а расширение остаться оригинальным.
+	//РРјСЏ РґР»СЏ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅРѕ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё, Р° СЂР°СЃС€РёСЂРµРЅРёРµ РѕСЃС‚Р°С‚СЊСЃСЏ РѕСЂРёРіРёРЅР°Р»СЊРЅС‹Рј.
 
 	if (m_position == boost::none)
 	{

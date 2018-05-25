@@ -1,4 +1,4 @@
-#include "stdafx.h"
+п»ї#include "stdafx.h"
 #include "DeleteItem.h"
 
 CDeleteItem::CDeleteItem(std::vector<CDocumentItem>& items, size_t index)
@@ -11,7 +11,7 @@ CDeleteItem::CDeleteItem(std::vector<CDocumentItem>& items, size_t index)
 
 CDeleteItem::~CDeleteItem()
 {
-	//если выполнена и это картинка то из images удаляем
+	//РµСЃР»Рё РІС‹РїРѕР»РЅРµРЅР° Рё СЌС‚Рѕ РєР°СЂС‚РёРЅРєР° С‚Рѕ РёР· images СѓРґР°Р»СЏРµРј
 	if (m_executed && m_image)
 	{
 		try
@@ -29,7 +29,7 @@ void CDeleteItem::DoExecute()
 {
 	if (m_index >= m_items.size())
 	{
-		//кидаем искл
+		//РєРёРґР°РµРј РёСЃРєР»
 		throw std::logic_error("Index should be less than the size of the document");
 	}
 	m_image = m_items[m_index].GetImage();

@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include "IImage.h"
 
 #include "CCommandHistory.h"
@@ -10,13 +10,13 @@ public:
 
 	boost::filesystem::path GetPath() const override;
 
-	// Ширина изображения в пикселях
+	// РЁРёСЂРёРЅР° РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РІ РїРёРєСЃРµР»СЏС…
 	int GetWidth() const override;
 
-	// Высота изображения в пикселях
+	// Р’С‹СЃРѕС‚Р° РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РІ РїРёРєСЃРµР»СЏС…
 	int GetHeight() const override;
 
-	// Изменяет размер изображения
+	// РР·РјРµРЅСЏРµС‚ СЂР°Р·РјРµСЂ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
 	void Resize(int width, int height) override;
 
 private:
