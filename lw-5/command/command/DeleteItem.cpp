@@ -1,20 +1,16 @@
 #include "stdafx.h"
 #include "DeleteItem.h"
 
-
-
-
-CDeleteItem::CDeleteItem(std::vector<CDocumentItem>& items, size_t index):
-	m_items(items),
-	m_index(index),
-	m_image(nullptr),
-	m_paragraph(nullptr)
+CDeleteItem::CDeleteItem(std::vector<CDocumentItem>& items, size_t index)
+	: m_items(items)
+	, m_index(index)
+	, m_image(nullptr)
+	, m_paragraph(nullptr)
 {
 }
 
 CDeleteItem::~CDeleteItem()
 {
-
 	//если выполнена и это картинка то из images удаляем
 	if (m_executed && m_image)
 	{
@@ -22,7 +18,7 @@ CDeleteItem::~CDeleteItem()
 		{
 			boost::filesystem::remove(m_image->GetPath());
 		}
-		catch (std::exception &e)
+		catch (std::exception& e)
 		{
 			std::cerr << e.what() << std::endl;
 		}
@@ -38,7 +34,7 @@ void CDeleteItem::DoExecute()
 	}
 	m_image = m_items[m_index].GetImage();
 	m_paragraph = m_items[m_index].GetParagraph();
-	
+
 	m_items.erase(m_items.begin() + m_index);
 }
 

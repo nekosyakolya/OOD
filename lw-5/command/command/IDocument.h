@@ -34,16 +34,19 @@ public:
 
 	// Возвращает заголовок документа
 	virtual std::string GetTitle() const = 0;
+
 	// Изменяет заголовок документа
 	virtual void SetTitle(const std::string& title) = 0;
 
 	// Сообщает о доступности операции Undo
 	virtual bool CanUndo() const = 0;
+
 	// Отменяет команду редактирования
 	virtual void Undo() = 0;
 
 	// Сообщает о доступности операции Redo
 	virtual bool CanRedo() const = 0;
+
 	// Выполняет отмененную команду редактирования
 	virtual void Redo() = 0;
 

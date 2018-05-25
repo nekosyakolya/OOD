@@ -10,6 +10,7 @@ public:
 
 	// Ширина изображения в пикселях
 	virtual int GetWidth() const = 0;
+
 	// Высота изображения в пикселях
 	virtual int GetHeight() const = 0;
 

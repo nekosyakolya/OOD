@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "ResizeImage.h"
 
-CResizeImage::CResizeImage(int & targetWidth, int const & newWidth, int & targetHeight, int const & newHeight):
-	m_targetHeight(targetHeight),
-	m_targetWidth(targetWidth),
-	m_newHeight(newHeight),
-	m_newWidth(newWidth)
+CResizeImage::CResizeImage(int& targetWidth, int const& newWidth, int& targetHeight, int const& newHeight)
+	: m_targetHeight(targetHeight)
+	, m_targetWidth(targetWidth)
+	, m_newHeight(newHeight)
+	, m_newWidth(newWidth)
 {
 }
 

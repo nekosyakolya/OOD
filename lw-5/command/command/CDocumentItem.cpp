@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "CDocumentItem.h"
 
-CDocumentItem::CDocumentItem(const std::shared_ptr<IImage>& image, const std::shared_ptr<IParagraph>& paragraph):
-	CConstDocumentItem(image, paragraph)
+CDocumentItem::CDocumentItem(const std::shared_ptr<IImage>& image, const std::shared_ptr<IParagraph>& paragraph)
+	: CConstDocumentItem(image, paragraph)
 {
 }
 

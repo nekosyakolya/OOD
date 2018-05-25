@@ -2,10 +2,8 @@
 #include "SaveDocumentToHtml.h"
 #include "ReplaceSpecialHtmlCharacters.h"
 
-
-
-CSaveDocumentToHtml::CSaveDocumentToHtml(const boost::filesystem::path & path, const IDocument & document):
-	m_document(document)
+CSaveDocumentToHtml::CSaveDocumentToHtml(const boost::filesystem::path& path, const IDocument& document)
+	: m_document(document)
 {
 	InitializationPath(path);
 }
@@ -20,7 +18,7 @@ CSaveDocumentToHtml::~CSaveDocumentToHtml()
 {
 }
 
-void CSaveDocumentToHtml::InitializationPath(const boost::filesystem::path & path)
+void CSaveDocumentToHtml::InitializationPath(const boost::filesystem::path& path)
 {
 	if (!boost::filesystem::is_regular_file(path))
 	{
@@ -44,9 +42,10 @@ void CSaveDocumentToHtml::CopyImages() const
 
 	auto itemsCount = m_document.GetItemsCount();
 	for (size_t i = 0; i < itemsCount; ++i)
+
 	{
 		auto item = m_document.GetItem(i);
-		if(auto it = item.GetImage())
+		if (auto it = item.GetImage())
 		{
 			boost::filesystem::path path = it->GetPath();
 			boost::filesystem::path newPath = imagesFolderPath;
@@ -57,14 +56,14 @@ void CSaveDocumentToHtml::CopyImages() const
 	}
 }
 
-void CSaveDocumentToHtml::OutputHead(std::ofstream & out)const
+void CSaveDocumentToHtml::OutputHead(std::ofstream& out) const
 {
 	out << "<head>" << std::endl;
 	out << "<title>" << m_document.GetTitle() << "</title>" << std::endl;
 	out << "</head>" << std::endl;
 }
 
-void CSaveDocumentToHtml::OutputBody(std::ofstream & out) const
+void CSaveDocumentToHtml::OutputBody(std::ofstream& out) const
 {
 	out << "<body>" << std::endl;
 	auto size = m_document.GetItemsCount();
@@ -82,12 +81,10 @@ void CSaveDocumentToHtml::OutputBody(std::ofstream & out) const
 			auto paragraph = item.GetParagraph();
 			std::string text = paragraph->GetText();
 			CReplaceSpecialHtmlCharacters::Execute(text);
-			out << boost::format(R"(<p>%1%</p>)") %text << std::endl;
-			
+			out << boost::format(R"(<p>%1%</p>)") % text << std::endl;
 		}
 	}
 	out << "</body>" << std::endl;
-
 }
 
 void CSaveDocumentToHtml::OutputHtml() const

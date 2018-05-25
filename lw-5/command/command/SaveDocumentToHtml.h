@@ -5,17 +5,18 @@
 class CSaveDocumentToHtml
 {
 public:
-	CSaveDocumentToHtml(const boost::filesystem::path & path, const IDocument & document);
+	CSaveDocumentToHtml(const boost::filesystem::path& path, const IDocument& document);
 	void Execute() const;
 	~CSaveDocumentToHtml();
+
 private:
 	boost::filesystem::path m_path;
-	const IDocument &m_document;
-	void InitializationPath(const boost::filesystem::path &path);
+	const IDocument& m_document;
+
+	void InitializationPath(const boost::filesystem::path& path);
 	void CopyImages() const;
-	void OutputHead(std::ofstream &out) const;
-	void OutputBody(std::ofstream &out) const;
+
+	void OutputHead(std::ofstream& out) const;
+	void OutputBody(std::ofstream& out) const;
 	void OutputHtml() const;
-
 };
-

@@ -2,10 +2,10 @@
 #include "Image.h"
 #include "ResizeImage.h"
 
-CImage::CImage(CCommandHistory & history, const boost::filesystem::path & path, int width, int height):
-	m_height(height),
-	m_width(width),
-	m_history(history)
+CImage::CImage(CCommandHistory& history, const boost::filesystem::path& path, int width, int height)
+	: m_height(height)
+	, m_width(width)
+	, m_history(history)
 {
 	InitializationPath(path);
 }
@@ -30,14 +30,15 @@ void CImage::Resize(int width, int height)
 	m_history.SetAndExecuteCommand(std::make_unique<CResizeImage>(m_width, width, m_height, height));
 }
 
-void CImage::InitializationPath(const boost::filesystem::path & path)
+void CImage::InitializationPath(const boost::filesystem::path& path)
 {
 	if (!boost::filesystem::is_regular_file(path))
 	{
 		throw std::logic_error("File does not exist or the file name is incorrect");
 	}
+
 	std::string extensionFile = boost::filesystem::extension(path);
-	boost::algorithm::to_lower(extensionFile); // modifies str
+	boost::algorithm::to_lower(extensionFile);
 
 	if (extensionFile != ".jpg" && extensionFile != ".png" && extensionFile != ".gif")
 	{
