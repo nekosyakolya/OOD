@@ -56,8 +56,11 @@ void HtmlToFileSerializer::CopyImages(const IDocument &document) const
 
 void HtmlToFileSerializer::OutputHead(std::ofstream& out, const IDocument &document) const
 {
+	std::string title = document.GetTitle();
+	CReplaceSpecialHtmlCharacters::Execute(title);
+
 	out << "<head>" << std::endl;
-	out << "<title>" << document.GetTitle() << "</title>" << std::endl;
+	out << "<title>" << title << "</title>" << std::endl;
 	out << "</head>" << std::endl;
 }
 
