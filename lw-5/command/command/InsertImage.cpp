@@ -29,24 +29,20 @@ CInsertImage::~CInsertImage()
 
 void CInsertImage::DoExecute()
 {
-	//добавляем в вектор
-	if (m_position >= m_items.size())
+	size_t index = m_position.get();
+
+	if (index != 0 && m_position >= m_items.size())
 	{
-		//кидаем искл
 		throw std::logic_error("Index should be less than the size of the document");
 	}
-	//копируем в подкаталог images
-
-	//Имя для изображения должно быть сгенерировано автоматически, а расширение остаться оригинальным.
 
 	if (m_position == boost::none)
 	{
-
 		m_items.emplace_back(CDocumentItem(m_image, nullptr));
 	}
 	else
 	{
-		m_items.emplace(m_items.begin() + m_position.get(), CDocumentItem(m_image, nullptr));
+		m_items.emplace(m_items.begin() + index, CDocumentItem(m_image, nullptr));
 	}
 }
 

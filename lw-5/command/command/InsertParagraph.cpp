@@ -12,10 +12,10 @@ CInsertParagraph::CInsertParagraph(CCommandHistory& history, std::vector<CDocume
 
 void CInsertParagraph::DoExecute()
 {
-	//добавляем в вектор
-	if (m_position >= m_items.size())
+	size_t index = m_position.get();
+
+	if (index != 0 && m_position >= m_items.size())
 	{
-		//кидаем искл
 		throw std::logic_error("Index should be less than the size of the document");
 	}
 	if (m_position == boost::none)
@@ -25,22 +25,18 @@ void CInsertParagraph::DoExecute()
 	}
 	else
 	{
-		m_items.emplace(m_items.begin() + m_position.get(), CDocumentItem(nullptr, m_paragraph));
+		m_items.emplace(m_items.begin() + index, CDocumentItem(nullptr, m_paragraph));
 	}
 }
 
 void CInsertParagraph::DoUnexecute()
 {
-	//удаляем из вектора
-
 	if (m_position == boost::none)
 	{
-
 		m_items.pop_back();
 	}
 	else
 	{
-
 		m_items.erase(m_items.begin() + m_position.get());
 	}
 }
