@@ -1,6 +1,4 @@
 ﻿#pragma once
-
-#include "stdafx.h"
 #include "IImage.h"
 #include "IParagraph.h"
 
