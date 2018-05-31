@@ -2,7 +2,6 @@
 #include "IImage.h"
 #include "IInvoker.h"
 
-
 class CImage : public IImage
 {
 public:

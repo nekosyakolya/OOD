@@ -2,9 +2,10 @@
 #include "Document.h"
 #include "ChangeStringCommand.h"
 #include "DeleteItem.h"
+#include "IDocumentSerializer.h"
 #include "InsertImage.h"
 #include "InsertParagraph.h"
-#include "IDocumentSerializer.h"
+
 void CDocument::SetTitle(const std::string& title)
 {
 	m_history.SetAndExecuteCommand(std::make_unique<CChangeStringCommand>(m_title, title));
@@ -73,7 +74,6 @@ std::shared_ptr<IImage> CDocument::InsertImage(const boost::filesystem::path& pa
 	m_history.SetAndExecuteCommand(std::make_unique<CInsertImage>(m_history, m_items, path, width, height, position));
 
 	size_t index = m_items.size() - 1;
-
 	if (position != boost::none)
 	{
 		index = position.get();
@@ -87,7 +87,6 @@ std::shared_ptr<IParagraph> CDocument::InsertParagraph(const std::string& text, 
 	m_history.SetAndExecuteCommand(std::make_unique<CInsertParagraph>(m_history, m_items, text, position));
 
 	size_t index = m_items.size() - 1;
-
 	if (position != boost::none)
 	{
 		index = position.get();

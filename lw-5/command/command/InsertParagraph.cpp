@@ -1,6 +1,5 @@
 ﻿#include "stdafx.h"
 #include "InsertParagraph.h"
-
 #include "Paragraph.h"
 
 CInsertParagraph::CInsertParagraph(CCommandHistory& history, std::vector<CDocumentItem>& items, const std::string& text, boost::optional<size_t> position)

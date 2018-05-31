@@ -1,6 +1,5 @@
 ﻿#include "stdafx.h"
 #include "InsertImage.h"
-
 #include "Image.h"
 
 CInsertImage::CInsertImage(CCommandHistory& history, std::vector<CDocumentItem>& items, const boost::filesystem::path& path, int width, int height, boost::optional<size_t> position)

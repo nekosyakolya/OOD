@@ -1,5 +1,6 @@
 #pragma once
 #include "ICommand.h"
+
 class CAbstractCommand : public ICommand
 {
 public:
@@ -9,5 +10,6 @@ public:
 protected:
 	virtual void DoExecute() = 0;
 	virtual void DoUnexecute() = 0;
+
 	bool m_executed = false;
 };

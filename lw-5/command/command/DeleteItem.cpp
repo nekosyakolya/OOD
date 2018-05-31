@@ -32,6 +32,7 @@ void CDeleteItem::DoExecute()
 		//кидаем искл
 		throw std::logic_error("Index should be less than the size of the document");
 	}
+
 	m_image = m_items[m_index].GetImage();
 	m_paragraph = m_items[m_index].GetParagraph();
 

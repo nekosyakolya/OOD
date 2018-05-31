@@ -1,5 +1,6 @@
 #pragma once
 #include "AbstractCommand.h"
+
 class CChangeStringCommand : public CAbstractCommand
 {
 public:
@@ -8,6 +9,7 @@ public:
 private:
 	void DoExecute() override;
 	void DoUnexecute() override;
+
 	std::string m_newValue;
 	std::string& m_target;
 };

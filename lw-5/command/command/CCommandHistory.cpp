@@ -40,7 +40,6 @@ void CCommandHistory::SetAndExecuteCommand(std::unique_ptr<ICommand>&& command)
 	}
 	else // будет происходить расширение истории команд
 	{
-		assert(m_nextCommandIndex == m_commands.size());
 		// резервируем место по добавляемую команду
 		m_commands.emplace_back(nullptr); // может выбросить исключение, но мы еще ничего не трогали
 

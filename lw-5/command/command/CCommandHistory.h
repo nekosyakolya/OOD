@@ -14,5 +14,6 @@ public:
 private:
 	std::deque<std::unique_ptr<ICommand>> m_commands;
 	size_t m_nextCommandIndex = 0;
+
 	const size_t MAX_SIZE = 10;
 };

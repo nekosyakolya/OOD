@@ -1,5 +1,6 @@
 #pragma once
 #include "AbstractCommand.h"
+
 class CResizeImage : public CAbstractCommand
 {
 public:
@@ -8,6 +9,7 @@ public:
 private:
 	void DoExecute() override;
 	void DoUnexecute() override;
+
 	int& m_targetWidth;
 	int m_newWidth;
 	int& m_targetHeight;

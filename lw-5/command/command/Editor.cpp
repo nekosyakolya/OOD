@@ -2,6 +2,7 @@
 #include "Editor.h"
 #include "Document.h"
 #include "HtmlToFileSerializer.h"
+
 CEditor::CEditor()
 	: m_document(std::make_unique<CDocument>())
 {
@@ -29,17 +30,12 @@ void CEditor::Run()
 				throw std::logic_error("Unknown command");
 			}
 			it->command(str);
-
 		}
 		catch (const std::exception& e)
 		{
 			std::cerr << e.what() << std::endl;
 		}
 	}
-}
-
-CEditor::~CEditor()
-{
 }
 
 void CEditor::InsertParagraph(std::istream& input)

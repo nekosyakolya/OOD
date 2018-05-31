@@ -7,7 +7,6 @@ class CEditor
 public:
 	CEditor();
 	void Run();
-	~CEditor();
 
 private:
 	using Command = std::function<void(std::istream& args)>;

@@ -11,6 +11,7 @@ public:
 private:
 	void DoExecute() override;
 	void DoUnexecute() override;
+
 	std::vector<CDocumentItem>& m_items;
 	size_t m_index;
 

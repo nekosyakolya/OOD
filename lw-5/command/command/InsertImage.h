@@ -1,8 +1,7 @@
 #pragma once
 #include "AbstractCommand.h"
-#include "CDocumentItem.h"
-
 #include "CCommandHistory.h"
+#include "CDocumentItem.h"
 
 class CInsertImage : public CAbstractCommand
 {
