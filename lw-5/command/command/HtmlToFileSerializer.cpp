@@ -16,10 +16,6 @@ void HtmlToFileSerializer::Serialize(const IDocument &document) const
 
 void HtmlToFileSerializer::InitializationPath(const boost::filesystem::path & path)
 {
-	if (!boost::filesystem::is_regular_file(path))
-	{
-		throw std::logic_error("File does not exist or the file name is incorrect");
-	}
 	std::string extensionFile = boost::filesystem::extension(path);
 	boost::algorithm::to_lower(extensionFile);
 
