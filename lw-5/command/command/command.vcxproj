@@ -160,6 +160,7 @@
     <ClInclude Include="IDocument.h" />
     <ClInclude Include="IDocumentSerializer.h" />
     <ClInclude Include="IImage.h" />
+    <ClInclude Include="IInvoker.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="InsertImage.h" />
     <ClInclude Include="InsertParagraph.h" />

@@ -2,7 +2,7 @@
 #include "Paragraph.h"
 #include "ChangeStringCommand.h"
 
-CParagraph::CParagraph(CCommandHistory& history)
+CParagraph::CParagraph(IInvoker& history)
 	: m_history(history)
 {
 }

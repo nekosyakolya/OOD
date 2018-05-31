@@ -1,14 +1,15 @@
 #pragma once
 #include "ICommand.h"
+#include "IInvoker.h"
 
-class CCommandHistory
+class CCommandHistory : public IInvoker
 {
 public:
 	bool CanUndo() const;
 	void Undo();
 	bool CanRedo() const;
 	void Redo();
-	void SetAndExecuteCommand(std::unique_ptr<ICommand>&& command);
+	void SetAndExecuteCommand(std::unique_ptr<ICommand>&& command) override;
 
 private:
 	std::deque<std::unique_ptr<ICommand>> m_commands;

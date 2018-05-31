@@ -1,12 +1,12 @@
 ﻿#pragma once
 #include "IImage.h"
+#include "IInvoker.h"
 
-#include "CCommandHistory.h"
 
 class CImage : public IImage
 {
 public:
-	CImage(CCommandHistory& history, const boost::filesystem::path& path, int width, int height);
+	CImage(IInvoker& history, const boost::filesystem::path& path, int width, int height);
 
 	boost::filesystem::path GetPath() const override;
 
@@ -23,6 +23,6 @@ private:
 	boost::filesystem::path m_path;
 	int m_width;
 	int m_height;
-	CCommandHistory& m_history;
+	IInvoker& m_history;
 	void InitializationPath(const boost::filesystem::path& path);
 };
