@@ -6,7 +6,7 @@ BOOST_AUTO_TEST_SUITE(Image)
 
 	CCommandHistory history;
 	CImage image(history, "resources/amanita.png", 450, 200);
-	BOOST_AUTO_TEST_CASE(is_not_created_if_the_path_is_not_correct)
+	BOOST_AUTO_TEST_CASE(is_not_created_if_path_is_incorrect)
 	{
 		BOOST_REQUIRE_THROW(CImage image(history, "resources/1.png", 450, 200), std::logic_error);
 		BOOST_REQUIRE_THROW(CImage image(history, "resources/tmp.txt", 450, 200), std::logic_error);

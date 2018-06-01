@@ -7,8 +7,13 @@ struct InsertImage_
 {
 	struct InsertImage_()
 	{
-		command = std::make_unique<CInsertImage>(history, items, "resources/amanita.png", 450, 300, 0);
+		width = 450;
+		height = 300;
+		command = std::make_unique<CInsertImage>(history, items, "resources/amanita.png", width, height, 0);
 	}
+	int width;
+	int height;
+
 	std::vector<CDocumentItem> items;
 	CCommandHistory history;
 	std::unique_ptr<CInsertImage> command;
@@ -16,12 +21,56 @@ struct InsertImage_
 
 BOOST_FIXTURE_TEST_SUITE(Insert_image_command, InsertImage_)
 
-	BOOST_AUTO_TEST_CASE(can_be_executed)
-	{
-		BOOST_CHECK(items.empty());
-		command->Execute();
-		BOOST_CHECK(!items.empty());
-	}
+	BOOST_AUTO_TEST_SUITE(should_be_executed)
+		BOOST_AUTO_TEST_CASE(if_position_is_correct)
+		{
+			BOOST_CHECK(items.empty());
+			command->Execute();
+
+			BOOST_REQUIRE(!items.empty());
+
+			auto image = items.front().GetImage();
+
+			BOOST_REQUIRE(image != nullptr);
+			BOOST_CHECK(boost::filesystem::exists(image->GetPath()));
+			BOOST_CHECK_EQUAL(image->GetHeight(), height);
+			BOOST_CHECK_EQUAL(image->GetWidth(), width);
+		}
+		BOOST_AUTO_TEST_CASE(if_position_is_not_transferred)
+		{
+			command = std::make_unique<CInsertImage>(history, items, "resources/amanita.png", width, height, boost::none);
+
+			BOOST_CHECK(items.empty());
+
+			command->Execute();
+			BOOST_REQUIRE(!items.empty());
+
+			auto image = items.front().GetImage();
+
+			BOOST_REQUIRE(image != nullptr);
+			BOOST_CHECK(boost::filesystem::exists(image->GetPath()));
+
+			BOOST_CHECK_EQUAL(image->GetHeight(), height);
+			BOOST_CHECK_EQUAL(image->GetWidth(), width);
+		}
+
+	BOOST_AUTO_TEST_SUITE_END()
+
+	BOOST_AUTO_TEST_SUITE(should_be_not_executed)
+
+		BOOST_AUTO_TEST_CASE(if_position_is_incorrect)
+		{
+			BOOST_CHECK(items.empty());
+			command = std::make_unique<CInsertImage>(history, items, "resources/amanita.png", width, height, 10);
+			BOOST_REQUIRE_THROW(command->Execute(), std::invalid_argument);
+		}
+
+		BOOST_AUTO_TEST_CASE(if_path_is_incorrect)
+		{
+			BOOST_REQUIRE_THROW(std::make_unique<CInsertImage>(history, items, "resources/1.png", width, height, 0), boost::filesystem::filesystem_error);
+			BOOST_REQUIRE_THROW(std::make_unique<CInsertImage>(history, items, "resources/tmp.txt", width, height, 0), std::logic_error);
+		}
+	BOOST_AUTO_TEST_SUITE_END()
 	BOOST_AUTO_TEST_CASE(can_be_unexecuted)
 	{
 		command->Execute();
@@ -32,6 +81,9 @@ BOOST_FIXTURE_TEST_SUITE(Insert_image_command, InsertImage_)
 	{
 		command->Execute();
 		auto image = items.front().GetImage();
+
+		BOOST_REQUIRE(image != nullptr);
 		BOOST_CHECK(boost::filesystem::exists(image->GetPath()));
 	}
+
 BOOST_AUTO_TEST_SUITE_END()
