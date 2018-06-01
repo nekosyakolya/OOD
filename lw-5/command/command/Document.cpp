@@ -95,7 +95,7 @@ std::shared_ptr<IParagraph> CDocument::InsertParagraph(const std::string& text, 
 	return m_items[index].GetParagraph();
 }
 
-CDocument::CDocument()
+CDocument::~CDocument()
 {
 	try
 	{
