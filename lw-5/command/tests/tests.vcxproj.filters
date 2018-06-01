@@ -134,7 +134,10 @@
     <ClCompile Include="..\command\ResizeImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ChangeStringCommandTestscpp.cpp">
+    <ClCompile Include="ResizeImageTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeStringCommandTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
