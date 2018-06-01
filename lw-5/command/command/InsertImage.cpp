@@ -28,20 +28,17 @@ CInsertImage::~CInsertImage()
 
 void CInsertImage::DoExecute()
 {
-	size_t index = m_position.get();
-
-	if (index != 0 && m_position >= m_items.size())
-	{
-		throw std::invalid_argument("Index should be less than the size of the document");
-	}
-
 	if (m_position == boost::none)
 	{
 		m_items.emplace_back(CDocumentItem(m_image, nullptr));
 	}
+	else if (m_position.get() != 0 && m_position >= m_items.size())
+	{
+		throw std::invalid_argument("Index should be less than the size of the document");
+	}
 	else
 	{
-		m_items.emplace(m_items.begin() + index, CDocumentItem(m_image, nullptr));
+		m_items.emplace(m_items.begin() + m_position.get(), CDocumentItem(m_image, nullptr));
 	}
 }
 
