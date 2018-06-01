@@ -197,6 +197,7 @@
     <ClCompile Include="..\command\Paragraph.cpp" />
     <ClCompile Include="..\command\ReplaceSpecialHtmlCharacters.cpp" />
     <ClCompile Include="..\command\ResizeImage.cpp" />
+    <ClCompile Include="ChangeStringCommandTestscpp.cpp" />
     <ClCompile Include="CommandHistoryTests.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
