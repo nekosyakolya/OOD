@@ -44,7 +44,7 @@ void CEditor::InsertParagraph(std::istream& input)
 	std::string position;
 	if (!((input >> position) && std::getline(input, text)))
 	{
-		throw std::logic_error("Incorrect arguments\nUsage: InsertParagraph <position> | end <text>");
+		throw std::invalid_argument("Incorrect arguments\nUsage: InsertParagraph <position> | end <text>");
 	}
 
 	boost::optional<size_t> index = boost::none;
@@ -55,7 +55,7 @@ void CEditor::InsertParagraph(std::istream& input)
 
 		if (!(s << tmp))
 		{
-			throw std::logic_error("Invalid arguments format");
+			throw std::invalid_argument("Invalid arguments format");
 		}
 		index.emplace(tmp);
 	}
@@ -73,7 +73,7 @@ void CEditor::InsertImage(std::istream& input)
 
 	if (!((input >> position) && (input >> width) && (input >> height) && (std::getline(input, path))))
 	{
-		throw std::logic_error("Incorrect arguments\nUsage: InsertImage <position> | end <width> <height> <path>");
+		throw std::invalid_argument("Incorrect arguments\nUsage: InsertImage <position> | end <width> <height> <path>");
 	}
 
 	boost::optional<size_t> index = boost::none;
@@ -83,7 +83,7 @@ void CEditor::InsertImage(std::istream& input)
 		std::stringstream s(position);
 		if (!(s << tmp))
 		{
-			throw std::logic_error("Invalid arguments format");
+			throw std::invalid_argument("Invalid arguments format");
 		}
 		index.emplace(tmp);
 	}
@@ -107,7 +107,7 @@ void CEditor::ReplaceText(std::istream& input)
 
 	if (!((input >> index) && std::getline(input, text)))
 	{
-		throw std::logic_error("Incorrect arguments\nUsage: ReplaceText <position> <text>");
+		throw std::invalid_argument("Incorrect arguments\nUsage: ReplaceText <position> <text>");
 	}
 	auto paragraph = m_document->GetItem(index).GetParagraph();
 
@@ -127,7 +127,7 @@ void CEditor::ResizeImage(std::istream& input)
 
 	if (!((input >> index) && (input >> width) && (input >> height)))
 	{
-		throw std::logic_error("Incorrect arguments\nUsage: ResizeImage <position> <width> <height>");
+		throw std::invalid_argument("Incorrect arguments\nUsage: ResizeImage <position> <width> <height>");
 	}
 	auto image = m_document->GetItem(index).GetImage();
 
@@ -143,7 +143,7 @@ void CEditor::DeleteItem(std::istream& input)
 	size_t index;
 	if (!(input >> index))
 	{
-		throw std::logic_error("Incorrect arguments\nUsage: DeleteItem <position>");
+		throw std::invalid_argument("Incorrect arguments\nUsage: DeleteItem <position>");
 	}
 
 	m_document->DeleteItem(index);

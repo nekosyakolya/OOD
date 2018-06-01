@@ -140,7 +140,13 @@
     <ClCompile Include="ChangeStringCommandTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InsertParagraphCommandTests.cpp">
+    <ClCompile Include="ImageTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InsertImageTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InsertParagraphTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

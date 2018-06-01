@@ -32,7 +32,7 @@ void CInsertImage::DoExecute()
 
 	if (index != 0 && m_position >= m_items.size())
 	{
-		throw std::logic_error("Index should be less than the size of the document");
+		throw std::invalid_argument("Index should be less than the size of the document");
 	}
 
 	if (m_position == boost::none)

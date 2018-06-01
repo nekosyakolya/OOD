@@ -30,7 +30,7 @@ void CDeleteItem::DoExecute()
 	if (m_index >= m_items.size())
 	{
 		//кидаем искл
-		throw std::logic_error("Index should be less than the size of the document");
+		throw std::invalid_argument("Index should be less than the size of the document");
 	}
 
 	m_image = m_items[m_index].GetImage();
