@@ -11,6 +11,17 @@
 #include <tchar.h>
 
 // TODO: reference additional headers your program requires here
+#include <boost/algorithm/string.hpp>
+#include <boost/filesystem.hpp>
+#include <boost/format.hpp>
+#include <boost/optional/optional_io.hpp>
+#include <iostream>
+#include <memory>
+#include <sstream>
+#include <string>
+#include <vector>
+
+#define BOOST_FILESYSTEM_VERSION 3
 
 #define BOOST_TEST_INCLUDED
 #pragma warning(disable : 4702)
