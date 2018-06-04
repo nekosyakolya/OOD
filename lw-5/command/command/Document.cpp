@@ -5,6 +5,7 @@
 #include "IDocumentSerializer.h"
 #include "InsertImage.h"
 #include "InsertParagraph.h"
+#include "Paragraph.h"
 
 void CDocument::SetTitle(const std::string& title)
 {
@@ -84,7 +85,8 @@ std::shared_ptr<IImage> CDocument::InsertImage(const boost::filesystem::path& pa
 
 std::shared_ptr<IParagraph> CDocument::InsertParagraph(const std::string& text, boost::optional<size_t> position)
 {
-	m_history.SetAndExecuteCommand(std::make_unique<CInsertParagraph>(m_history, m_items, text, position));
+	auto paragraph = std::make_shared<CParagraph>(m_history, text);
+	m_history.SetAndExecuteCommand(std::make_unique<CInsertParagraph>(paragraph, m_items, position));
 
 	size_t index = m_items.size() - 1;
 	if (position != boost::none)

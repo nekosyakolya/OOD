@@ -1,16 +1,15 @@
 #pragma once
-#include "IInvoker.h"
+#include "ICommandHistory.h"
 #include "IParagraph.h"
 
 class CParagraph : public IParagraph
 {
 public:
-	CParagraph(IInvoker& history);
+	CParagraph(ICommandHistory& history, const std::string& text);
 	std::string GetText() const override;
 	void SetText(const std::string& text) override;
-	~CParagraph();
 
 private:
 	std::string m_text;
-	IInvoker& m_history;
+	ICommandHistory& m_history;
 };

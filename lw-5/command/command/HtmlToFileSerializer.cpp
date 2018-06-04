@@ -4,7 +4,7 @@
 
 HtmlToFileSerializer::HtmlToFileSerializer(const boost::filesystem::path& path)
 {
-	InitializationPath(path);
+	SetPath(path);
 }
 
 void HtmlToFileSerializer::Serialize(const IDocument& document) const
@@ -13,12 +13,12 @@ void HtmlToFileSerializer::Serialize(const IDocument& document) const
 	OutputHtml(document);
 }
 
-void HtmlToFileSerializer::InitializationPath(const boost::filesystem::path& path)
+void HtmlToFileSerializer::SetPath(const boost::filesystem::path& path)
 {
-	std::string extensionFile = boost::filesystem::extension(path);
-	boost::algorithm::to_lower(extensionFile);
+	std::string fileExtension = boost::filesystem::extension(path);
+	boost::algorithm::to_lower(fileExtension);
 
-	if (extensionFile != ".html")
+	if (fileExtension != ".html")
 	{
 		throw std::logic_error("File extension is incorrect");
 	}

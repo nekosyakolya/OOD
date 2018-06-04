@@ -11,7 +11,7 @@ public:
 private:
 	boost::filesystem::path m_path;
 
-	void InitializationPath(const boost::filesystem::path& path);
+	void SetPath(const boost::filesystem::path& path);
 	void CopyImages(const IDocument& document) const;
 
 	void OutputHead(std::ofstream& out, const IDocument& document) const;

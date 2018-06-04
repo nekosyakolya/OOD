@@ -2,11 +2,11 @@
 #include "InsertParagraph.h"
 #include "Paragraph.h"
 
-CInsertParagraph::CInsertParagraph(CCommandHistory& history, std::vector<CDocumentItem>& items, const std::string& text, boost::optional<size_t> position)
+CInsertParagraph::CInsertParagraph(std::shared_ptr<IParagraph>&& paragraph, std::vector<CDocumentItem>& items, boost::optional<size_t> position)
 	: m_items(items)
 	, m_position(position)
+	, m_paragraph(paragraph)
 {
-	InitializationParagraph(history, text);
 }
 
 void CInsertParagraph::DoExecute()
@@ -36,11 +36,4 @@ void CInsertParagraph::DoUnexecute()
 	{
 		m_items.erase(m_items.begin() + m_position.get());
 	}
-}
-
-void CInsertParagraph::InitializationParagraph(CCommandHistory& history, const std::string& text)
-{
-	CParagraph paragraph(history);
-	paragraph.SetText(text);
-	m_paragraph = std::make_shared<CParagraph>(paragraph);
 }

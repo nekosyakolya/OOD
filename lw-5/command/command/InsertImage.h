@@ -18,5 +18,5 @@ private:
 	boost::optional<size_t> m_position;
 	std::shared_ptr<IImage> m_image;
 
-	void InitializationImage(CCommandHistory& history, const boost::filesystem::path& path, int width, int height);
+	void SetImage(CCommandHistory& history, const boost::filesystem::path& path, int width, int height);
 };

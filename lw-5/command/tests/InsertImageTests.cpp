@@ -86,4 +86,27 @@ BOOST_FIXTURE_TEST_SUITE(Insert_image_command, InsertImage_)
 		BOOST_CHECK(boost::filesystem::exists(image->GetPath()));
 	}
 
+	BOOST_AUTO_TEST_CASE(does_not_delete_image_if_it_was_deleted_at_executed_state)
+	{
+		command->Execute();
+		auto image = items.front().GetImage();
+
+		BOOST_REQUIRE(image != nullptr);
+		command.reset();
+
+		BOOST_CHECK(boost::filesystem::exists(image->GetPath()));
+	}
+
+	BOOST_AUTO_TEST_CASE(does_delete_image_if_it_was_deleted_at_unexecuted_state)
+	{
+		command->Execute();
+		auto image = items.front().GetImage();
+
+		BOOST_REQUIRE(image != nullptr);
+		command->Unexecute();
+		command.reset();
+
+		BOOST_CHECK(!boost::filesystem::exists(image->GetPath()));
+	}
+
 BOOST_AUTO_TEST_SUITE_END()

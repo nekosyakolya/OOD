@@ -2,8 +2,9 @@
 #include "Paragraph.h"
 #include "ChangeStringCommand.h"
 
-CParagraph::CParagraph(IInvoker& history)
+CParagraph::CParagraph(ICommandHistory& history, const std::string& text)
 	: m_history(history)
+	, m_text(text)
 {
 }
 
@@ -15,8 +16,4 @@ std::string CParagraph::GetText() const
 void CParagraph::SetText(const std::string& text)
 {
 	m_history.SetAndExecuteCommand(std::make_unique<CChangeStringCommand>(m_text, text));
-}
-
-CParagraph::~CParagraph()
-{
 }

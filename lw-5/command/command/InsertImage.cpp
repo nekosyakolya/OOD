@@ -7,7 +7,7 @@ CInsertImage::CInsertImage(CCommandHistory& history, std::vector<CDocumentItem>&
 	, m_position(position)
 
 {
-	InitializationImage(history, path, width, height);
+	SetImage(history, path, width, height);
 }
 
 CInsertImage::~CInsertImage()
@@ -54,7 +54,7 @@ void CInsertImage::DoUnexecute()
 	}
 }
 
-void CInsertImage::InitializationImage(CCommandHistory& history, const boost::filesystem::path& path, int width, int height)
+void CInsertImage::SetImage(CCommandHistory& history, const boost::filesystem::path& path, int width, int height)
 {
 	boost::filesystem::path imagesFolderPath = boost::filesystem::complete(boost::filesystem::path("images", boost::filesystem::native));
 	boost::filesystem::create_directory(imagesFolderPath);

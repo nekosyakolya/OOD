@@ -81,7 +81,7 @@
     <ClInclude Include="HtmlToFileSerializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IInvoker.h">
+    <ClInclude Include="ICommandHistory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

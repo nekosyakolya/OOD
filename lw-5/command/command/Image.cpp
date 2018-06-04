@@ -2,7 +2,7 @@
 #include "Image.h"
 #include "ResizeImage.h"
 
-CImage::CImage(IInvoker& history, const boost::filesystem::path& path, int width, int height)
+CImage::CImage(ICommandHistory& history, const boost::filesystem::path& path, int width, int height)
 	: m_height(height)
 	, m_width(width)
 	, m_history(history)
