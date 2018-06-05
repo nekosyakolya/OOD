@@ -2,7 +2,6 @@
 #include "../command/CCommandHistory.h"
 #include "../command/CDocumentItem.h"
 #include "../command/DeleteItem.h"
-#include "../command/Image.h"
 #include "../command/InsertImage.h"
 #include "../command/InsertParagraph.h"
 #include "../command/Paragraph.h"
