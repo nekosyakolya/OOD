@@ -59,7 +59,15 @@ void CInsertImage::SetImage(CCommandHistory& history, const boost::filesystem::p
 	boost::filesystem::path imagesFolderPath = boost::filesystem::complete(boost::filesystem::path("images", boost::filesystem::native));
 	boost::filesystem::create_directory(imagesFolderPath);
 
-	std::string newFileName = boost::filesystem::unique_path().string() + boost::filesystem::extension(path);
+	std::string extensionFile = boost::filesystem::extension(path);
+	boost::algorithm::to_lower(extensionFile);
+
+	if (extensionFile != ".jpg" && extensionFile != ".png" && extensionFile != ".gif")
+	{
+		throw std::logic_error("File extension is incorrect");
+	}
+
+	std::string newFileName = boost::filesystem::unique_path().string() + extensionFile;
 
 	boost::filesystem::path newRelativePath = imagesFolderPath.stem();
 	newRelativePath /= boost::filesystem::path(newFileName);
