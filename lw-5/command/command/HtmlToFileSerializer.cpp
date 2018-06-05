@@ -24,6 +24,13 @@ void HtmlToFileSerializer::SetPath(const boost::filesystem::path& path)
 	}
 
 	m_path = boost::filesystem::complete(path);
+	boost::filesystem::path directory = m_path;
+	directory.remove_filename();
+
+	if (!boost::filesystem::exists(directory))
+	{
+		boost::filesystem::create_directory(directory);
+	}
 }
 
 void HtmlToFileSerializer::CopyImages(const IDocument& document) const
