@@ -44,20 +44,12 @@ size_t CDocument::GetItemsCount() const
 
 CConstDocumentItem CDocument::GetItem(size_t index) const
 {
-	if (index >= m_items.size())
-	{
-		throw std::logic_error("Index should be less than the size of the document");
-	}
-	return m_items[index];
+	return m_items.at(index);
 }
 
 CDocumentItem CDocument::GetItem(size_t index)
 {
-	if (index >= m_items.size())
-	{
-		throw std::logic_error("Index should be less than the size of the document");
-	}
-	return m_items[index];
+	return m_items.at(index);
 }
 
 void CDocument::Save(const IDocumentSerializer& serializer) const
