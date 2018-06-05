@@ -1,6 +1,6 @@
 #include "stdafx.h"
-
 #include "../command/Document.h"
+#include "../command/HtmlToFileSerializer.h"
 
 struct Document_
 {
@@ -107,6 +107,20 @@ BOOST_FIXTURE_TEST_SUITE(Document, Document_)
 		BOOST_CHECK_EQUAL(document.GetItemsCount(), 2);
 		BOOST_CHECK_EQUAL(document.GetItem(0).GetParagraph()->GetText(), "first");
 		BOOST_CHECK_EQUAL(document.GetItem(1).GetParagraph()->GetText(), "third");
+	}
+
+	BOOST_AUTO_TEST_CASE(can_save_to_html)
+	{
+		boost::filesystem::path path = "tmp/index.html";
+
+		BOOST_CHECK(!boost::filesystem::exists(path));
+
+		HtmlToFileSerializer serializer(path);
+
+		document.Save(serializer);
+		BOOST_CHECK(boost::filesystem::exists(path));
+
+		boost::filesystem::remove_all(path);
 	}
 
 BOOST_AUTO_TEST_SUITE_END()
