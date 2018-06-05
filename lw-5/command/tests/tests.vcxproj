@@ -199,6 +199,7 @@
     <ClCompile Include="..\command\ResizeImage.cpp" />
     <ClCompile Include="ChangeStringCommandTests.cpp" />
     <ClCompile Include="CommandHistoryTests.cpp" />
+    <ClCompile Include="DeleteItemTests.cpp" />
     <ClCompile Include="ImageTests.cpp" />
     <ClCompile Include="InsertImageTests.cpp" />
     <ClCompile Include="InsertParagraphTests.cpp" />

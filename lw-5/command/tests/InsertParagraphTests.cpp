@@ -3,17 +3,20 @@
 #include "../command/CCommandHistory.h"
 #include "../command/CDocumentItem.h"
 #include "../command/InsertParagraph.h"
+#include "../command/Paragraph.h"
 
 struct InsertParagraph_
 {
 	InsertParagraph_()
 	{
 		text = "text";
-		command = std::make_unique<CInsertParagraph>(history, items, text, 0);
+		paragraphPtr = std::make_shared<CParagraph>(history, text);
+		command = std::make_unique<CInsertParagraph>(paragraphPtr, items, 0);
 	}
 	std::string text;
 	std::vector<CDocumentItem> items;
 	CCommandHistory history;
+	std::shared_ptr<CParagraph> paragraphPtr;
 	std::unique_ptr<CInsertParagraph> command;
 };
 
@@ -31,7 +34,7 @@ BOOST_FIXTURE_TEST_SUITE(Insert_paragraph_command, InsertParagraph_)
 		}
 		BOOST_AUTO_TEST_CASE(if_position_is_not_transferred)
 		{
-			command = std::make_unique<CInsertParagraph>(history, items, text, boost::none);
+			command = std::make_unique<CInsertParagraph>(paragraphPtr, items, boost::none);
 
 			BOOST_CHECK(items.empty());
 
@@ -54,7 +57,9 @@ BOOST_FIXTURE_TEST_SUITE(Insert_paragraph_command, InsertParagraph_)
 	BOOST_AUTO_TEST_CASE(should_be_not_executed_if_position_is_incorrect)
 	{
 		BOOST_CHECK(items.empty());
-		command = std::make_unique<CInsertParagraph>(history, items, text, 10);
+
+		command = std::make_unique<CInsertParagraph>(paragraphPtr, items, 10);
+
 		BOOST_REQUIRE_THROW(command->Execute(), std::invalid_argument);
 	}
 
