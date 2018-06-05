@@ -9,12 +9,12 @@ BOOST_AUTO_TEST_SUITE(Command_history)
 	BOOST_AUTO_TEST_SUITE(when_is_empty)
 		BOOST_AUTO_TEST_CASE(can_not_redo)
 		{
-			BOOST_CHECK_EQUAL(history.CanRedo(), false);
+			BOOST_CHECK(!history.CanRedo());
 		}
 
 		BOOST_AUTO_TEST_CASE(can_not_undo)
 		{
-			BOOST_CHECK_EQUAL(history.CanUndo(), false);
+			BOOST_CHECK(!history.CanUndo());
 		}
 	BOOST_AUTO_TEST_SUITE_END()
 
