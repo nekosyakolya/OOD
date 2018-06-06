@@ -77,7 +77,9 @@ void HtmlToFileSerializer::OutputBody(std::ofstream& out, const IDocument& docum
 		auto item = document.GetItem(i);
 		if (auto image = item.GetImage())
 		{
-			out << boost::format(R"(<img src=%1% width="%2%" height="%3%" />)") % image->GetPath() % image->GetWidth() % image->GetHeight() << std::endl;
+			boost::filesystem::path path = (boost::filesystem::path("images") /= (image->GetPath()).filename());
+
+			out << boost::format(R"(<img src=%1% width="%2%" height="%3%" />)") % path % image->GetWidth() % image->GetHeight() << std::endl;
 		}
 		else
 		{
