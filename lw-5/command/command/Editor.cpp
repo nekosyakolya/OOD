@@ -53,7 +53,7 @@ void CEditor::InsertParagraph(std::istream& input)
 		std::stringstream s(position);
 		size_t tmp = 0;
 
-		if (!(s << tmp))
+		if (!(s >> tmp))
 		{
 			throw std::invalid_argument("Invalid arguments format");
 		}
@@ -81,7 +81,7 @@ void CEditor::InsertImage(std::istream& input)
 	{
 		size_t tmp = 0;
 		std::stringstream s(position);
-		if (!(s << tmp))
+		if (!(s >> tmp))
 		{
 			throw std::invalid_argument("Invalid arguments format");
 		}
