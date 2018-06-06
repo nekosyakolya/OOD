@@ -12,6 +12,8 @@
 
 // TODO: reference additional headers your program requires here
 #include <boost/algorithm/string.hpp>
+#include <boost/dll/import.hpp>
+
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
 #include <boost/optional/optional_io.hpp>

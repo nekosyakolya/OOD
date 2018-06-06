@@ -93,8 +93,7 @@ CDocument::~CDocument()
 {
 	try
 	{
-		boost::filesystem::path imagesFolderPath = boost::filesystem::complete(boost::filesystem::path("images", boost::filesystem::native));
-		boost::filesystem::remove_all(imagesFolderPath);
+		boost::filesystem::remove_all("images");
 	}
 	catch (std::exception& e)
 	{
