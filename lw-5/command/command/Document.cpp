@@ -93,7 +93,7 @@ CDocument::~CDocument()
 {
 	try
 	{
-		boost::filesystem::remove_all("images");
+		boost::filesystem::remove_all("tmp");
 	}
 	catch (std::exception& e)
 	{

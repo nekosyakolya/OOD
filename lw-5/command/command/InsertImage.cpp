@@ -15,13 +15,11 @@ CInsertImage::~CInsertImage()
 	//если не выполнена , то удаляем из подкаталога файл
 	if (!m_executed)
 	{
-		try
+		boost::system::error_code errorCode;
+		boost::filesystem::remove(m_image->GetPath(), errorCode);
+		if (errorCode)
 		{
-			boost::filesystem::remove(m_image->GetPath());
-		}
-		catch (std::exception& e)
-		{
-			std::cerr << e.what() << std::endl;
+			std::cout << errorCode.message() << std::endl;
 		}
 	}
 }
@@ -56,7 +54,7 @@ void CInsertImage::DoUnexecute()
 
 void CInsertImage::SetImage(ICommandHistory& history, const boost::filesystem::path& path, int width, int height)
 {
-	boost::filesystem::path imagesFolderPath = boost::filesystem::complete(boost::filesystem::path("images", boost::filesystem::native));
+	boost::filesystem::path imagesFolderPath = boost::filesystem::path("tmp");
 	boost::filesystem::create_directory(imagesFolderPath);
 
 	std::string extensionFile = boost::filesystem::extension(path);
