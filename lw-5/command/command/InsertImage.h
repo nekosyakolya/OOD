@@ -1,12 +1,12 @@
 #pragma once
 #include "AbstractCommand.h"
-#include "CCommandHistory.h"
 #include "CDocumentItem.h"
+#include "ICommandHistory.h"
 
 class CInsertImage : public CAbstractCommand
 {
 public:
-	CInsertImage(CCommandHistory& history, std::vector<CDocumentItem>& items, const boost::filesystem::path& path, int width, int height,
+	CInsertImage(ICommandHistory& history, std::vector<CDocumentItem>& items, const boost::filesystem::path& path, int width, int height,
 		boost::optional<size_t> position = boost::none);
 
 	~CInsertImage() override;
@@ -18,5 +18,5 @@ private:
 	boost::optional<size_t> m_position;
 	std::shared_ptr<IImage> m_image;
 
-	void SetImage(CCommandHistory& history, const boost::filesystem::path& path, int width, int height);
+	void SetImage(ICommandHistory& history, const boost::filesystem::path& path, int width, int height);
 };
