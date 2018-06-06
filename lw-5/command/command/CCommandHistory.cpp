@@ -31,9 +31,10 @@ void CCommandHistory::Redo()
 
 void CCommandHistory::SetAndExecuteCommand(std::unique_ptr<ICommand>&& command)
 {
+	command->Execute(); // может выбросить исключение
+
 	if (m_nextCommandIndex < m_commands.size()) // Не происходит расширения истории команд
 	{
-		command->Execute(); // может бросить исключение
 		++m_nextCommandIndex; //
 		m_commands.resize(m_nextCommandIndex); // исключение выброшено не будет, т.к. размер <= текущему
 		m_commands.back() = move(command);
@@ -43,28 +44,16 @@ void CCommandHistory::SetAndExecuteCommand(std::unique_ptr<ICommand>&& command)
 		// резервируем место по добавляемую команду
 		m_commands.emplace_back(nullptr); // может выбросить исключение, но мы еще ничего не трогали
 
-		try
-		{
-			command->Execute(); // может выбросить исключение
-			// заменяем команду-заглушку
+		// заменяем команду-заглушку
 
-			if (m_nextCommandIndex == MAX_SIZE)
-			{
-				//удаляем из начала,если история заполнилась
-				m_commands.pop_front();
-				--m_nextCommandIndex;
-			}
-
-			m_commands.back() = move(command); // не бросает исключений
-			++m_nextCommandIndex; // теперь можно обновить индекс следующей команды
-		}
-		catch (...)
+		if (m_nextCommandIndex == MAX_SIZE)
 		{
-			// удаляем заглушку, т.к. команда не исполнилась
-			m_commands.pop_back(); // не бросает исключений
-			// перевыбрасываем пойманное исключение вверх (кем бы оно ни было),
-			// т.к. команду выполнить не смогли
-			throw;
+			//удаляем из начала,если история заполнилась
+			m_commands.pop_front();
+			--m_nextCommandIndex;
 		}
+
+		m_commands.back() = move(command); // не бросает исключений
+		++m_nextCommandIndex; // теперь можно обновить индекс следующей команды
 	}
 }
