@@ -16,7 +16,7 @@ void CInsertParagraph::DoExecute()
 
 		m_items.emplace_back(CDocumentItem(nullptr, m_paragraph));
 	}
-	else if (m_position.get() != 0 && m_position >= m_items.size())
+	else if (m_position > m_items.size())
 	{
 		throw std::invalid_argument("Index should be less than the size of the document");
 	}
