@@ -5,10 +5,10 @@
 class CCommandHistory : public ICommandHistory
 {
 public:
-	bool CanUndo() const override;
-	void Undo() override;
-	bool CanRedo() const override;
-	void Redo() override;
+	bool CanUndo() const;
+	void Undo();
+	bool CanRedo() const;
+	void Redo();
 	void SetAndExecuteCommand(std::unique_ptr<ICommand>&& command) override;
 
 private:
