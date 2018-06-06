@@ -15,6 +15,5 @@ private:
 	std::vector<CDocumentItem>& m_items;
 	size_t m_index;
 
-	std::shared_ptr<IParagraph> m_paragraph;
-	std::shared_ptr<IImage> m_image;
+	std::shared_ptr<CDocumentItem> m_item;
 };
