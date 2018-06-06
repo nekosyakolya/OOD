@@ -53,7 +53,7 @@ BOOST_FIXTURE_TEST_SUITE(Delete_item_command, DeleteItem_)
 		BOOST_AUTO_TEST_CASE(if_position_is_incorrect)
 		{
 			BOOST_CHECK(items.empty());
-			BOOST_REQUIRE_THROW(command->Execute(), std::invalid_argument);
+			BOOST_REQUIRE_THROW(command->Execute(), std::out_of_range);
 		}
 
 	BOOST_AUTO_TEST_SUITE_END()

@@ -123,4 +123,18 @@ BOOST_FIXTURE_TEST_SUITE(Document, Document_)
 		boost::filesystem::remove_all(path);
 	}
 
+	BOOST_AUTO_TEST_CASE(can_save_to_html_in_current_dir)
+	{
+		boost::filesystem::path path = "index.html";
+
+		BOOST_CHECK(!boost::filesystem::exists(path));
+
+		HtmlToFileSerializer serializer(path);
+
+		document.Save(serializer);
+		BOOST_CHECK(boost::filesystem::exists(path));
+
+		boost::filesystem::remove_all(path);
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
