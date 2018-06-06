@@ -49,7 +49,10 @@ void HtmlToFileSerializer::CopyImages(const IDocument& document) const
 			boost::filesystem::path newPath = imagesFolderPath;
 			newPath /= boost::filesystem::path(path.filename());
 
-			boost::filesystem::copy_file(boost::filesystem::complete(path), newPath, boost::filesystem::copy_option::overwrite_if_exists);
+			if (!boost::filesystem::exists(newPath))
+			{
+				boost::filesystem::copy_file(boost::filesystem::complete(path), newPath);
+			}
 		}
 	}
 }
