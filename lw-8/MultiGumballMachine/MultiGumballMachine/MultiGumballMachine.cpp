@@ -35,13 +35,19 @@ void CSoldState::Dispense()
 	}
 
 	m_gumballMachine.ReleaseBall();
+	bool hasBalls = m_gumballMachine.GetBallCount() != 0;
+	bool hasCoins = m_gumballMachine.GetCoins() != 0;
 
-	if (m_gumballMachine.GetBallCount() == 0 && m_gumballMachine.GetCoins() == 0)
+	if (!hasBalls)
 	{
 		m_out << "Oops, out of gumballs\n";
+	}
+
+	if (!hasBalls && !hasCoins)
+	{
 		m_gumballMachine.SetSoldOutState();
 	}
-	else if (m_gumballMachine.GetCoins() == 0)
+	else if (!hasCoins)
 	{
 		m_gumballMachine.SetNoCoinState();
 	}
