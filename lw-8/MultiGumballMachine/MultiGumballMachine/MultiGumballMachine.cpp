@@ -15,7 +15,7 @@ void CSoldState::InsertCoin()
 {
 	m_out << "Please wait, we're already giving you a gumball\n";
 }
-void CSoldState::Refill(size_t /*count*/)
+void CSoldState::Refill(size_t)
 {
 	m_out << "Sorry, this operation is not available\n ";
 }
@@ -29,21 +29,25 @@ void CSoldState::TurnCrank()
 }
 void CSoldState::Dispense()
 {
-	m_gumballMachine.ReleaseBall();
-	m_gumballMachine.ReleaseCoin();
-
-	if (m_gumballMachine.GetCoins() > m_gumballMachine.GetBallCount())
+	if (m_gumballMachine.GetBallCount() != 0)
 	{
-		m_gumballMachine.SetHasCoinState();
+		m_gumballMachine.ReleaseCoin();
 	}
-	else if (m_gumballMachine.GetBallCount() == 0)
+
+	m_gumballMachine.ReleaseBall();
+
+	if (m_gumballMachine.GetBallCount() == 0 && m_gumballMachine.GetCoins() == 0)
 	{
 		m_out << "Oops, out of gumballs\n";
 		m_gumballMachine.SetSoldOutState();
 	}
-	else
+	else if (m_gumballMachine.GetCoins() == 0)
 	{
 		m_gumballMachine.SetNoCoinState();
+	}
+	else
+	{
+		m_gumballMachine.SetHasCoinState();
 	}
 }
 std::string CSoldState::ToString() const
@@ -59,7 +63,11 @@ CSoldOutState::CSoldOutState(IGumballMachineContext& gumballMachine, std::ostrea
 
 void CSoldOutState::Refill(size_t count)
 {
-	m_gumballMachine.Refill(count);
+	m_gumballMachine.AddBall(count);
+	if (m_gumballMachine.GetBallCount() != 0)
+	{
+		m_gumballMachine.SetNoCoinState();
+	}
 }
 
 void CSoldOutState::InsertCoin()
@@ -91,7 +99,7 @@ CHasCoinState::CHasCoinState(IGumballMachineContext& gumballMachine, std::ostrea
 
 void CHasCoinState::Refill(size_t count)
 {
-	m_gumballMachine.Refill(count);
+	m_gumballMachine.AddBall(count);
 }
 void CHasCoinState::InsertCoin()
 {
@@ -102,6 +110,7 @@ void CHasCoinState::EjectCoin()
 	while (m_gumballMachine.GetCoins() != 0)
 	{
 		m_gumballMachine.ReleaseCoin();
+		m_out << "Coin returned\n";
 	}
 
 	m_gumballMachine.SetNoCoinState();
@@ -128,7 +137,7 @@ CNoCoinState::CNoCoinState(IGumballMachineContext& gumballMachine, std::ostream&
 
 void CNoCoinState::Refill(size_t count)
 {
-	m_gumballMachine.Refill(count);
+	m_gumballMachine.AddBall(count);
 }
 
 void CNoCoinState::InsertCoin()
@@ -182,13 +191,13 @@ void CMultiGumballMachine::TurnCrank()
 }
 std::string CMultiGumballMachine::ToString() const
 {
-	auto fmt = boost::format(R"(
-Mighty Gumball, Inc.
+	auto fmt = boost::format(R"(Mighty Gumball, Inc.
 C++-enabled Standing Gumball Model #2016 (with state)
 Inventory: %1% gumball%2%
 Machine is %3%
+Number of coins: %4%
 )");
-	return (fmt % m_gumBalls % (m_gumBalls != 1 ? "s" : "") % m_state->ToString()).str();
+	return (fmt % m_gumBalls % (m_gumBalls != 1 ? "s" : "") % m_state->ToString() % m_coin).str();
 }
 
 size_t CMultiGumballMachine::GetBallCount() const
@@ -237,15 +246,19 @@ void CMultiGumballMachine::ReleaseCoin()
 {
 	if (m_coin != 0)
 	{
-		m_out << "Coin returned\n";
 		--m_coin;
 	}
 }
 
 void CMultiGumballMachine::Refill(size_t count)
 {
+	m_state->Refill(count);
+}
+
+void CMultiGumballMachine::AddBall(size_t count)
+{
 	m_gumBalls += count;
-	m_out << "Added " << count << (count != 1 ? "s" : "") << "\n";
+	m_out << "Added " << count << " gum ball" << (count != 1 ? "s" : "") << "\n";
 }
 
 size_t CMultiGumballMachine::GetCoins()

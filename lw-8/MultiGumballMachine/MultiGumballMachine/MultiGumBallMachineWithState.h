@@ -10,18 +10,28 @@ struct IState
 	virtual void TurnCrank() = 0;
 	virtual void Dispense() = 0;
 
-	virtual void Refill(size_t count) = 0;
+	virtual void Refill(size_t) = 0;
 
 	virtual std::string ToString() const = 0;
 	virtual ~IState() = default;
+};
+
+struct IGumballMachine
+{
+	virtual void EjectCoin() = 0;
+
+	virtual void InsertCoin() = 0;
+	virtual void TurnCrank() = 0;
+	virtual std::string ToString() const = 0;
+	virtual void Refill(size_t) = 0;
+
+	virtual ~IGumballMachine() = default;
 };
 
 struct IGumballMachineContext
 {
 	virtual void ReleaseBall() = 0;
 	virtual size_t GetBallCount() const = 0;
-	virtual void Refill(size_t count) = 0;
-
 	virtual void SetSoldOutState() = 0;
 	virtual void SetNoCoinState() = 0;
 	virtual void SetSoldState() = 0;
@@ -30,6 +40,7 @@ struct IGumballMachineContext
 	virtual void AddCoin() = 0;
 	virtual void ReleaseCoin() = 0;
 	virtual size_t GetCoins() = 0;
+	virtual void AddBall(size_t) = 0;
 
 	virtual ~IGumballMachineContext() = default;
 };
@@ -107,19 +118,23 @@ private:
 };
 
 class CMultiGumballMachine : private IGumballMachineContext
+	, public IGumballMachine
 {
 public:
 	CMultiGumballMachine(size_t numBalls, std::ostream& out);
 
-	void EjectCoin();
+	void EjectCoin() override;
 
-	void InsertCoin();
-	void TurnCrank();
-	std::string ToString() const;
+	void InsertCoin() override;
+	void TurnCrank() override;
+	std::string ToString() const override;
+	void Refill(size_t count) override;
 
 private:
 	size_t GetBallCount() const override;
 	void ReleaseBall() override;
+
+	void AddBall(size_t count) override;
 
 	void SetSoldOutState() override;
 	void SetNoCoinState() override;
@@ -136,8 +151,6 @@ private:
 
 	size_t m_coin = 0;
 	const size_t MAX_COUNT_OF_COINS = 5;
-
-	void Refill(size_t count);
 
 	void AddCoin() override;
 	void ReleaseCoin() override;

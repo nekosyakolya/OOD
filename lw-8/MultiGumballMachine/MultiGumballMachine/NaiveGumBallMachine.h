@@ -49,7 +49,9 @@ public:
 			while (m_coin != 0)
 			{
 				ReleaseCoin();
+				m_out << "Coin returned\n";
 			}
+
 			m_state = State::NoQuarter;
 			break;
 		case State::NoQuarter:
@@ -153,7 +155,6 @@ private:
 	{
 		if (m_coin != 0)
 		{
-			m_out << "Coin returned\n";
 			--m_coin;
 		}
 	}
