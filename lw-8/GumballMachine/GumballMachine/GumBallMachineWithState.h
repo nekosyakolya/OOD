@@ -5,40 +5,40 @@ namespace with_state
 
 struct IState
 {
-	virtual void InsertQuarter() = 0;
-	virtual void EjectQuarter() = 0;
+	virtual void InsertCoin() = 0;
+	virtual void EjectCoin() = 0;
 	virtual void TurnCrank() = 0;
 	virtual void Dispense() = 0;
 	virtual std::string ToString() const = 0;
 	virtual ~IState() = default;
 };
 
-struct IGumballMachine
+struct IGumballMachineContext
 {
 	virtual void ReleaseBall() = 0;
 	virtual size_t GetBallCount() const = 0;
 
 	virtual void SetSoldOutState() = 0;
-	virtual void SetNoQuarterState() = 0;
+	virtual void SetNoCoinState() = 0;
 	virtual void SetSoldState() = 0;
-	virtual void SetHasQuarterState() = 0;
+	virtual void SetHasCoinState() = 0;
 
-	virtual ~IGumballMachine() = default;
+	virtual ~IGumballMachineContext() = default;
 };
 
 class CSoldState : public IState
 {
 public:
-	CSoldState(IGumballMachine& gumballMachine, std::ostream& out);
+	CSoldState(IGumballMachineContext& gumballMachine, std::ostream& out);
 
-	void InsertQuarter() override;
-	void EjectQuarter() override;
+	void InsertCoin() override;
+	void EjectCoin() override;
 	void TurnCrank() override;
 	void Dispense() override;
 	std::string ToString() const override;
 
 private:
-	IGumballMachine& m_gumballMachine;
+	IGumballMachineContext& m_gumballMachine;
 
 	std::ostream& m_out;
 };
@@ -46,62 +46,62 @@ private:
 class CSoldOutState : public IState
 {
 public:
-	CSoldOutState(IGumballMachine& gumballMachine, std::ostream& out);
+	CSoldOutState(IGumballMachineContext& gumballMachine, std::ostream& out);
 
-	void InsertQuarter() override;
-	void EjectQuarter() override;
+	void InsertCoin() override;
+	void EjectCoin() override;
 	void TurnCrank() override;
 	void Dispense() override;
 	std::string ToString() const override;
 
 private:
-	IGumballMachine& m_gumballMachine;
+	IGumballMachineContext& m_gumballMachine;
 
 	std::ostream& m_out;
 };
 
-class CHasQuarterState : public IState
+class CHasCoinState : public IState
 {
 public:
-	CHasQuarterState(IGumballMachine& gumballMachine, std::ostream& out);
+	CHasCoinState(IGumballMachineContext& gumballMachine, std::ostream& out);
 
-	void InsertQuarter() override;
-	void EjectQuarter() override;
+	void InsertCoin() override;
+	void EjectCoin() override;
 	void TurnCrank() override;
 	void Dispense() override;
 	std::string ToString() const override;
 
 private:
-	IGumballMachine& m_gumballMachine;
+	IGumballMachineContext& m_gumballMachine;
 
 	std::ostream& m_out;
 };
 
-class CNoQuarterState : public IState
+class CNoCoinState : public IState
 {
 public:
-	CNoQuarterState(IGumballMachine& gumballMachine, std::ostream& out);
+	CNoCoinState(IGumballMachineContext& gumballMachine, std::ostream& out);
 
-	void InsertQuarter() override;
-	void EjectQuarter() override;
+	void InsertCoin() override;
+	void EjectCoin() override;
 	void TurnCrank() override;
 	void Dispense() override;
 	std::string ToString() const override;
 
 private:
-	IGumballMachine& m_gumballMachine;
+	IGumballMachineContext& m_gumballMachine;
 
 	std::ostream& m_out;
 };
 
-class CGumballMachine : private IGumballMachine
+class CGumballMachine : private IGumballMachineContext
 {
 public:
 	CGumballMachine(size_t numBalls, std::ostream& out);
 
-	void EjectQuarter();
+	void EjectCoin();
 
-	void InsertQuarter();
+	void InsertCoin();
 	void TurnCrank();
 	std::string ToString() const;
 
@@ -109,15 +109,15 @@ private:
 	size_t GetBallCount() const override;
 	void ReleaseBall() override;
 	void SetSoldOutState() override;
-	void SetNoQuarterState() override;
+	void SetNoCoinState() override;
 	void SetSoldState() override;
-	void SetHasQuarterState() override;
+	void SetHasCoinState() override;
 
 	size_t m_count = 0;
 	CSoldState m_soldState;
 	CSoldOutState m_soldOutState;
-	CNoQuarterState m_noQuarterState;
-	CHasQuarterState m_hasQuarterState;
+	CNoCoinState m_noCoinState;
+	CHasCoinState m_hasCoinState;
 	IState* m_state;
 	std::ostream& m_out;
 };

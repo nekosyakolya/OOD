@@ -6,16 +6,16 @@
 
 using namespace with_state;
 
-CSoldState::CSoldState(IGumballMachine& gumballMachine, std::ostream& out)
+CSoldState::CSoldState(IGumballMachineContext& gumballMachine, std::ostream& out)
 	: m_gumballMachine(gumballMachine)
 	, m_out(out)
 {
 }
-void CSoldState::InsertQuarter()
+void CSoldState::InsertCoin()
 {
 	m_out << "Please wait, we're already giving you a gumball\n";
 }
-void CSoldState::EjectQuarter()
+void CSoldState::EjectCoin()
 {
 	m_out << "Sorry you already turned the crank\n";
 }
@@ -33,7 +33,7 @@ void CSoldState::Dispense()
 	}
 	else
 	{
-		m_gumballMachine.SetNoQuarterState();
+		m_gumballMachine.SetNoCoinState();
 	}
 }
 std::string CSoldState::ToString() const
@@ -41,17 +41,17 @@ std::string CSoldState::ToString() const
 	return "delivering a gumball";
 }
 
-CSoldOutState::CSoldOutState(IGumballMachine& gumballMachine, std::ostream& out)
+CSoldOutState::CSoldOutState(IGumballMachineContext& gumballMachine, std::ostream& out)
 	: m_gumballMachine(gumballMachine)
 	, m_out(out)
 {
 }
 
-void CSoldOutState::InsertQuarter()
+void CSoldOutState::InsertCoin()
 {
 	m_out << "You can't insert a quarter, the machine is sold out\n";
 }
-void CSoldOutState::EjectQuarter()
+void CSoldOutState::EjectCoin()
 {
 	m_out << "You can't eject, you haven't inserted a quarter yet\n";
 }
@@ -68,59 +68,59 @@ std::string CSoldOutState::ToString() const
 	return "sold out";
 }
 
-CHasQuarterState::CHasQuarterState(IGumballMachine& gumballMachine, std::ostream& out)
+CHasCoinState::CHasCoinState(IGumballMachineContext& gumballMachine, std::ostream& out)
 	: m_gumballMachine(gumballMachine)
 	, m_out(out)
 {
 }
 
-void CHasQuarterState::InsertQuarter()
+void CHasCoinState::InsertCoin()
 {
 	m_out << "You can't insert another quarter\n";
 }
-void CHasQuarterState::EjectQuarter()
+void CHasCoinState::EjectCoin()
 {
 	m_out << "Quarter returned\n";
-	m_gumballMachine.SetNoQuarterState();
+	m_gumballMachine.SetNoCoinState();
 }
-void CHasQuarterState::TurnCrank()
+void CHasCoinState::TurnCrank()
 {
 	m_out << "You turned...\n";
 	m_gumballMachine.SetSoldState();
 }
-void CHasQuarterState::Dispense()
+void CHasCoinState::Dispense()
 {
 	m_out << "No gumball dispensed\n";
 }
-std::string CHasQuarterState::ToString() const
+std::string CHasCoinState::ToString() const
 {
 	return "waiting for turn of crank";
 }
 
-CNoQuarterState::CNoQuarterState(IGumballMachine& gumballMachine, std::ostream& out)
+CNoCoinState::CNoCoinState(IGumballMachineContext& gumballMachine, std::ostream& out)
 	: m_gumballMachine(gumballMachine)
 	, m_out(out)
 {
 }
 
-void CNoQuarterState::InsertQuarter()
+void CNoCoinState::InsertCoin()
 {
 	m_out << "You inserted a quarter\n";
-	m_gumballMachine.SetHasQuarterState();
+	m_gumballMachine.SetHasCoinState();
 }
-void CNoQuarterState::EjectQuarter()
+void CNoCoinState::EjectCoin()
 {
 	m_out << "You haven't inserted a quarter\n";
 }
-void CNoQuarterState::TurnCrank()
+void CNoCoinState::TurnCrank()
 {
 	m_out << "You turned but there's no quarter\n";
 }
-void CNoQuarterState::Dispense()
+void CNoCoinState::Dispense()
 {
 	m_out << "You need to pay first\n";
 }
-std::string CNoQuarterState::ToString() const
+std::string CNoCoinState::ToString() const
 {
 	return "waiting for quarter";
 }
@@ -128,24 +128,24 @@ std::string CNoQuarterState::ToString() const
 CGumballMachine::CGumballMachine(size_t numBalls, std::ostream& out)
 	: m_soldState(*this, out)
 	, m_soldOutState(*this, out)
-	, m_noQuarterState(*this, out)
-	, m_hasQuarterState(*this, out)
+	, m_noCoinState(*this, out)
+	, m_hasCoinState(*this, out)
 	, m_state(&m_soldOutState)
 	, m_count(numBalls)
 	, m_out(out)
 {
 	if (m_count > 0)
 	{
-		m_state = &m_noQuarterState;
+		m_state = &m_noCoinState;
 	}
 }
-void CGumballMachine::EjectQuarter()
+void CGumballMachine::EjectCoin()
 {
-	m_state->EjectQuarter();
+	m_state->EjectCoin();
 }
-void CGumballMachine::InsertQuarter()
+void CGumballMachine::InsertCoin()
 {
-	m_state->InsertQuarter();
+	m_state->InsertCoin();
 }
 void CGumballMachine::TurnCrank()
 {
@@ -179,15 +179,15 @@ void CGumballMachine::SetSoldOutState()
 {
 	m_state = &m_soldOutState;
 }
-void CGumballMachine::SetNoQuarterState()
+void CGumballMachine::SetNoCoinState()
 {
-	m_state = &m_noQuarterState;
+	m_state = &m_noCoinState;
 }
 void CGumballMachine::SetSoldState()
 {
 	m_state = &m_soldState;
 }
-void CGumballMachine::SetHasQuarterState()
+void CGumballMachine::SetHasCoinState()
 {
-	m_state = &m_hasQuarterState;
+	m_state = &m_hasCoinState;
 }

@@ -27,14 +27,14 @@ BOOST_AUTO_TEST_SUITE(GumBallMachine)
 
 		BOOST_AUTO_TEST_CASE(insert_quarter)
 		{
-			machine.InsertQuarter();
+			machine.InsertCoin();
 			BOOST_CHECK(output.is_equal("You can't insert a quarter, the machine is sold out\n"));
 			AssertState(machine, "sold out", 0);
 		}
 
 		BOOST_AUTO_TEST_CASE(eject_quarter)
 		{
-			machine.EjectQuarter();
+			machine.EjectCoin();
 			BOOST_CHECK(output.is_equal("You can't eject, you haven't inserted a quarter yet\n"));
 			AssertState(machine, "sold out", 0);
 		}
@@ -62,14 +62,14 @@ BOOST_AUTO_TEST_SUITE(GumBallMachine)
 
 			BOOST_AUTO_TEST_CASE(changes_state_when_insertion_quarter)
 			{
-				machine.InsertQuarter();
+				machine.InsertCoin();
 				BOOST_CHECK(output.is_equal("You inserted a quarter\n"));
 				AssertState(machine, "waiting for turn of crank", 13);
 			}
 
 			BOOST_AUTO_TEST_CASE(do_not_change_state_when_eject_quarter)
 			{
-				machine.EjectQuarter();
+				machine.EjectCoin();
 				BOOST_CHECK(output.is_equal("You haven't inserted a quarter\n"));
 				AssertState(machine, "waiting for quarter", 13);
 			}
@@ -87,7 +87,7 @@ BOOST_AUTO_TEST_SUITE(GumBallMachine)
 			CGumballMachineHasQuarter_()
 				: machine(13, output)
 			{
-				machine.InsertQuarter();
+				machine.InsertCoin();
 			}
 			CGumballMachine machine;
 		};
@@ -96,14 +96,14 @@ BOOST_AUTO_TEST_SUITE(GumBallMachine)
 
 			BOOST_AUTO_TEST_CASE(do_not_change_state_when_insertion_quarter)
 			{
-				machine.InsertQuarter();
+				machine.InsertCoin();
 				BOOST_CHECK(output.is_equal("You inserted a quarter\nYou can't insert another quarter\n"));
 				AssertState(machine, "waiting for turn of crank", 13);
 			}
 
 			BOOST_AUTO_TEST_CASE(changes_state_when_eject_quarter)
 			{
-				machine.EjectQuarter();
+				machine.EjectCoin();
 				BOOST_CHECK(output.is_equal("You inserted a quarter\nQuarter returned\n"));
 				AssertState(machine, "waiting for quarter", 13);
 			}
@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_SUITE(GumBallMachine)
 			BOOST_AUTO_TEST_CASE(changes_state_when_get_last_gum_ball)
 			{
 				CGumballMachine gumballMachine(1, output);
-				gumballMachine.InsertQuarter();
+				gumballMachine.InsertCoin();
 				gumballMachine.TurnCrank();
 				AssertState(gumballMachine, "sold out", 0);
 			}
