@@ -9,6 +9,9 @@ struct IState
 	virtual void EjectCoin() = 0;
 	virtual void TurnCrank() = 0;
 	virtual void Dispense() = 0;
+
+	virtual void Refill(size_t count) = 0;
+
 	virtual std::string ToString() const = 0;
 	virtual ~IState() = default;
 };
@@ -17,6 +20,7 @@ struct IGumballMachineContext
 {
 	virtual void ReleaseBall() = 0;
 	virtual size_t GetBallCount() const = 0;
+	virtual void Refill(size_t count) = 0;
 
 	virtual void SetSoldOutState() = 0;
 	virtual void SetNoCoinState() = 0;
@@ -39,6 +43,7 @@ public:
 	void EjectCoin() override;
 	void TurnCrank() override;
 	void Dispense() override;
+	void Refill(size_t count) override;
 	std::string ToString() const override;
 
 private:
@@ -56,6 +61,7 @@ public:
 	void EjectCoin() override;
 	void TurnCrank() override;
 	void Dispense() override;
+	void Refill(size_t count) override;
 	std::string ToString() const override;
 
 private:
@@ -73,6 +79,7 @@ public:
 	void EjectCoin() override;
 	void TurnCrank() override;
 	void Dispense() override;
+	void Refill(size_t count) override;
 	std::string ToString() const override;
 
 private:
@@ -90,6 +97,7 @@ public:
 	void EjectCoin() override;
 	void TurnCrank() override;
 	void Dispense() override;
+	void Refill(size_t count) override;
 	std::string ToString() const override;
 
 private:
@@ -112,12 +120,13 @@ public:
 private:
 	size_t GetBallCount() const override;
 	void ReleaseBall() override;
+
 	void SetSoldOutState() override;
 	void SetNoCoinState() override;
 	void SetSoldState() override;
 	void SetHasCoinState() override;
 
-	size_t m_count = 0;
+	size_t m_gumBalls = 0;
 	CSoldState m_soldState;
 	CSoldOutState m_soldOutState;
 	CNoCoinState m_noCoinState;
@@ -127,6 +136,8 @@ private:
 
 	size_t m_coin = 0;
 	const size_t MAX_COUNT_OF_COINS = 5;
+
+	void Refill(size_t count);
 
 	void AddCoin() override;
 	void ReleaseCoin() override;

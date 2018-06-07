@@ -15,6 +15,10 @@ void CSoldState::InsertCoin()
 {
 	m_out << "Please wait, we're already giving you a gumball\n";
 }
+void CSoldState::Refill(size_t /*count*/)
+{
+	m_out << "Sorry, this operation is not available\n ";
+}
 void CSoldState::EjectCoin()
 {
 	m_out << "Sorry you already turned the crank\n";
@@ -53,6 +57,11 @@ CSoldOutState::CSoldOutState(IGumballMachineContext& gumballMachine, std::ostrea
 {
 }
 
+void CSoldOutState::Refill(size_t count)
+{
+	m_gumballMachine.Refill(count);
+}
+
 void CSoldOutState::InsertCoin()
 {
 	m_out << "You can't insert a Coin, the machine is sold out\n";
@@ -80,6 +89,10 @@ CHasCoinState::CHasCoinState(IGumballMachineContext& gumballMachine, std::ostrea
 {
 }
 
+void CHasCoinState::Refill(size_t count)
+{
+	m_gumballMachine.Refill(count);
+}
 void CHasCoinState::InsertCoin()
 {
 	m_gumballMachine.AddCoin();
@@ -113,6 +126,11 @@ CNoCoinState::CNoCoinState(IGumballMachineContext& gumballMachine, std::ostream&
 {
 }
 
+void CNoCoinState::Refill(size_t count)
+{
+	m_gumballMachine.Refill(count);
+}
+
 void CNoCoinState::InsertCoin()
 {
 	m_gumballMachine.AddCoin();
@@ -141,10 +159,10 @@ CMultiGumballMachine::CMultiGumballMachine(size_t numBalls, std::ostream& out)
 	, m_noCoinState(*this, out)
 	, m_hasCoinState(*this, out)
 	, m_state(&m_soldOutState)
-	, m_count(numBalls)
+	, m_gumBalls(numBalls)
 	, m_out(out)
 {
-	if (m_count > 0)
+	if (m_gumBalls > 0)
 	{
 		m_state = &m_noCoinState;
 	}
@@ -170,19 +188,19 @@ C++-enabled Standing Gumball Model #2016 (with state)
 Inventory: %1% gumball%2%
 Machine is %3%
 )");
-	return (fmt % m_count % (m_count != 1 ? "s" : "") % m_state->ToString()).str();
+	return (fmt % m_gumBalls % (m_gumBalls != 1 ? "s" : "") % m_state->ToString()).str();
 }
 
 size_t CMultiGumballMachine::GetBallCount() const
 {
-	return m_count;
+	return m_gumBalls;
 }
 void CMultiGumballMachine::ReleaseBall()
 {
-	if (m_count != 0)
+	if (m_gumBalls != 0)
 	{
 		m_out << "A gumball comes rolling out the slot...\n";
-		--m_count;
+		--m_gumBalls;
 	}
 }
 void CMultiGumballMachine::SetSoldOutState()
@@ -222,6 +240,12 @@ void CMultiGumballMachine::ReleaseCoin()
 		m_out << "Coin returned\n";
 		--m_coin;
 	}
+}
+
+void CMultiGumballMachine::Refill(size_t count)
+{
+	m_gumBalls += count;
+	m_out << "Added " << count << (count != 1 ? "s" : "") << "\n";
 }
 
 size_t CMultiGumballMachine::GetCoins()
