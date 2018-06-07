@@ -24,6 +24,9 @@
     <ClInclude Include="MultiGumBallMachineWithState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NaiveGumBallMachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
