@@ -14,10 +14,10 @@ public:
 	};
 
 	CMultiGumballMachine(size_t count, std::ostream& out)
-		: m_gumBalls(count)
+		: m_gumBallsCount(count)
 		, m_state(count > 0 ? State::NoCoin : State::SoldOut)
 		, m_out(out)
-		, m_coins(0)
+		, m_coinsCount(0)
 	{
 	}
 
@@ -46,7 +46,7 @@ public:
 		switch (m_state)
 		{
 		case State::HasCoin:
-			while (m_coins != 0)
+			while (m_coinsCount != 0)
 			{
 				ReleaseCoin();
 				m_out << "Coin returned\n";
@@ -89,7 +89,7 @@ public:
 
 	void Refill(size_t numBalls)
 	{
-		m_gumBalls = numBalls;
+		m_gumBallsCount = numBalls;
 		m_state = numBalls > 0 ? State::NoCoin : State::SoldOut;
 	}
 
@@ -102,7 +102,7 @@ Inventory: %1% gumball%2%
 Machine is %3%
 Number of coins: %4%
 )");
-		return (fmt % m_gumBalls % (m_gumBalls != 1 ? "s" : "") % state % m_coins).str();
+		return (fmt % m_gumBallsCount % (m_gumBallsCount != 1 ? "s" : "") % state % m_coinsCount).str();
 	}
 
 private:
@@ -114,14 +114,14 @@ private:
 		{
 			m_out << "A gumball comes rolling out the slot\n";
 
-			if (m_gumBalls != 0)
+			if (m_gumBallsCount != 0)
 			{
-				--m_gumBalls;
+				--m_gumBallsCount;
 				ReleaseCoin();
 			}
 
-			bool hasCoins = (m_coins != 0);
-			bool hasBalls = (m_gumBalls != 0);
+			bool hasCoins = (m_coinsCount != 0);
+			bool hasBalls = (m_gumBallsCount != 0);
 
 			if (!hasBalls)
 			{
@@ -154,9 +154,9 @@ private:
 
 	void AddCoin()
 	{
-		if (m_coins != MAX_COUNT_OF_COINS)
+		if (m_coinsCount != MAX_COUNT_OF_COINS)
 		{
-			++m_coins;
+			++m_coinsCount;
 			m_out << "You inserted a coin\n";
 		}
 		else
@@ -167,14 +167,14 @@ private:
 
 	void ReleaseCoin()
 	{
-		if (m_coins != 0)
+		if (m_coinsCount != 0)
 		{
-			--m_coins;
+			--m_coinsCount;
 		}
 	}
 
-	size_t m_gumBalls; // Количество шариков
-	size_t m_coins; // Количество монет
+	size_t m_gumBallsCount; // Количество шариков
+	size_t m_coinsCount; // Количество монет
 	const size_t MAX_COUNT_OF_COINS = 5;
 
 	State m_state = State::SoldOut;

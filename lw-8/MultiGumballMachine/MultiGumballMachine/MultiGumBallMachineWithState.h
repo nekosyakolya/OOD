@@ -141,7 +141,7 @@ private:
 	void SetSoldState() override;
 	void SetHasCoinState() override;
 
-	size_t m_gumBalls = 0;
+	size_t m_gumBallsCount = 0;
 	CSoldState m_soldState;
 	CSoldOutState m_soldOutState;
 	CNoCoinState m_noCoinState;
@@ -149,7 +149,7 @@ private:
 	IState* m_state;
 	std::ostream& m_out;
 
-	size_t m_coin = 0;
+	size_t m_coinsCount = 0;
 	const size_t MAX_COUNT_OF_COINS = 5;
 
 	void AddCoin() override;
