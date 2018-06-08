@@ -78,11 +78,11 @@ void CSoldOutState::Refill(size_t count)
 
 void CSoldOutState::InsertCoin()
 {
-	m_out << "You can't insert a Coin, the machine is sold out\n";
+	m_out << "You can't insert a coin, the machine is sold out\n";
 }
 void CSoldOutState::EjectCoin()
 {
-	m_out << "You can't eject, you haven't inserted a Coin yet\n";
+	m_out << "You can't eject, you haven't inserted a coin yet\n";
 }
 void CSoldOutState::TurnCrank()
 {
@@ -153,11 +153,11 @@ void CNoCoinState::InsertCoin()
 }
 void CNoCoinState::EjectCoin()
 {
-	m_out << "You haven't inserted a Coin\n";
+	m_out << "You haven't inserted a coin\n";
 }
 void CNoCoinState::TurnCrank()
 {
-	m_out << "You turned but there's no Coin\n";
+	m_out << "You turned but there's no coin\n";
 }
 void CNoCoinState::Dispense()
 {
@@ -165,7 +165,7 @@ void CNoCoinState::Dispense()
 }
 std::string CNoCoinState::ToString() const
 {
-	return "waiting for Coin";
+	return "waiting for coin";
 }
 
 CMultiGumballMachine::CMultiGumballMachine(size_t numBalls, std::ostream& out)

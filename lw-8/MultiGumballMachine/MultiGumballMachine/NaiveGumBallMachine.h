@@ -2,37 +2,37 @@
 
 namespace naive
 {
-class CGumballMachine
+class CMultiGumballMachine
 {
 public:
 	enum class State
 	{
 		SoldOut, // Жвачка закончилась
-		NoQuarter, // Нет монетки
-		HasQuarter, // Есть монетка
+		NoCoin, // Нет монетки
+		HasCoin, // Есть монетка
 		Sold, // Монетка выдана
 	};
 
-	CGumballMachine(size_t count, std::ostream& out)
-		: m_count(count)
-		, m_state(count > 0 ? State::NoQuarter : State::SoldOut)
+	CMultiGumballMachine(size_t count, std::ostream& out)
+		: m_gunBalls(count)
+		, m_state(count > 0 ? State::NoCoin : State::SoldOut)
 		, m_out(out)
 		, m_coin(0)
 	{
 	}
 
-	void InsertQuarter()
+	void InsertCoin()
 	{
 		switch (m_state)
 		{
 		case State::SoldOut:
-			m_out << "You can't insert a quarter, the machine is sold out\n";
+			m_out << "You can't insert a coin, the machine is sold out\n";
 			break;
-		case State::NoQuarter:
+		case State::NoCoin:
 			AddCoin();
-			m_state = State::HasQuarter;
+			m_state = State::HasCoin;
 			break;
-		case State::HasQuarter:
+		case State::HasCoin:
 			AddCoin();
 			break;
 		case State::Sold:
@@ -41,27 +41,27 @@ public:
 		}
 	}
 
-	void EjectQuarter()
+	void EjectCoin()
 	{
 		switch (m_state)
 		{
-		case State::HasQuarter:
+		case State::HasCoin:
 			while (m_coin != 0)
 			{
 				ReleaseCoin();
 				m_out << "Coin returned\n";
 			}
 
-			m_state = State::NoQuarter;
+			m_state = State::NoCoin;
 			break;
-		case State::NoQuarter:
-			m_out << "You haven't inserted a quarter\n";
+		case State::NoCoin:
+			m_out << "You haven't inserted a coin\n";
 			break;
 		case State::Sold:
 			m_out << "Sorry you already turned the crank\n";
 			break;
 		case State::SoldOut:
-			m_out << "You can't eject, you haven't inserted a quarter yet\n";
+			m_out << "You can't eject, you haven't inserted a coin yet\n";
 			break;
 		}
 	}
@@ -73,10 +73,10 @@ public:
 		case State::SoldOut:
 			m_out << "You turned but there's no gumballs\n";
 			break;
-		case State::NoQuarter:
-			m_out << "You turned but there's no quarter\n";
+		case State::NoCoin:
+			m_out << "You turned but there's no coin\n";
 			break;
-		case State::HasQuarter:
+		case State::HasCoin:
 			m_out << "You turned...\n";
 			m_state = State::Sold;
 			Dispense();
@@ -89,20 +89,20 @@ public:
 
 	void Refill(size_t numBalls)
 	{
-		m_count = numBalls;
-		m_state = numBalls > 0 ? State::NoQuarter : State::SoldOut;
+		m_gunBalls = numBalls;
+		m_state = numBalls > 0 ? State::NoCoin : State::SoldOut;
 	}
 
 	std::string ToString() const
 	{
-		std::string state = (m_state == State::SoldOut) ? "sold out" : (m_state == State::NoQuarter) ? "waiting for quarter" : (m_state == State::HasQuarter) ? "waiting for turn of crank" : "delivering a gumball";
-		auto fmt = boost::format(R"(
-Mighty Gumball, Inc.
-C++-enabled Standing Gumball Model #2016
+		std::string state = (m_state == State::SoldOut) ? "sold out" : (m_state == State::NoCoin) ? "waiting for coin" : (m_state == State::HasCoin) ? "waiting for turn of crank" : "delivering a gumball";
+		auto fmt = boost::format(R"(Mighty Gumball, Inc.
+C++-enabled Standing Gumball Model #2016 (with state)
 Inventory: %1% gumball%2%
 Machine is %3%
+Number of coins: %4%
 )");
-		return (fmt % m_count % (m_count != 1 ? "s" : "") % state).str();
+		return (fmt % m_gunBalls % (m_gunBalls != 1 ? "s" : "") % state % m_coin).str();
 	}
 
 private:
@@ -112,27 +112,27 @@ private:
 		{
 		case State::Sold:
 			m_out << "A gumball comes rolling out the slot\n";
-			--m_count;
+			--m_gunBalls;
 			ReleaseCoin();
-			if (m_coin > m_count)
+			if (m_coin > m_gunBalls)
 			{
-				m_state = State::HasQuarter;
+				m_state = State::HasCoin;
 			}
-			else if (m_count == 0)
+			else if (m_gunBalls == 0)
 			{
 				m_out << "Oops, out of gumballs\n";
 				m_state = State::SoldOut;
 			}
 			else
 			{
-				m_state = State::NoQuarter;
+				m_state = State::NoCoin;
 			}
 			break;
-		case State::NoQuarter:
+		case State::NoCoin:
 			m_out << "You need to pay first\n";
 			break;
 		case State::SoldOut:
-		case State::HasQuarter:
+		case State::HasCoin:
 			m_out << "No gumball dispensed\n";
 			break;
 		}
@@ -159,7 +159,7 @@ private:
 		}
 	}
 
-	size_t m_count; // Количество шариков
+	size_t m_gunBalls; // Количество шариков
 	size_t m_coin; // Количество монет
 	const size_t MAX_COUNT_OF_COINS = 5;
 
