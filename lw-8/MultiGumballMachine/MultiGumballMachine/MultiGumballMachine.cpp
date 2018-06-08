@@ -240,7 +240,7 @@ void CMultiGumballMachine::AddCoin()
 	if (m_coin != MAX_COUNT_OF_COINS)
 	{
 		++m_coin;
-		m_out << "You inserted a Coin\n";
+		m_out << "You inserted a coin\n";
 	}
 	else
 	{

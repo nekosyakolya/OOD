@@ -14,10 +14,10 @@ public:
 	};
 
 	CMultiGumballMachine(size_t count, std::ostream& out)
-		: m_gunBalls(count)
+		: m_gumBalls(count)
 		, m_state(count > 0 ? State::NoCoin : State::SoldOut)
 		, m_out(out)
-		, m_coin(0)
+		, m_coins(0)
 	{
 	}
 
@@ -46,7 +46,7 @@ public:
 		switch (m_state)
 		{
 		case State::HasCoin:
-			while (m_coin != 0)
+			while (m_coins != 0)
 			{
 				ReleaseCoin();
 				m_out << "Coin returned\n";
@@ -89,7 +89,7 @@ public:
 
 	void Refill(size_t numBalls)
 	{
-		m_gunBalls = numBalls;
+		m_gumBalls = numBalls;
 		m_state = numBalls > 0 ? State::NoCoin : State::SoldOut;
 	}
 
@@ -102,7 +102,7 @@ Inventory: %1% gumball%2%
 Machine is %3%
 Number of coins: %4%
 )");
-		return (fmt % m_gunBalls % (m_gunBalls != 1 ? "s" : "") % state % m_coin).str();
+		return (fmt % m_gumBalls % (m_gumBalls != 1 ? "s" : "") % state % m_coins).str();
 	}
 
 private:
@@ -111,23 +111,37 @@ private:
 		switch (m_state)
 		{
 		case State::Sold:
+		{
 			m_out << "A gumball comes rolling out the slot\n";
-			--m_gunBalls;
-			ReleaseCoin();
-			if (m_coin > m_gunBalls)
+
+			if (m_gumBalls != 0)
 			{
-				m_state = State::HasCoin;
+				--m_gumBalls;
+				ReleaseCoin();
 			}
-			else if (m_gunBalls == 0)
+
+			bool hasCoins = (m_coins != 0);
+			bool hasBalls = (m_gumBalls != 0);
+
+			if (!hasBalls)
 			{
 				m_out << "Oops, out of gumballs\n";
+			}
+
+			if (!hasBalls && !hasCoins)
+			{
 				m_state = State::SoldOut;
 			}
-			else
+			else if (!hasCoins)
 			{
 				m_state = State::NoCoin;
 			}
+			else
+			{
+				m_state = State::HasCoin;
+			}
 			break;
+		}
 		case State::NoCoin:
 			m_out << "You need to pay first\n";
 			break;
@@ -140,10 +154,10 @@ private:
 
 	void AddCoin()
 	{
-		if (m_coin != MAX_COUNT_OF_COINS)
+		if (m_coins != MAX_COUNT_OF_COINS)
 		{
-			++m_coin;
-			m_out << "You inserted a Coin\n";
+			++m_coins;
+			m_out << "You inserted a coin\n";
 		}
 		else
 		{
@@ -153,14 +167,14 @@ private:
 
 	void ReleaseCoin()
 	{
-		if (m_coin != 0)
+		if (m_coins != 0)
 		{
-			--m_coin;
+			--m_coins;
 		}
 	}
 
-	size_t m_gunBalls; // Количество шариков
-	size_t m_coin; // Количество монет
+	size_t m_gumBalls; // Количество шариков
+	size_t m_coins; // Количество монет
 	const size_t MAX_COUNT_OF_COINS = 5;
 
 	State m_state = State::SoldOut;
