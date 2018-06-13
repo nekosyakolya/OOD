@@ -29,6 +29,7 @@ public:
 
 private:
 	std::string m_title;
+	const std::string TMP_DIRECTORY_NAME = "tmp";
 	CCommandHistory m_history;
 	std::vector<CDocumentItem> m_items;
 };

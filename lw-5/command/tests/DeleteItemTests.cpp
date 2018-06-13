@@ -11,7 +11,7 @@ struct DeleteItem_
 	struct DeleteItem_()
 	{
 
-		insertImageCommand = std::make_unique<CInsertImage>(history, items, "resources/amanita.png", 450, 300, 0);
+		insertImageCommand = std::make_unique<CInsertImage>(history, items, "resources/amanita.png", 450, 300, "tmp", 0);
 		auto paragraph = std::make_shared<CParagraph>(history, "text");
 		insertParagraphCommand = std::make_unique<CInsertParagraph>(paragraph, items, 0);
 

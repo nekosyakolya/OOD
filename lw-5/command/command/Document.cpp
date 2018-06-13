@@ -64,7 +64,7 @@ void CDocument::DeleteItem(size_t index)
 
 std::shared_ptr<IImage> CDocument::InsertImage(const boost::filesystem::path& path, int width, int height, boost::optional<size_t> position)
 {
-	m_history.SetAndExecuteCommand(std::make_unique<CInsertImage>(m_history, m_items, path, width, height, position));
+	m_history.SetAndExecuteCommand(std::make_unique<CInsertImage>(m_history, m_items, path, width, height, TMP_DIRECTORY_NAME, position));
 
 	size_t index = m_items.size() - 1;
 	if (position != boost::none)
@@ -93,7 +93,7 @@ CDocument::~CDocument()
 {
 	try
 	{
-		boost::filesystem::remove_all("tmp");
+		boost::filesystem::remove_all(TMP_DIRECTORY_NAME);
 	}
 	catch (std::exception& e)
 	{

@@ -2,12 +2,12 @@
 #include "InsertImage.h"
 #include "Image.h"
 
-CInsertImage::CInsertImage(ICommandHistory& history, std::vector<CDocumentItem>& items, const boost::filesystem::path& path, int width, int height, boost::optional<size_t> position)
+CInsertImage::CInsertImage(ICommandHistory& history, std::vector<CDocumentItem>& items, const boost::filesystem::path& path, int width, int height, const std::string& tmpDirectoryName, boost::optional<size_t> position)
 	: m_items(items)
 	, m_position(position)
 
 {
-	SetImage(history, path, width, height);
+	SetImage(history, path, width, height, tmpDirectoryName);
 }
 
 CInsertImage::~CInsertImage()
@@ -52,9 +52,9 @@ void CInsertImage::DoUnexecute()
 	}
 }
 
-void CInsertImage::SetImage(ICommandHistory& history, const boost::filesystem::path& path, int width, int height)
+void CInsertImage::SetImage(ICommandHistory& history, const boost::filesystem::path& path, int width, int height, const std::string& tmpDirectoryName)
 {
-	boost::filesystem::path imagesFolderPath = boost::filesystem::path("tmp");
+	boost::filesystem::path imagesFolderPath = boost::filesystem::path(tmpDirectoryName);
 	boost::filesystem::create_directory(imagesFolderPath);
 
 	std::string extensionFile = boost::filesystem::extension(path);

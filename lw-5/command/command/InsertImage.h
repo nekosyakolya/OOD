@@ -7,6 +7,7 @@ class CInsertImage : public CAbstractCommand
 {
 public:
 	CInsertImage(ICommandHistory& history, std::vector<CDocumentItem>& items, const boost::filesystem::path& path, int width, int height,
+		const std::string& tmpDirectoryName,
 		boost::optional<size_t> position = boost::none);
 
 	~CInsertImage() override;
@@ -18,5 +19,5 @@ private:
 	boost::optional<size_t> m_position;
 	std::shared_ptr<IImage> m_image;
 
-	void SetImage(ICommandHistory& history, const boost::filesystem::path& path, int width, int height);
+	void SetImage(ICommandHistory& history, const boost::filesystem::path& path, int width, int height, const std::string& tmpDirectoryName);
 };

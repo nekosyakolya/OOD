@@ -9,7 +9,7 @@ struct InsertImage_
 	{
 		width = 450;
 		height = 300;
-		command = std::make_unique<CInsertImage>(history, items, "resources/amanita.png", width, height, 0);
+		command = std::make_unique<CInsertImage>(history, items, "resources/amanita.png", width, height, "tmp", 0);
 	}
 	int width;
 	int height;
@@ -38,7 +38,7 @@ BOOST_FIXTURE_TEST_SUITE(Insert_image_command, InsertImage_)
 		}
 		BOOST_AUTO_TEST_CASE(if_position_is_not_transferred)
 		{
-			command = std::make_unique<CInsertImage>(history, items, "resources/amanita.png", width, height, boost::none);
+			command = std::make_unique<CInsertImage>(history, items, "resources/amanita.png", width, height, "tmp");
 
 			BOOST_CHECK(items.empty());
 
@@ -61,14 +61,14 @@ BOOST_FIXTURE_TEST_SUITE(Insert_image_command, InsertImage_)
 		BOOST_AUTO_TEST_CASE(if_position_is_incorrect)
 		{
 			BOOST_CHECK(items.empty());
-			command = std::make_unique<CInsertImage>(history, items, "resources/amanita.png", width, height, 10);
+			command = std::make_unique<CInsertImage>(history, items, "resources/amanita.png", width, height, "tmp", 10);
 			BOOST_REQUIRE_THROW(command->Execute(), std::invalid_argument);
 		}
 
 		BOOST_AUTO_TEST_CASE(if_path_is_incorrect)
 		{
-			BOOST_REQUIRE_THROW(std::make_unique<CInsertImage>(history, items, "resources/1.png", width, height, 0), boost::filesystem::filesystem_error);
-			BOOST_REQUIRE_THROW(std::make_unique<CInsertImage>(history, items, "resources/tmp.txt", width, height, 0), std::logic_error);
+			BOOST_REQUIRE_THROW(std::make_unique<CInsertImage>(history, items, "resources/1.png", width, height, "tmp", 0), boost::filesystem::filesystem_error);
+			BOOST_REQUIRE_THROW(std::make_unique<CInsertImage>(history, items, "resources/tmp.txt", width, height, "tmp", 0), std::logic_error);
 		}
 	BOOST_AUTO_TEST_SUITE_END()
 	BOOST_AUTO_TEST_CASE(can_be_unexecuted)
