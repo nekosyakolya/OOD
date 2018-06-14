@@ -3,14 +3,14 @@
 #include "CDocumentItem.h"
 #include "ICommandHistory.h"
 
-class CInsertImage : public CAbstractCommand
+class CInsertImageCommand : public CAbstractCommand
 {
 public:
-	CInsertImage(ICommandHistory& history, std::vector<CDocumentItem>& items, const boost::filesystem::path& path, int width, int height,
+	CInsertImageCommand(ICommandHistory& history, std::vector<CDocumentItem>& items, const boost::filesystem::path& path, int width, int height,
 		const std::string& tmpDirectoryName,
 		boost::optional<size_t> position = boost::none);
 
-	~CInsertImage() override;
+	~CInsertImageCommand() override;
 
 private:
 	void DoExecute() override;

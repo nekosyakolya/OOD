@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "Document.h"
 #include "ChangeStringCommand.h"
-#include "DeleteItem.h"
+#include "DeleteItemCommand.h"
 #include "IDocumentSerializer.h"
-#include "InsertImage.h"
-#include "InsertParagraph.h"
+#include "InsertImageCommand.h"
+#include "InsertParagraphCommand.h"
 #include "Paragraph.h"
 
 void CDocument::SetTitle(const std::string& title)
@@ -59,12 +59,12 @@ void CDocument::Save(const IDocumentSerializer& serializer) const
 
 void CDocument::DeleteItem(size_t index)
 {
-	m_history.SetAndExecuteCommand(std::make_unique<CDeleteItem>(m_items, index));
+	m_history.SetAndExecuteCommand(std::make_unique<CDeleteItemCommand>(m_items, index));
 }
 
 std::shared_ptr<IImage> CDocument::InsertImage(const boost::filesystem::path& path, int width, int height, boost::optional<size_t> position)
 {
-	m_history.SetAndExecuteCommand(std::make_unique<CInsertImage>(m_history, m_items, path, width, height, TMP_DIRECTORY_NAME, position));
+	m_history.SetAndExecuteCommand(std::make_unique<CInsertImageCommand>(m_history, m_items, path, width, height, TMP_DIRECTORY_NAME, position));
 
 	size_t index = m_items.size() - 1;
 	if (position != boost::none)
@@ -78,7 +78,7 @@ std::shared_ptr<IImage> CDocument::InsertImage(const boost::filesystem::path& pa
 std::shared_ptr<IParagraph> CDocument::InsertParagraph(const std::string& text, boost::optional<size_t> position)
 {
 	auto paragraph = std::make_shared<CParagraph>(m_history, text);
-	m_history.SetAndExecuteCommand(std::make_unique<CInsertParagraph>(paragraph, m_items, position));
+	m_history.SetAndExecuteCommand(std::make_unique<CInsertParagraphCommand>(paragraph, m_items, position));
 
 	size_t index = m_items.size() - 1;
 	if (position != boost::none)

@@ -164,7 +164,7 @@
     <ClInclude Include="..\command\CConstDocumentItem.h" />
     <ClInclude Include="..\command\CDocumentItem.h" />
     <ClInclude Include="..\command\ChangeStringCommand.h" />
-    <ClInclude Include="..\command\DeleteItem.h" />
+    <ClInclude Include="..\command\DeleteItemCommand.h" />
     <ClInclude Include="..\command\Document.h" />
     <ClInclude Include="..\command\HtmlToFileSerializer.h" />
     <ClInclude Include="..\command\ICommand.h" />
@@ -173,12 +173,12 @@
     <ClInclude Include="..\command\IImage.h" />
     <ClInclude Include="..\command\IInvoker.h" />
     <ClInclude Include="..\command\Image.h" />
-    <ClInclude Include="..\command\InsertImage.h" />
-    <ClInclude Include="..\command\InsertParagraph.h" />
+    <ClInclude Include="..\command\InsertImageCommand.h" />
+    <ClInclude Include="..\command\InsertParagraphCommand.h" />
     <ClInclude Include="..\command\IParagraph.h" />
     <ClInclude Include="..\command\Paragraph.h" />
     <ClInclude Include="..\command\ReplaceSpecialHtmlCharacters.h" />
-    <ClInclude Include="..\command\ResizeImage.h" />
+    <ClInclude Include="..\command\ResizeImageCommand.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -188,15 +188,15 @@
     <ClCompile Include="..\command\CConstDocumentItem.cpp" />
     <ClCompile Include="..\command\CDocumentItem.cpp" />
     <ClCompile Include="..\command\ChangeStringCommand.cpp" />
-    <ClCompile Include="..\command\DeleteItem.cpp" />
+    <ClCompile Include="..\command\DeleteItemCommand.cpp" />
     <ClCompile Include="..\command\Document.cpp" />
     <ClCompile Include="..\command\HtmlToFileSerializer.cpp" />
     <ClCompile Include="..\command\Image.cpp" />
-    <ClCompile Include="..\command\InsertImage.cpp" />
-    <ClCompile Include="..\command\InsertParagraph.cpp" />
+    <ClCompile Include="..\command\InsertImageCommand.cpp" />
+    <ClCompile Include="..\command\InsertParagraphCommand.cpp" />
     <ClCompile Include="..\command\Paragraph.cpp" />
     <ClCompile Include="..\command\ReplaceSpecialHtmlCharacters.cpp" />
-    <ClCompile Include="..\command\ResizeImage.cpp" />
+    <ClCompile Include="..\command\ResizeImageCommand.cpp" />
     <ClCompile Include="ChangeStringCommandTests.cpp" />
     <ClCompile Include="CommandHistoryTests.cpp" />
     <ClCompile Include="DeleteItemTests.cpp" />

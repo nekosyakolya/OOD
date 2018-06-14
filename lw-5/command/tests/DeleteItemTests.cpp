@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "../command/CCommandHistory.h"
 #include "../command/CDocumentItem.h"
-#include "../command/DeleteItem.h"
-#include "../command/InsertImage.h"
-#include "../command/InsertParagraph.h"
+#include "../command/DeleteItemCommand.h"
+#include "../command/InsertImageCommand.h"
+#include "../command/InsertParagraphCommand.h"
 #include "../command/Paragraph.h"
 
 struct DeleteItem_
@@ -11,11 +11,11 @@ struct DeleteItem_
 	struct DeleteItem_()
 	{
 
-		insertImageCommand = std::make_unique<CInsertImage>(history, items, "resources/amanita.png", 450, 300, "tmp", 0);
+		insertImageCommand = std::make_unique<CInsertImageCommand>(history, items, "resources/amanita.png", 450, 300, "tmp", 0);
 		auto paragraph = std::make_shared<CParagraph>(history, "text");
-		insertParagraphCommand = std::make_unique<CInsertParagraph>(paragraph, items, 0);
+		insertParagraphCommand = std::make_unique<CInsertParagraphCommand>(paragraph, items, 0);
 
-		command = std::make_unique<CDeleteItem>(items, 0);
+		command = std::make_unique<CDeleteItemCommand>(items, 0);
 	}
 	std::unique_ptr<ICommand> insertImageCommand;
 	std::unique_ptr<ICommand> insertParagraphCommand;

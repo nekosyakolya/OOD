@@ -2,10 +2,10 @@
 #include "AbstractCommand.h"
 #include "CDocumentItem.h"
 
-class CInsertParagraph : public CAbstractCommand
+class CInsertParagraphCommand : public CAbstractCommand
 {
 public:
-	CInsertParagraph(std::shared_ptr<IParagraph>&& paragraph, std::vector<CDocumentItem>& items, boost::optional<size_t> position);
+	CInsertParagraphCommand(std::shared_ptr<IParagraph>&& paragraph, std::vector<CDocumentItem>& items, boost::optional<size_t> position);
 
 private:
 	void DoExecute() override;

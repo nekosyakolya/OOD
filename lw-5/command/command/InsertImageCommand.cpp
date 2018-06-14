@@ -1,8 +1,8 @@
 ﻿#include "stdafx.h"
-#include "InsertImage.h"
+#include "InsertImageCommand.h"
 #include "Image.h"
 
-CInsertImage::CInsertImage(ICommandHistory& history, std::vector<CDocumentItem>& items, const boost::filesystem::path& path, int width, int height, const std::string& tmpDirectoryName, boost::optional<size_t> position)
+CInsertImageCommand::CInsertImageCommand(ICommandHistory& history, std::vector<CDocumentItem>& items, const boost::filesystem::path& path, int width, int height, const std::string& tmpDirectoryName, boost::optional<size_t> position)
 	: m_items(items)
 	, m_position(position)
 
@@ -10,7 +10,7 @@ CInsertImage::CInsertImage(ICommandHistory& history, std::vector<CDocumentItem>&
 	SetImage(history, path, width, height, tmpDirectoryName);
 }
 
-CInsertImage::~CInsertImage()
+CInsertImageCommand::~CInsertImageCommand()
 {
 	//если не выполнена , то удаляем из подкаталога файл
 	if (!m_executed)
@@ -24,7 +24,7 @@ CInsertImage::~CInsertImage()
 	}
 }
 
-void CInsertImage::DoExecute()
+void CInsertImageCommand::DoExecute()
 {
 	if (m_position == boost::none)
 	{
@@ -40,7 +40,7 @@ void CInsertImage::DoExecute()
 	}
 }
 
-void CInsertImage::DoUnexecute()
+void CInsertImageCommand::DoUnexecute()
 {
 	if (m_position == boost::none)
 	{
@@ -52,7 +52,7 @@ void CInsertImage::DoUnexecute()
 	}
 }
 
-void CInsertImage::SetImage(ICommandHistory& history, const boost::filesystem::path& path, int width, int height, const std::string& tmpDirectoryName)
+void CInsertImageCommand::SetImage(ICommandHistory& history, const boost::filesystem::path& path, int width, int height, const std::string& tmpDirectoryName)
 {
 	boost::filesystem::path imagesFolderPath = boost::filesystem::path(tmpDirectoryName);
 	boost::filesystem::create_directory(imagesFolderPath);

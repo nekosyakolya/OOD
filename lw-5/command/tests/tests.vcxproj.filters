@@ -45,9 +45,6 @@
     <ClInclude Include="..\command\AbstractCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\command\DeleteItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\command\HtmlToFileSerializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -63,12 +60,6 @@
     <ClInclude Include="..\command\Image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\command\InsertImage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\command\InsertParagraph.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\command\IParagraph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -78,7 +69,16 @@
     <ClInclude Include="..\command\ReplaceSpecialHtmlCharacters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\command\ResizeImage.h">
+    <ClInclude Include="..\command\DeleteItemCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\command\InsertImageCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\command\InsertParagraphCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\command\ResizeImageCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -110,28 +110,16 @@
     <ClCompile Include="..\command\AbstractCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\command\DeleteItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\command\HtmlToFileSerializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\command\Image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\command\InsertImage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\command\InsertParagraph.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\command\Paragraph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\command\ReplaceSpecialHtmlCharacters.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\command\ResizeImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ResizeImageTests.cpp">
@@ -159,6 +147,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ReplaceSpecialHtmlCharactersTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\command\DeleteItemCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\command\InsertImageCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\command\InsertParagraphCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\command\ResizeImageCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

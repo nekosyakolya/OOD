@@ -45,9 +45,6 @@
     <ClInclude Include="AbstractCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="InsertParagraph.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ChangeStringCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -57,16 +54,7 @@
     <ClInclude Include="Paragraph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DeleteItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InsertImage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResizeImage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ReplaceSpecialHtmlCharacters.h">
@@ -82,6 +70,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ICommandHistory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DeleteItemCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InsertImageCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InsertParagraphCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResizeImageCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -104,9 +104,6 @@
     <ClCompile Include="AbstractCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InsertParagraph.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ChangeStringCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -116,16 +113,7 @@
     <ClCompile Include="Paragraph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DeleteItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InsertImage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResizeImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ReplaceSpecialHtmlCharacters.cpp">
@@ -135,6 +123,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HtmlToFileSerializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DeleteItemCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InsertImageCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InsertParagraphCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResizeImageCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

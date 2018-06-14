@@ -1,15 +1,15 @@
 ﻿#include "stdafx.h"
-#include "InsertParagraph.h"
+#include "InsertParagraphCommand.h"
 #include "Paragraph.h"
 
-CInsertParagraph::CInsertParagraph(std::shared_ptr<IParagraph>&& paragraph, std::vector<CDocumentItem>& items, boost::optional<size_t> position)
+CInsertParagraphCommand::CInsertParagraphCommand(std::shared_ptr<IParagraph>&& paragraph, std::vector<CDocumentItem>& items, boost::optional<size_t> position)
 	: m_items(items)
 	, m_position(position)
 	, m_paragraph(paragraph)
 {
 }
 
-void CInsertParagraph::DoExecute()
+void CInsertParagraphCommand::DoExecute()
 {
 	if (m_position == boost::none)
 	{
@@ -26,7 +26,7 @@ void CInsertParagraph::DoExecute()
 	}
 }
 
-void CInsertParagraph::DoUnexecute()
+void CInsertParagraphCommand::DoUnexecute()
 {
 	if (m_position == boost::none)
 	{

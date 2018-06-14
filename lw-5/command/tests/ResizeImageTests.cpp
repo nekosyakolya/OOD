@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#include "../command/ResizeImage.h"
+#include "../command/ResizeImageCommand.h"
 
 struct ResizeImage_
 {
@@ -10,13 +10,13 @@ struct ResizeImage_
 		height = 210;
 		newWidth = 600;
 		newHeight = 420;
-		command = std::make_unique<CResizeImage>(width, newWidth, height, newHeight);
+		command = std::make_unique<CResizeImageCommand>(width, newWidth, height, newHeight);
 	}
 	int width;
 	int height;
 	int newWidth;
 	int newHeight;
-	std::unique_ptr<CResizeImage> command;
+	std::unique_ptr<CResizeImageCommand> command;
 };
 
 BOOST_FIXTURE_TEST_SUITE(Resize_image_command, ResizeImage_)

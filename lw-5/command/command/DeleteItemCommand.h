@@ -2,11 +2,11 @@
 #include "AbstractCommand.h"
 #include "CDocumentItem.h"
 
-class CDeleteItem : public CAbstractCommand
+class CDeleteItemCommand : public CAbstractCommand
 {
 public:
-	CDeleteItem(std::vector<CDocumentItem>& items, size_t index);
-	~CDeleteItem();
+	CDeleteItemCommand(std::vector<CDocumentItem>& items, size_t index);
+	~CDeleteItemCommand();
 
 private:
 	void DoExecute() override;

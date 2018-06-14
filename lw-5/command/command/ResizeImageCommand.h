@@ -1,10 +1,10 @@
 #pragma once
 #include "AbstractCommand.h"
 
-class CResizeImage : public CAbstractCommand
+class CResizeImageCommand : public CAbstractCommand
 {
 public:
-	CResizeImage(int& targetWidth, int const& newWidth, int& targetHeight, int const& newHeight);
+	CResizeImageCommand(int& targetWidth, int const& newWidth, int& targetHeight, int const& newHeight);
 
 private:
 	void DoExecute() override;
