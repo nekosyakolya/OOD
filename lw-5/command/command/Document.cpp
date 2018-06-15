@@ -97,8 +97,9 @@ std::shared_ptr<IParagraph> CDocument::InsertParagraph(const std::string& text, 
 
 CDocument::~CDocument()
 {
+
 	boost::system::error_code errorCode;
-	boost::filesystem::remove(TMP_DIRECTORY_NAME, errorCode);
+	boost::filesystem::remove_all(boost::filesystem::path(TMP_DIRECTORY_NAME), errorCode);
 	if (errorCode)
 	{
 		std::cout << errorCode.message() << std::endl;
