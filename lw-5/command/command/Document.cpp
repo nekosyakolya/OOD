@@ -52,9 +52,15 @@ CDocumentItem CDocument::GetItem(size_t index)
 	return m_items.at(index);
 }
 
-void CDocument::Save(const IDocumentSerializer& serializer) const
+void CDocument::Save(IDocumentSerializer& serializer) const
 {
-	serializer.Serialize(*this);
+	serializer.SetTitle(m_title);
+	for (size_t i = 0; i < m_items.size(); ++i)
+	{
+		serializer.InsertItem(GetItem(i));
+	}
+
+	serializer.Serialize();
 }
 
 void CDocument::DeleteItem(size_t index)
@@ -91,12 +97,10 @@ std::shared_ptr<IParagraph> CDocument::InsertParagraph(const std::string& text, 
 
 CDocument::~CDocument()
 {
-	try
+	boost::system::error_code errorCode;
+	boost::filesystem::remove(TMP_DIRECTORY_NAME, errorCode);
+	if (errorCode)
 	{
-		boost::filesystem::remove_all(TMP_DIRECTORY_NAME);
-	}
-	catch (std::exception& e)
-	{
-		std::cerr << e.what() << std::endl;
+		std::cout << errorCode.message() << std::endl;
 	}
 }
