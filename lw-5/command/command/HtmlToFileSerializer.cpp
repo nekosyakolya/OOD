@@ -7,10 +7,21 @@ HtmlToFileSerializer::HtmlToFileSerializer(const boost::filesystem::path& path)
 	SetPath(path);
 }
 
-void HtmlToFileSerializer::Serialize(const IDocument& document) const
+void HtmlToFileSerializer::Serialize() const
 {
-	CopyImages(document);
-	OutputHtml(document);
+	CopyImages();
+	OutputHtml();
+}
+
+void HtmlToFileSerializer::SetTitle(const std::string & title)
+{
+	m_title = title;
+	CReplaceSpecialHtmlCharacters::Execute(m_title);
+}
+
+void HtmlToFileSerializer::InsertItem(const CConstDocumentItem & item)
+{
+	m_items.emplace_back(item);
 }
 
 void HtmlToFileSerializer::SetPath(const boost::filesystem::path& path)
@@ -33,16 +44,15 @@ void HtmlToFileSerializer::SetPath(const boost::filesystem::path& path)
 	}
 }
 
-void HtmlToFileSerializer::CopyImages(const IDocument& document) const
+void HtmlToFileSerializer::CopyImages() const
 {
 	boost::filesystem::path imagesFolderPath = (m_path.parent_path() /= boost::filesystem::path("images"));
 	boost::filesystem::create_directory(imagesFolderPath);
 
-	auto itemsCount = document.GetItemsCount();
-	for (size_t i = 0; i < itemsCount; ++i)
+	for (size_t i = 0; i < m_items.size(); ++i)
 
 	{
-		auto item = document.GetItem(i);
+		auto item = m_items.at(i);
 		if (auto it = item.GetImage())
 		{
 			boost::filesystem::path path = it->GetPath();
@@ -57,24 +67,20 @@ void HtmlToFileSerializer::CopyImages(const IDocument& document) const
 	}
 }
 
-void HtmlToFileSerializer::OutputHead(std::ofstream& out, const IDocument& document) const
+void HtmlToFileSerializer::OutputHead(std::ofstream& out) const
 {
-	std::string title = document.GetTitle();
-	CReplaceSpecialHtmlCharacters::Execute(title);
-
 	out << "<head>" << std::endl;
-	out << "<title>" << title << "</title>" << std::endl;
+	out << "<title>" << m_title << "</title>" << std::endl;
 	out << "</head>" << std::endl;
 }
 
-void HtmlToFileSerializer::OutputBody(std::ofstream& out, const IDocument& document) const
+void HtmlToFileSerializer::OutputBody(std::ofstream& out) const
 {
 	out << "<body>" << std::endl;
-	auto size = document.GetItemsCount();
 
-	for (size_t i = 0; i < size; ++i)
+	for (size_t i = 0; i < m_items.size(); ++i)
 	{
-		auto item = document.GetItem(i);
+		auto item = m_items.at(i);
 		if (auto image = item.GetImage())
 		{
 			boost::filesystem::path path = (boost::filesystem::path("images") /= (image->GetPath()).filename());
@@ -92,12 +98,12 @@ void HtmlToFileSerializer::OutputBody(std::ofstream& out, const IDocument& docum
 	out << "</body>" << std::endl;
 }
 
-void HtmlToFileSerializer::OutputHtml(const IDocument& document) const
+void HtmlToFileSerializer::OutputHtml() const
 {
 	std::ofstream output(m_path.string());
 
 	output << "<html>" << std::endl;
-	OutputHead(output, document);
-	OutputBody(output, document);
+	OutputHead(output);
+	OutputBody(output);
 	output << "</html>" << std::endl;
 }
