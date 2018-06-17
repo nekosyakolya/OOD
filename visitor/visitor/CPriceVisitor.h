@@ -9,20 +9,17 @@ class CPriceVisitor : public ITransportVisitor
 {
 public:
 	CPriceVisitor();
-	float GetTicketPrice(float distance, ITransport & transport);
+	double GetTicketPrice(double distance, ITransport & transport);
+	using TypeCheck = std::function<bool(ITransport* transport)>;
+	void AddTypeCheck(const TypeCheck& typeCheck, double price);
 
 	void Visit(CBoat &) override;
 	void Visit(CCar &) override;
 	void Visit(CBus &) override;
 	void Visit(CPlane &) override;
 private:
-	float m_price;
-	struct PriceList
-	{
-		float boatPrice = 100.f;
-		float carPrice = 43.5f;
-		float busPrice = 50.5f;
-		float planePrice = 4300.f;
-	} m_priceList;
+	double m_price;
+	std::vector<std::pair<TypeCheck, double>> m_priceList;
+	void SetPrice(ITransport & transport);
 };
 

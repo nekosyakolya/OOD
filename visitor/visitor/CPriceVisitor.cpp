@@ -2,32 +2,49 @@
 #include "CPriceVisitor.h"
 
 CPriceVisitor::CPriceVisitor():
-	m_price(.0f)
+	m_price(.0)
 {
 }
 
-float CPriceVisitor::GetTicketPrice(float distance, ITransport & transport)
+double CPriceVisitor::GetTicketPrice(double distance, ITransport & transport)
 {
 	transport.Accept(*this);
 	return m_price * distance;
 }
 
+void CPriceVisitor::AddTypeCheck(const TypeCheck & typeCheck, double price)
+{
+	m_priceList.emplace_back(typeCheck, price);
+}
+
 void CPriceVisitor::Visit(CBoat & boat)
 {
-	m_price = m_priceList.boatPrice;
+	SetPrice(boat);
 }
 
 void CPriceVisitor::Visit(CCar & car)
 {
-	m_price = m_priceList.carPrice;
+	SetPrice(car);
 }
 
 void CPriceVisitor::Visit(CBus & bus)
 {
-	m_price = m_priceList.busPrice;
+	SetPrice(bus);
 }
 
 void CPriceVisitor::Visit(CPlane &plane)
 {
-	m_price = m_priceList.planePrice;
+	SetPrice(plane);
+}
+
+void CPriceVisitor::SetPrice(ITransport & transport)
+{
+	m_price = 0.f;
+	auto it = std::find_if(m_priceList.cbegin(), m_priceList.cend(),
+		[&](const std::pair<TypeCheck, double>& item) {return item.first(&transport);
+	});
+	if (it != m_priceList.end())
+	{
+		m_price = it->second;
+	}
 }
