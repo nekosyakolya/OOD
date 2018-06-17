@@ -7,4 +7,3 @@ public:
 	CTriangle(const RectD & rect, ILineStyle &, IStyle &);
 	void Draw(ICanvas & canvas) override;
 };
-
