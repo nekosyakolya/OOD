@@ -6,6 +6,8 @@ class ICanvas
 {
 public:
 	virtual void SetLineColor(RGBAColor color) = 0;
+	virtual void SetLineThickness(size_t) = 0;
+
 	virtual void BeginFill(RGBAColor color) = 0;
 	virtual void EndFill() = 0;
 	virtual void MoveTo(double x, double y) = 0;

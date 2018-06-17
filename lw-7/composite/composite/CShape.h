@@ -4,6 +4,7 @@
 class CShape : public IShape
 {
 public:
+	CShape(const RectD & rect, ILineStyle &, IStyle &);
 	RectD GetFrame() override;
 	void SetFrame(const RectD & rect) override;
 
@@ -19,7 +20,8 @@ public:
 	std::shared_ptr<const IGroupShape> GetGroup() const override;
 
 	virtual ~CShape() = default;
-private:
+
+protected:
 	RectD m_rect;
 	IStyle & m_style;
 	ILineStyle &m_lineStyle;

@@ -1,6 +1,13 @@
 #include "stdafx.h"
 #include "CShape.h"
 
+CShape::CShape(const RectD & rect, ILineStyle &lineStyle, IStyle &style):
+	m_rect(rect),
+	m_lineStyle(lineStyle),
+	m_style(style)
+{
+}
+
 RectD CShape::GetFrame()
 {
 	return m_rect;
