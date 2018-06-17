@@ -4,6 +4,7 @@
 class CGroupShape : public IGroupShape
 {
 public:
+	CGroupShape();
 	~CGroupShape();
 	void Draw(ICanvas & canvas) override;
 	boost::optional<size_t> GetShapesCount()const override;
@@ -28,4 +29,6 @@ public:
 private:
 	std::vector<std::shared_ptr<IShape>> m_shapes;
 	RectD m_rect;
+
+	void SetGroupFrame(const RectD & rect);
 };
