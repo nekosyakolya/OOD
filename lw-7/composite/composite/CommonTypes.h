@@ -9,5 +9,5 @@ struct Rect
 	T height;
 };
 
-typedef Rect<double> RectD;
-typedef uint32_t RGBAColor;
+using RectD = Rect<double>;
+using RGBAColor = uint32_t;
