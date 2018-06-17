@@ -17,11 +17,11 @@ public:
 	void SetDistance(float distance);
 	using TypeCheck = std::function<bool(ITransport* transport)>;
 
-	void AddTypeCheck(const TypeCheck& typeCheck, float price);
+	void AddPrice(const TypeCheck& typeCheck, float price);
 private:
 
 	float m_distance;
 	float m_ticketPrice;
-	std::vector<std::pair<TypeCheck, float>> m_prices;
+	std::vector<std::pair<TypeCheck, float>> m_priceList;
 };
 
