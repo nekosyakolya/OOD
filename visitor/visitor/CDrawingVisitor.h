@@ -1,11 +1,11 @@
 #pragma once
-#include "IVisitor.h"
+#include "ITransportVisitor.h"
 #include "CPlane.h"
 #include "CBoat.h"
 #include "CBus.h"
 #include "CCar.h"
 
-class CDrawingVisitor : public IVisitor
+class CDrawingVisitor : public ITransportVisitor
 {
 public:
 	void Visit(CBoat &) override;

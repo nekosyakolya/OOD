@@ -4,10 +4,10 @@ class CCar;
 class CBus;
 class CPlane;
 
-class IVisitor
+class ITransportVisitor
 {
 public:
-	virtual ~IVisitor() = default;
+	virtual ~ITransportVisitor() = default;
 	virtual void Visit(CBoat &) = 0;
 	virtual void Visit(CCar &) = 0;
 	virtual void Visit(CBus &) = 0;

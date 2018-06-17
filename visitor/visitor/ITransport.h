@@ -1,9 +1,9 @@
 #pragma once
-#include "IVisitor.h"
+#include "ITransportVisitor.h"
 
 class ITransport
 {
 public:
 	virtual ~ITransport() = default;
-	virtual void Accept(IVisitor &) = 0;
+	virtual void Accept(ITransportVisitor &) = 0;
 };

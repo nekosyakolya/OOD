@@ -147,19 +147,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CCalculateTicketPriceVisitor.h" />
+    <ClInclude Include="CPriceVisitor.h" />
     <ClInclude Include="CPlane.h" />
     <ClInclude Include="CBoat.h" />
     <ClInclude Include="CBus.h" />
     <ClInclude Include="CCar.h" />
     <ClInclude Include="CDrawingVisitor.h" />
     <ClInclude Include="ITransport.h" />
-    <ClInclude Include="IVisitor.h" />
+    <ClInclude Include="ITransportVisitor.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CCalculateTicketPriceVisitor.cpp" />
+    <ClCompile Include="CPriceVisitor.cpp" />
     <ClCompile Include="CPlane.cpp" />
     <ClCompile Include="CBoat.cpp" />
     <ClCompile Include="CBus.cpp" />

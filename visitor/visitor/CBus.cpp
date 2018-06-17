@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CBus.h"
 
-void CBus::Accept(IVisitor &visitor)
+void CBus::Accept(ITransportVisitor &visitor)
 {
 	visitor.Visit(*this);
 }
