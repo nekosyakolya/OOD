@@ -15,7 +15,7 @@ public:
 	void Visit(CPlane &) override;
 	float GetTicketPrice() const;
 	void SetDistance(float distance);
-	using TypeCheck = std::function<bool(ITransport* transport)>;
+	using TypeCheck = std::function<bool(const ITransport* transport)>;
 
 	void AddPrice(const TypeCheck& typeCheck, float price);
 private:
@@ -23,5 +23,6 @@ private:
 	float m_distance;
 	float m_ticketPrice;
 	std::vector<std::pair<TypeCheck, float>> m_priceList;
+	void Calculate(const ITransport&);
 };
 

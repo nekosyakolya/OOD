@@ -9,57 +9,22 @@ CCalculateTicketPriceVisitor::CCalculateTicketPriceVisitor():
 
 void CCalculateTicketPriceVisitor::Visit(CBoat & boat)
 {
-	std::cout << "Distance: " << m_distance << std::endl;
-	m_ticketPrice = 0.f;
-	auto it = std::find_if(m_priceList.cbegin(), m_priceList.cend(), [&](const std::pair<TypeCheck, float>& item) {
-		return item.first(&boat);
-	});
-	if (it != m_priceList.end())
-	{
-		m_ticketPrice = it->second * m_distance;
-	}
-
+	Calculate(boat);
 }
 
 void CCalculateTicketPriceVisitor::Visit(CCar & car)
 {
-	std::cout << "Distance: " << m_distance << std::endl;
-	m_ticketPrice = 0.f;
-	auto it = std::find_if(m_priceList.cbegin(), m_priceList.cend(), [&](const std::pair<TypeCheck, float>& item) {
-		return item.first(&car);
-	});
-	if (it != m_priceList.end())
-	{
-		m_ticketPrice = it->second * m_distance;
-	}
+	Calculate(car);
 }
 
 void CCalculateTicketPriceVisitor::Visit(CBus & bus)
 {
-	std::cout << "Distance: " << m_distance << std::endl;
-
-	m_ticketPrice = 0.f;
-	auto it = std::find_if(m_priceList.cbegin(), m_priceList.cend(), [&](const std::pair<TypeCheck, float>& item) {
-		return item.first(&bus);
-	});
-	if (it != m_priceList.end())
-	{
-		m_ticketPrice = it->second * m_distance;
-	}
+	Calculate(bus);
 }
 
 void CCalculateTicketPriceVisitor::Visit(CPlane &plane)
 {
-	std::cout << "Distance: " << m_distance << std::endl;
-
-	m_ticketPrice = 0.f;
-	auto it = std::find_if(m_priceList.cbegin(), m_priceList.cend(), [&](const std::pair<TypeCheck, float>& item) {
-		return item.first(&plane);
-	});
-	if (it != m_priceList.end())
-	{
-		m_ticketPrice = it->second * m_distance;
-	}
+	Calculate(plane);
 }
 
 float CCalculateTicketPriceVisitor::GetTicketPrice() const
@@ -75,4 +40,17 @@ void CCalculateTicketPriceVisitor::SetDistance(float distance)
 void CCalculateTicketPriceVisitor::AddPrice(const TypeCheck & typeCheck, float price)
 {
 	m_priceList.emplace_back(typeCheck, price);
+}
+
+void CCalculateTicketPriceVisitor::Calculate(const ITransport &transport)
+{
+	m_ticketPrice = 0.f;
+	auto it = std::find_if(m_priceList.cbegin(), m_priceList.cend(), [&](const std::pair<TypeCheck, float>& item) {
+		return item.first(&transport);
+	});
+	if (it != m_priceList.end())
+	{
+		m_ticketPrice = it->second * m_distance;
+	}
+
 }
