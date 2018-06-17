@@ -5,7 +5,7 @@ class CShape : public IShape
 {
 public:
 	CShape(const RectD & rect, ILineStyle &, IStyle &);
-	RectD GetFrame() override;
+	RectD GetFrame() const override;
 	void SetFrame(const RectD & rect) override;
 
 	ILineStyle & GetOutlineStyle() override;

@@ -8,7 +8,7 @@ CShape::CShape(const RectD & rect, ILineStyle &lineStyle, IStyle &style):
 {
 }
 
-RectD CShape::GetFrame()
+RectD CShape::GetFrame() const
 {
 	return m_rect;
 }
