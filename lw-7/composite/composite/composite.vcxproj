@@ -147,10 +147,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CEllipse.h" />
+    <ClInclude Include="CGroupShape.h" />
     <ClInclude Include="CommonTypes.h" />
+    <ClInclude Include="CompositeStyle.h" />
+    <ClInclude Include="CRectangle.h" />
+    <ClInclude Include="CShape.h" />
+    <ClInclude Include="CShapes.h" />
+    <ClInclude Include="CTriangle.h" />
     <ClInclude Include="ICanvas.h" />
     <ClInclude Include="IDrawable.h" />
     <ClInclude Include="IGroupShape.h" />
+    <ClInclude Include="ILineStyle.h" />
     <ClInclude Include="IShape.h" />
     <ClInclude Include="IShapes.h" />
     <ClInclude Include="ISlide.h" />
@@ -159,7 +167,14 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CEllipse.cpp" />
+    <ClCompile Include="CGroupShape.cpp" />
     <ClCompile Include="composite.cpp" />
+    <ClCompile Include="CompositeStyle.cpp" />
+    <ClCompile Include="CRectangle.cpp" />
+    <ClCompile Include="CShape.cpp" />
+    <ClCompile Include="CShapes.cpp" />
+    <ClCompile Include="CTriangle.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
